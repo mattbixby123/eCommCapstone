@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model product {
+  id                 Int              @id @default(autoincrement())
+  name               String           @db.VarChar(255)
+  desc               String           @db.Text
+  imageUrl           String           @db.VarChar(8000)
+  SKU                String           @unique @default(uuid()) @db.VarChar(36)
+  categoryId         Int
+  inventoryId        Int
+  price              Decimal
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  deletedAt          DateTime?
+  category           productCategory  @relation(fields: [categoryId], references: [id])
+  cartItem           cartItem[]
+  orderItems         orderItems[]
+  productInventory   productInventory @relation(fields: [productInventoryId], references: [id])
+  productInventoryId Int
+}
+
+model productCategory {
+  id          Int                @id @default(autoincrement())
+  name        String             @db.VarChar()
+  desc        String             @db.Text
+  createdAt   DateTime           @default(now())
+  modifiedAt  DateTime           @updatedAt
+  deletedAt   DateTime?
+  inventories productInventory[] // This line defines the one-to-many relationship
+  products    product[] // This line defines the one-to-many relationship between products and productCategory
+}
+
+model productInventory {
+  id         Int             @id @default(autoincrement())
+  quantity   Int
+  createdAt  DateTime        @default(now())
+  modifiedAt DateTime        @updatedAt
+  deletedAt  DateTime?
+  categoryId Int // This field is used to establish the relationship
+  category   productCategory @relation(fields: [categoryId], references: [id]) // This line defines the relationship
+  productId  Int             @unique // Ensure this field is unique
+  product    product[]
+}
+
+model customer {
+  id               Int               @id @default(autoincrement())
+  email            String            @unique @db.VarChar(255)
+  username         String            @db.VarChar(255)
+  password         String            @db.VarChar(255)
+  firstName        String            @db.VarChar(255)
+  lastName         String            @db.VarChar(255)
+  imageUrl         String            @db.VarChar(8000)
+  addressLine1     String            @db.VarChar(46)
+  addressLine2     String            @db.VarChar(46)
+  city             String            @db.VarChar(50)
+  state            String            @db.VarChar(50)
+  postalCode       String            @db.VarChar(50)
+  country          String            @db.VarChar(50)
+  createdAt        DateTime          @default(now()) @db.Timestamp()
+  modifiedAt       DateTime          @updatedAt @db.Timestamp()
+  isAdmin          Boolean?          @default(false) @db.Boolean
+  shoppingSessions shoppingSession[]
+  orderDetails     orderDetails[]
+}
+
+model shoppingSession {
+  id         Int        @id @default(autoincrement())
+  customerId Int
+  total      Decimal
+  createdAt  DateTime   @default(now())
+  modifiedAt DateTime   @updatedAt
+  customer   customer   @relation(fields: [customerId], references: [id])
+  cartItem   cartItem[]
+}
+
+model orderDetails {
+  id               Int            @id @default(autoincrement())
+  customerId       Int
+  total            Decimal
+  paymentDetailsId Int            @unique // added unique to enforce one-to-one
+  createdAt        DateTime       @default(now())
+  modifiedAt       DateTime       @updatedAt
+  customer         customer       @relation(fields: [customerId], references: [id])
+  orderItems       orderItems[]
+  paymentDetail    paymentDetails @relation(fields: [paymentDetailsId], references: [id])
+}
+
+model cartItem {
+  id         Int             @id @default(autoincrement())
+  sessionId  Int
+  productId  Int
+  quantity   Int
+  createdAt  DateTime        @default(now()) @db.Timestamp()
+  modifiedAt DateTime        @updatedAt @db.Timestamp()
+  session    shoppingSession @relation(fields: [sessionId], references: [id])
+  product    product         @relation(fields: [productId], references: [id])
+}
+
+model orderItems {
+  id          Int          @id @default(autoincrement())
+  orderId     Int
+  productId   Int
+  quantity    Int
+  createdAt   DateTime     @default(now())
+  modifiedAt  DateTime     @updatedAt
+  orderDetail orderDetails @relation(fields: [orderId], references: [id])
+  product     product      @relation(fields: [productId], references: [id])
+}
+
+model paymentDetails {
+  id          Int           @id @default(autoincrement())
+  orderId     Int
+  amount      Decimal
+  provider    String        @db.VarChar(150)
+  status      String        @db.VarChar(100)
+  createdAt   DateTime      @default(now())
+  modifiedAt  DateTime      @updatedAt
+  orderDetail orderDetails?
+}

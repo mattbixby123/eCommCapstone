@@ -1,20 +1,51 @@
-require('dotenv').config()
+// this is the index for the express server
+require('dotenv').config() //load env variables
+const express = require('express'); // Import Express framework
+const router = require('vite-express'); // Import Vite Express for serving Vite-built assets
+const app = express(); // Create an Express application instance
+const jwt = require("jsonwebtoken");
 
-const express = require('express');
-const router = require('vite-express');
-const app = express();
-
+// Import body-parser middleware for parsing JSON request bodies
 const bodyParser = require('body-parser')
+// Use body-parser middleware to parse JSON bodies
 app.use(bodyParser.json());
 
+// Serve static files from the 'public' directory
 app.use(express.static('public'))
 
+// Import database client and connect to the database
 const db = require('./db/client')
 db.connect()
 
-const apiRouter = require('./api');
-app.use('/api', apiRouter);
+// Check requests for a token and attach the decoded id to the request
+app.use((req, res, next) => {
+  const auth = req.headers.authorization;
+  const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+  try {
+    req.user = jwt.verify(token, process.env.JWT);
+  } catch {
+    req.user = null;
+  }
 
+  next();
+});
+
+// Backend routes
+// app.use("/auth", require("./auth"));
+app.use("/api", require("./api"));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).send(err.message || "Internal server error.");
+});
+
+// Default to 404 if no other route matched
+app.use((req, res) => {
+  res.status(404).send("Not found.");
+});
+
+// Start the server on port 3000 and log a message when it's ready
 router.listen(app, 3000, () =>
   console.log('Server is listening on port 3000...')
 );
