@@ -4,6 +4,7 @@ const express = require('express'); // Import Express framework
 const router = require('vite-express'); // Import Vite Express for serving Vite-built assets
 const app = express(); // Create an Express application instance
 const jwt = require("jsonwebtoken");
+const port = process.env.PORT;
 
 // Import body-parser middleware for parsing JSON request bodies
 const bodyParser = require('body-parser')
@@ -13,9 +14,8 @@ app.use(bodyParser.json());
 // Serve static files from the 'public' directory
 app.use(express.static('public'))
 
-// Import database client and connect to the database
-const db = require('./db/client')
-db.connect()
+// Static file-serving middleware / only needed for deployment
+// app.use(express.static(path.join(__dirname, "..", "client/dist")));
 
 // Check requests for a token and attach the decoded id to the request
 app.use((req, res, next) => {
@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 });
 
 // Backend routes
-// app.use("/auth", require("./auth"));
 app.use("/api", require("./api"));
+app.use("/auth", require("./auth"));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -46,8 +46,8 @@ app.use((req, res) => {
 });
 
 // Start the server on port 3000 and log a message when it's ready
-router.listen(app, 3000, () =>
-  console.log('Server is listening on port 3000...')
+router.listen(app, port, () =>
+  console.log(`Server is listening on port ${port}...`)
 );
 
 module.exports = router;
