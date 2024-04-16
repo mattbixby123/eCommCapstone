@@ -1,52 +1,61 @@
-#  🚀 Capstone Boilerplate
+# 🚀 Group 1 - eComm Capstone
 
-A template for building web applications using the PERN (PostgreSQL, Express.js, React, Node.js) stack. 
+A template for building web applications using the PERN (PostgreSQL, Express.js, React, Node.js) stack.
 
-##  🏁 Getting Started
+## 🏁 Getting Started
 
-1. **Don't fork or clone this repo!** Instead, create a new, empty directory on your machine and `git init` (or create an _empty_ repo on GitHub and clone it to your local machine)
-
-2. Add this template as a remote and merge it into your own repository
-
-```bash
-git remote add boilermaker git@github.com:FullstackAcademy/capstone-app-template.git
-git fetch boilermaker
-git merge boilermaker/main
-```
-
-3. Install packages
+1. Install packages
 
 ```bash
 npm i
 ```
 
-4. Add a `.env` file with your secret value for auth
+2. Add a `.env` file with your secret value for auth
+
 ```
 JWT_SECRET='somesecretvalue'
+SALT_ROUNDS
+DATABASE_URL='postgresql://USER:PASSWORD@HOST:PORT/g1ecomm'
+etc.
 ```
 
-5. Create the database
+3. Create the database
 
 ```bash
-createdb your-database-name
+createdb g1ecomm
 ```
 
-6. Update `src/server/db/client.js` to reflect the name of your database
+4. install prisma
 
-```js
-const connectionString = process.env.DATABASE_URL || 'https://localhost:5432/your-database-name';
+```
+npm install prisma --save-dev
 ```
 
-7. Seed the database
-```bash
-npm run seed
+```
+npx prisma init
 ```
 
-8. Start the server
+5. Migrate table data - review the prisma/schema.prisma (PSL file) & migrate the tables to your local 'g1econn' db
+
+```
+npx prisma migrate dev --name init
+```
+
+6. Install and generate Prisma Client
+
+```
+npm install @prisma/client
+```
+
+7. Start the server
+
 ```bash
 npm run dev
 ```
 
-9. Open your browser at `http://localhost:3000`
+8. Open your browser at `http://localhost:3000`
 
-10. Build something cool! 😎
+<!-- 9. Seed the database
+```bash
+npm run seed
+``` -->
