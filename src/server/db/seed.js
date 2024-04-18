@@ -1,4 +1,4 @@
-const db = require('./client');
+const { prisma } = require('../db');
 const { createUser } = require('./users');
 
 const users = [

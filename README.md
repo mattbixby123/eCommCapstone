@@ -32,7 +32,7 @@ npm install prisma --save-dev
 ```
 
 ```
-npx prisma init
+npx prisma init ( dont need to do )
 ```
 
 5. Migrate table data - review the prisma/schema.prisma (PSL file) & migrate the tables to your local 'g1econn' db
