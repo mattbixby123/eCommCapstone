@@ -1,9 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
-// require ("dotenv").config();
 const { prisma } = require("../db");
-// const db = require('./client');
-// const { createUser } = require('./users');
+
 
 async function main() {
   // const allCustomers = await prisma.customer.findMany();
@@ -28,21 +26,35 @@ async function main() {
     categoryId: faker.number.int({ min: 1, max: 3})
   }))
 
-  const customer = Array.from({ length: 10 }).map(() => ({
-    email: faker.internet.email(),
-    username: faker.internet.userName(),
-    password: faker.internet.password(),
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    imageUrl: faker.image.avatar(),
-    addressLine1: faker.location.streetAddress(),
-    addressLine2: faker.location.buildingNumber(),
-    city: faker.location.city(),
-    state: faker.location.state(),
-    postalCode: faker.location.zipCode(),
-    country: faker.location.country(),
+  const customer = await Promise.all(Array.from({ length: 10 }).map(async () => {
+    const passwordHash = await bcrypt.hash(faker.internet.password(), Number(process.env.SALT_ROUNDS));
+    return prisma.customer.create({
+      data: {
+        email: faker.internet.email(),
+        username: faker.internet.userName(),
+        password: passwordHash,
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        imageUrl: faker.image.avatar(),
+        addressLine1: faker.location.streetAddress(),
+        addressLine2: faker.location.buildingNumber(),
+        city: faker.location.city(),
+        state: faker.location.state(),
+        postalCode: faker.location.zipCode(),
+        country: faker.location.country(),
+      },
+    });
   }));
+// I reworked the customer faker seed function to include password hashing for the seeded users.
 
+// In this case, using create inside a loop works because you're generating unique data for each user, 
+// which is not possible with createMany without additional logic to ensure uniqueness. 
+// The loop allows us to perform the asynchronous operations (like hashing passwords),
+// for each user before inserting them into the database. 
+
+// This approach is necessary when you need to perform operations 
+// that depend on the result of previous operations,
+// such as generating a unique password hash for each user.
 
   
 
