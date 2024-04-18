@@ -18,10 +18,10 @@ model product {
   name               String           @db.VarChar(255)
   desc               String           @db.Text
   imageUrl           String           @db.VarChar(8000)
-  SKU                String           @unique @default(uuid()) @db.VarChar(36)
+  SKU                String           @unique @default(uuid()) @db.VarChar(100)
   categoryId         Int
   inventoryId        Int
-  price              Decimal
+  price              Decimal @db.Decimal(10,2)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
   deletedAt          DateTime?
@@ -68,7 +68,7 @@ model customer {
   city             String            @db.VarChar(50)
   state            String            @db.VarChar(50)
   postalCode       String            @db.VarChar(50)
-  country          String            @db.VarChar(50)
+  country          String            @db.VarChar(200)
   createdAt        DateTime          @default(now()) @db.Timestamp()
   modifiedAt       DateTime          @updatedAt @db.Timestamp()
   isAdmin          Boolean?          @default(false) @db.Boolean
