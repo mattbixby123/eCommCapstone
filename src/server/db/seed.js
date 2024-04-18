@@ -4,9 +4,7 @@ const { prisma } = require("../db");
 
 
 async function main() {
-  // const allCustomers = await prisma.customer.findMany();
-  // console.log(allCustomers);
-
+  // creating the 3 categories (not random)
   await prisma.productCategory.createMany({
     data: [
       {name: "Comics",
@@ -17,7 +15,7 @@ async function main() {
       desc: "Vintage architectural, fashion, encyclopaedia, and, research"}
     ]
   })
-
+  // creating the 1000 random products with a random category assigned from the 3 created
   const product = Array.from({ length: 1000 }).map(() => ({
     name: faker.commerce.productName(),
     desc: faker.commerce.productDescription(),
@@ -25,7 +23,7 @@ async function main() {
     SKU: faker.commerce.isbn(),
     categoryId: faker.number.int({ min: 1, max: 3})
   }))
-
+  // creating 10 random customers with hashed passwords
   const customer = await Promise.all(Array.from({ length: 10 }).map(async () => {
     const passwordHash = await bcrypt.hash(faker.internet.password(), Number(process.env.SALT_ROUNDS));
     return prisma.customer.create({
@@ -58,93 +56,9 @@ async function main() {
 
   
 
-  await prisma.customer.createMany({data: customer});
+  // await prisma.customer.createMany({data: customer}); // dont need this line with the updated customer code above
   await prisma.product.createMany({data: product});
 }
-
-// const users = [
-//   {
-//     name: 'Emily Johnson',
-//     email: 'emily@example.com',
-//     password: 'securepass',
-//   },
-//   {
-//     name: 'Liu Wei',
-//     email: 'liu@example.com',
-//     password: 'strongpass',
-//   },
-//   {
-//     name: 'Isabella García',
-//     email: 'bella@example.com',
-//     password: 'pass1234',
-//   },
-//   {
-//     name: 'Mohammed Ahmed',
-//     email: 'mohammed@example.com',
-//     password: 'mysecretpassword',
-//   },
-//   {
-//     name: 'John Smith',
-//     email: 'john@example.com',
-//     password: 'password123',
-//   },
-//   // Add more user objects as needed
-// ];  
-
-// const dropTables = async () => {
-//     try {
-//         await db.query(`
-//         DROP TABLE IF EXISTS users;
-//         `)
-//     }
-//     catch(err) {
-//         throw err;
-//     }
-// }
-
-// const createTables = async () => {
-//     try{
-//         await db.query(`
-//         CREATE TABLE users(
-//             id SERIAL PRIMARY KEY,
-//             name VARCHAR(255) DEFAULT 'name',
-//             email VARCHAR(255) UNIQUE NOT NULL,
-//             password VARCHAR(255) NOT NULL
-//         )`)
-//     }
-//     catch(err) {
-//         throw err;
-//     }
-// }
-
-// const insertUsers = async () => {
-//   try {
-//     for (const user of users) {
-//       await createUser({name: user.name, email: user.email, password: user.password});
-//     }
-//     console.log('Seed data inserted successfully.');
-//   } catch (error) {
-//     console.error('Error inserting seed data:', error);
-//   }
-// };
-
-// const seedDatabse = async () => {
-//     try {
-//         db.connect();
-//         await dropTables();
-//         await createTables();
-//         await insertUsers();
-//     }
-//     catch (err) {
-//         throw err;
-//     }
-//     finally {
-//         db.end()
-//     }
-// }
-
-// seedDatabse()
-
 
 main()
   .then(async () => {
