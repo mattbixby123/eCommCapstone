@@ -21,7 +21,7 @@ model product {
   SKU                String           @unique @default(uuid()) @db.VarChar(100)
   categoryId         Int
   inventoryId        Int
-  price              Decimal @db.Decimal(10,2)
+  price              Decimal          @db.Decimal(10, 2)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
   deletedAt          DateTime?
@@ -82,7 +82,7 @@ model shoppingSession {
   total      Decimal
   createdAt  DateTime   @default(now())
   modifiedAt DateTime   @updatedAt
-  customer   customer   @relation(fields: [customerId], references: [id])
+  customer   customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
   cartItem   cartItem[]
 }
 
@@ -93,9 +93,9 @@ model orderDetails {
   paymentDetailsId Int            @unique // added unique to enforce one-to-one
   createdAt        DateTime       @default(now())
   modifiedAt       DateTime       @updatedAt
-  customer         customer       @relation(fields: [customerId], references: [id])
+  customer         customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   orderItems       orderItems[]
-  paymentDetail    paymentDetails @relation(fields: [paymentDetailsId], references: [id])
+  paymentDetail    paymentDetails @relation(fields: [paymentDetailsId], references: [id], onDelete: Cascade)
 }
 
 model cartItem {
