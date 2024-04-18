@@ -19,17 +19,15 @@ model product {
   desc               String           @db.Text
   imageUrl           String           @db.VarChar(8000)
   SKU                String           @unique @default(uuid()) @db.VarChar(100)
-  categoryId         Int
-  inventoryId        Int
+  inventory          Int
   price              Decimal          @db.Decimal(10, 2)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
   deletedAt          DateTime?
+  categoryId         Int
   category           productCategory  @relation(fields: [categoryId], references: [id])
   cartItem           cartItem[]
   orderItems         orderItem[]
-  productInventory   productInventory @relation(fields: [productInventoryId], references: [id])
-  productInventoryId Int
 }
 
 model productCategory {
@@ -39,20 +37,7 @@ model productCategory {
   createdAt   DateTime           @default(now())
   modifiedAt  DateTime           @updatedAt
   deletedAt   DateTime?
-  inventories productInventory[] // This line defines the one-to-many relationship
   products    product[] // This line defines the one-to-many relationship between products and productCategory
-}
-
-model productInventory {
-  id         Int             @id @default(autoincrement())
-  quantity   Int
-  createdAt  DateTime        @default(now())
-  modifiedAt DateTime        @updatedAt
-  deletedAt  DateTime?
-  categoryId Int // This field is used to establish the relationship
-  category   productCategory @relation(fields: [categoryId], references: [id]) // This line defines the relationship
-  productId  Int             @unique // Ensure this field is unique
-  product    product[]
 }
 
 model customer {
