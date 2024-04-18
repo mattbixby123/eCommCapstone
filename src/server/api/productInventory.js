@@ -1,13 +1,13 @@
 const router = require("express").Router();
 
-// GET /productInventory
+// GET /productInventory - Retrieve a list of all productInventories
 
-// GET /productInventory/:id
+// GET /productInventory/:id - Retrieve a specific productInventory by ID
 
-// POST /productInventory
+// POST /productInventory - Create a new productInventory
 
-// PUT /productInventory/:id
+// PUT /productInventory/:id - Update a specific productInventory by ID.
 
-// DELETE /productInventory/:id
+// DELETE /productInventory/:id - Delete a specific productInventory by Id.
 
 module.exports = router;

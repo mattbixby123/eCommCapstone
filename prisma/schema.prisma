@@ -27,7 +27,7 @@ model product {
   deletedAt          DateTime?
   category           productCategory  @relation(fields: [categoryId], references: [id])
   cartItem           cartItem[]
-  orderItems         orderItems[]
+  orderItems         orderItem[]
   productInventory   productInventory @relation(fields: [productInventoryId], references: [id])
   productInventoryId Int
 }
@@ -73,7 +73,7 @@ model customer {
   modifiedAt       DateTime          @updatedAt @db.Timestamp()
   isAdmin          Boolean?          @default(false) @db.Boolean
   shoppingSessions shoppingSession[]
-  orderDetails     orderDetails[]
+  orderDetails     orderDetail[]
 }
 
 model shoppingSession {
@@ -86,16 +86,16 @@ model shoppingSession {
   cartItem   cartItem[]
 }
 
-model orderDetails {
-  id               Int            @id @default(autoincrement())
+model orderDetail {
+  id               Int           @id @default(autoincrement())
   customerId       Int
   total            Decimal
-  paymentDetailsId Int            @unique // added unique to enforce one-to-one
-  createdAt        DateTime       @default(now())
-  modifiedAt       DateTime       @updatedAt
-  customer         customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  orderItems       orderItems[]
-  paymentDetail    paymentDetails @relation(fields: [paymentDetailsId], references: [id], onDelete: Cascade)
+  paymentDetailsId Int           @unique // added unique to enforce one-to-one
+  createdAt        DateTime      @default(now())
+  modifiedAt       DateTime      @updatedAt
+  customer         customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  orderItems       orderItem[]
+  paymentDetail    paymentDetail @relation(fields: [paymentDetailsId], references: [id], onDelete: Cascade)
 }
 
 model cartItem {
@@ -109,24 +109,24 @@ model cartItem {
   product    product         @relation(fields: [productId], references: [id])
 }
 
-model orderItems {
-  id          Int          @id @default(autoincrement())
+model orderItem {
+  id          Int         @id @default(autoincrement())
   orderId     Int
   productId   Int
   quantity    Int
-  createdAt   DateTime     @default(now())
-  modifiedAt  DateTime     @updatedAt
-  orderDetail orderDetails @relation(fields: [orderId], references: [id])
-  product     product      @relation(fields: [productId], references: [id])
+  createdAt   DateTime    @default(now())
+  modifiedAt  DateTime    @updatedAt
+  orderDetail orderDetail @relation(fields: [orderId], references: [id])
+  product     product     @relation(fields: [productId], references: [id])
 }
 
-model paymentDetails {
-  id          Int           @id @default(autoincrement())
+model paymentDetail {
+  id          Int          @id @default(autoincrement())
   orderId     Int
   amount      Decimal
-  provider    String        @db.VarChar(150)
-  status      String        @db.VarChar(100)
-  createdAt   DateTime      @default(now())
-  modifiedAt  DateTime      @updatedAt
-  orderDetail orderDetails?
+  provider    String       @db.VarChar(150)
+  status      String       @db.VarChar(100)
+  createdAt   DateTime     @default(now())
+  modifiedAt  DateTime     @updatedAt
+  orderDetail orderDetail?
 }

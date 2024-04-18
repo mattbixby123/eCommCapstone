@@ -1,13 +1,13 @@
 const router = require("express").Router();
 
-// GET /cartItems
+// GET /cartItem - Retrieve a list of all cartItems 
 
-// GET /cartItems/:id
+// GET /cartItem/:id - Retrieve a specific cartItems by ID
 
-// POST /cartItems
+// POST /cartItem - Create a new cartItem.
 
-// PUT /cartItems/:id
+// PUT /cartItem/:id - Update a specific cartItem by ID.
 
-// DELETE /cartItems/:id
+// DELETE /cartItem/:id - Delete a specific cartItem by Id.
 
 module.exports = router;
