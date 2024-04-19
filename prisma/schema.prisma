@@ -14,30 +14,30 @@ datasource db {
 }
 
 model product {
-  id                 Int              @id @default(autoincrement())
-  name               String           @db.VarChar(255)
-  desc               String           @db.Text
-  imageUrl           String           @db.VarChar(8000)
-  SKU                String           @unique @default(uuid()) @db.VarChar(100)
-  inventory          Int
-  price              Decimal          @db.Decimal(10, 2)
-  createdAt          DateTime         @default(now())
-  updatedAt          DateTime         @updatedAt
-  deletedAt          DateTime?
-  categoryId         Int
-  category           productCategory  @relation(fields: [categoryId], references: [id])
-  cartItem           cartItem[]
-  orderItems         orderItem[]
+  id         Int             @id @default(autoincrement())
+  name       String          @db.VarChar(255)
+  desc       String          @db.Text
+  imageUrl   String          @db.VarChar(8000)
+  SKU        String          @unique @default(uuid()) @db.VarChar(100)
+  inventory  Int
+  price      Decimal         @db.Decimal(10, 2)
+  createdAt  DateTime        @default(now())
+  modifiedAt DateTime        @updatedAt
+  deletedAt  DateTime?
+  categoryId Int
+  category   productCategory @relation(fields: [categoryId], references: [id])
+  cartItem   cartItem[]
+  orderItems orderItem[]
 }
 
 model productCategory {
-  id          Int                @id @default(autoincrement())
-  name        String             @db.VarChar()
-  desc        String             @db.Text
-  createdAt   DateTime           @default(now())
-  modifiedAt  DateTime           @updatedAt
-  deletedAt   DateTime?
-  products    product[] // This line defines the one-to-many relationship between products and productCategory
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar()
+  desc       String    @db.Text
+  createdAt  DateTime  @default(now())
+  modifiedAt DateTime  @updatedAt
+  deletedAt  DateTime?
+  products   product[] // This line defines the one-to-many relationship between products and productCategory
 }
 
 model customer {
