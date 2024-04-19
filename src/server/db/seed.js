@@ -21,7 +21,10 @@ async function main() {
     desc: faker.commerce.productDescription(),
     imageUrl: faker.image.urlPicsumPhotos(),
     SKU: faker.commerce.isbn(),
-    categoryId: faker.number.int({ min: 1, max: 3})
+    inventory: faker.number.int({ min: 1, max: 5 }),
+    price: faker.commerce.price({ min: 3, max: 500 }),
+    categoryId: faker.number.int({ min: 1, max: 3 })
+
   }))
   // creating 10 random customers with hashed passwords
   const customer = await Promise.all(Array.from({ length: 10 }).map(async () => {
@@ -57,6 +60,8 @@ async function main() {
   
 
   // await prisma.customer.createMany({data: customer}); // dont need this line with the updated customer code above
+
+  
   await prisma.product.createMany({data: product});
 }
 
