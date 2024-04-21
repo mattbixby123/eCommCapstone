@@ -15,4 +15,4 @@ const prisma = new PrismaClient().$extends({
 //     return db.query(sql, params, callback);
 //   }
   
-  module.exports = { prisma };
+  module.exports = { prisma }; 
