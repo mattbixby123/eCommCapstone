@@ -3,15 +3,15 @@ const router = require("express").Router();
 const volleyball = require('volleyball')
 router.use(volleyball)
 
-// router.use("cartItems");
-// router.use("customer");
-// router.use("orderDetails");
-// router.use("orderItems");
-// router.use("paymentDetails");
-// router.use("product");
-// router.use("productCategory");
-// router.use("productInventory");
-// router.use("shoppingSession");
+router.use("/cartItem", require("./cartItem"));
+router.use("/customer", require("./customer"));
+// router.use("/orderDetail", require("./orderDetail"));
+// router.use("/orderItem", require("./orderItem"));
+// router.use("/paymentDetail", require("./paymentDetail"));
+router.use("/product", require("./product"));
+router.use("/productCategory", require("./productCategory"));
+// router.use("/productInventory", require("./productInventory"));
+// router.use("/shoppingSession", require("./shoppingSession"));
 
 
 module.exports = router;
