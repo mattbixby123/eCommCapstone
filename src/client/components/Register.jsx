@@ -11,8 +11,8 @@ export default function RegistrationForm() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [firstname, setfirstname] = useState('');
-  const [lastname, setlastname] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [addressLine1, setAddressLine1] = useState('');
   const [addressLine2, setAddressLine2] = useState('');
   const [city, setCity] = useState('');
@@ -86,10 +86,9 @@ export default function RegistrationForm() {
           margin='normal'
           required
           fullWidth
-          label='Email Address'
-          name='email'
-          autoComplete='email'
-          autoFocus
+          label='Username'
+          name='username'
+          autoComplete='username'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -112,7 +111,7 @@ export default function RegistrationForm() {
           label="First Name"
           autoComplete="firstname"
           value={firstname}
-          onChange={(e) => setfirstname(e.target.value)}
+          onChange={(e) => setFirstname(e.target.value)}
         />
         <TextField
           margin="normal"
@@ -122,15 +121,15 @@ export default function RegistrationForm() {
           label="Last Name"
           autoComplete="lastname"
           value={lastname}
-          onChange={(e) => setlastname(e.target.value)}
+          onChange={(e) => setLastname(e.target.value)}
         />
         <TextField
           margin="normal"
           required
           fullWidth
-          name="lastname"
-          label="Last Name"
-          autoComplete="lastname"
+          name="addressLine1"
+          label="Address Line 1"
+          autoComplete="addressLine1"
           value={addressLine1}
           onChange={(e) => setAddressLine1(e.target.value)}
         />
@@ -138,9 +137,9 @@ export default function RegistrationForm() {
           margin="normal"
           required
           fullWidth
-          name="lastname"
-          label="Last Name"
-          autoComplete="lastname"
+          name="addressLine2"
+          label="Address Line 2"
+          autoComplete="addressLine2"
           value={addressLine2}
           onChange={(e) => setAddressLine2(e.target.value)}
         />
@@ -148,9 +147,9 @@ export default function RegistrationForm() {
           margin="normal"
           required
           fullWidth
-          name="lastname"
-          label="Last Name"
-          autoComplete="lastname"
+          name="city"
+          label="City"
+          autoComplete="city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -158,9 +157,9 @@ export default function RegistrationForm() {
           margin="normal"
           required
           fullWidth
-          name="lastname"
-          label="Last Name"
-          autoComplete="lastname"
+          name="state"
+          label="State"
+          autoComplete="state"
           value={state}
           onChange={(e) => setState(e.target.value)}
         />
@@ -168,9 +167,9 @@ export default function RegistrationForm() {
           margin="normal"
           required
           fullWidth
-          name="lastname"
-          label="Last Name"
-          autoComplete="lastname"
+          name="postalCode"
+          label="Postal Code"
+          autoComplete="postalCode"
           value={postalCode}
           onChange={(e) => setPostalCode(e.target.value)}
         />
@@ -178,9 +177,9 @@ export default function RegistrationForm() {
           margin="normal"
           required
           fullWidth
-          name="lastname"
-          label="Last Name"
-          autoComplete="lastname"
+          name="country"
+          label="Country"
+          autoComplete="country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
