@@ -5,6 +5,7 @@ const router = require('vite-express'); // Import Vite Express for serving Vite-
 const app = express(); // Create an Express application instance
 const jwt = require("jsonwebtoken");
 const port = process.env.PORT;
+const path = require('path')
 
 // Import body-parser middleware for parsing JSON request bodies
 const bodyParser = require('body-parser')
@@ -13,9 +14,11 @@ app.use(bodyParser.json());
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'))
+// app.use("/", express.static(path.join(__dirname, "public")));
 
 // Static file-serving middleware / only needed for deployment
 // app.use(express.static(path.join(__dirname, "..", "client/dist")));
+
 
 // Check requests for a token and attach the decoded id to the request
 app.use((req, res, next) => {
@@ -41,9 +44,14 @@ app.use((err, req, res, next) => {
 });
 
 // Default to 404 if no other route matched
-app.use((req, res) => {
-  res.status(404).send("Not found.");
-});
+// app.use((req, res) => {
+//   res.status(404).send("Not found.");
+// });
+
+// error handler
+app.use((err, req, res, next) => {
+  res.status(400).send(err.message)
+})
 
 // Start the server on port 3000 and log a message when it's ready
 router.listen(app, port, () =>

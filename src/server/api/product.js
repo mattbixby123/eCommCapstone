@@ -3,12 +3,6 @@ const { prisma } =  require("../db");
 
 // done below, in review - ADD AUTH MIDDLEWARE TO THE ADMIN ROUTES FOR THE CONDITIONAL STATEMENTS TO WORK 'req.customer'.
 // Deny access if customer is not logged in -- this is needed on all routes where auth/login is required
-router.use((req, res, next) => {
-  if (!req.customer) {
-    return res.status(401).send("You must be logged in to do that.");
-  }
-  next();
-});
 
 // GET /product - Retrieve a list of all products.
 router.get("/", async (req, res, next) => {
@@ -29,17 +23,23 @@ router.get("/:id", async (req, res, next) => {
         id: parseInt(id),
       },
     });
-
+    
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
-
+    
     res.json(product);
   } catch (error) {
     next(error);
   }
 });
 
+router.use((req, res, next) => {
+  if (!req.customer) {
+    return res.status(401).send("You must be logged in to do that.");
+  }
+  next();
+});
 // POST /product - Create a new product.
 // This route will allow an admin to create a new product.
   //***ADMIN STORY TIER 3***//

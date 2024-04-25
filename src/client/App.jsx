@@ -1,22 +1,26 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import Login from './components/Login';
+// import reactLogo from './assets/react.svg';
+// import Login from './components/Login';
+import { Routes, Route } from 'react-router-dom'
+import Welcome from '../client/components/Welcome'
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
+    
     <>
-      <Router>
+    <h1>Hello World</h1>
+    <div className='App'>
         <Routes>
-          <Route path='/' element={<WelcomeScreen />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Welcome />} />
+          {/* <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/books' element={<AllBooks />} />
           <Route path='/comicBooks' element={<AllComicBooks />} />
-          <Route path='/magazines' element={<AllMagazines />} />
+          <Route path='/magazines' element={<AllMagazines />} /> */}
         </Routes>
-      </Router>
+        </div>
     </>
     // <div className='App'>
     //     <h1>Boilerplate</h1>
