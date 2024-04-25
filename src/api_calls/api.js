@@ -75,6 +75,48 @@ export const api = createApi({
         body: { magazineId, ...body}
       }),
     }),
+    removeFromCart: builder.mutation({
+      query: ({ bookId }) => ({
+        url: '/cart/remove/books',
+        method: 'DELETE',
+        body: { bookId }
+      }),
+    }),
+    removeFromCart: builder.mutation({
+      query: ({ comicId }) => ({
+        url: '/cart/remove/comics',
+        method: 'DELETE',
+        body: { comicId }
+      }),
+    }),
+    removeFromCart: builder.mutation({
+      query: ({ magazineId }) => ({
+        url: '/cart/remove/magazines',
+        method: 'DELETE',
+        body: { magazineId }
+      }),
+    }),
+    saveForLater: builder.mutation({
+      query: ({ bookId }) => ({
+        url: '/cart/save-for-later/books',
+        method: 'POST',
+        body: { bookId }
+      }),
+    }),
+    saveForLater: builder.mutation({
+      query: ({ comicId }) => ({
+        url: '/cart/save-for-later/comics',
+        method: 'POST',
+        body: { comicId }
+      }),
+    }),
+    saveForLater: builder.mutation({
+      query: ({ magazineId }) => ({
+        url: '/cart/save-for-later/magazines',
+        method: 'POST',
+        body: { magazineId }
+      }),
+    }),
     fetchUserDetails: builder.query({
       query: () => '/users/me',
     }),
@@ -83,3 +125,23 @@ export const api = createApi({
     })
   })
 })
+
+export const {
+  useFetchAllBooksQuery,
+  useFetchBooksByIdQuery,
+  useFetchAllComicsQuery,
+  useFetchComicsByIdQuery,
+  useFetchAllMagazinesQuery,
+  useFetchMagazinesByIdQuery,
+  useRegistrationFormMutation,
+  useAuthenticateQuery,
+  useLoginMutation,
+  useWelcomeQuery,
+  useAddToCartBookMutation,
+  useAddToCartComicMutation,
+  useAddToCartMagazineMutation,
+  useRemoveFromCartMutation,
+  useSaveForLaterMutation,
+  useFetchUserDetailsQuery,
+  useFetchOrderHistoryQuery
+} = api;
