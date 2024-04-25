@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useLoginMutation } from '../../api_calls/'
+// import { useLoginMutation } from '../../api_calls/'
+import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -48,26 +49,28 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor='email'>Email:</label>
-          <input
+          <TextField 
+          id="email" 
+          label="email" 
+          variant="filled"
             type='email'
-            id='email'
             value={email}
             onChange={handleEmailChange}
             required
           />
         </div>
         <div>
-          <label htmlFor='password'>Password:</label>
-          <input
+          <TextField 
+          id="password" 
+          label="password" 
+          variant="filled"
             type='password'
-            id='password'
             value={password}
             onChange={handlePasswordChange}
             required
           />
         </div>
-        <button type='submit'>Login</button>
+        <Button variant="outlined" type='submit'>Login</Button>
       </form>
       <p>{message}</p>
     </div>

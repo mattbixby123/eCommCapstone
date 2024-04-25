@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectToken } from '../redux/authslice';
 
 
-const AllMagazines = () => {
+const Magazines = () => {
   const { data: magazinesData, error, isLoading } = useFetchAllMagazinesQuery();
   const [searchParam, setSearchParam] = useState('');
 
@@ -82,5 +82,5 @@ const AllMagazines = () => {
     );
 };
 
-export default AllMagazines;
+export default Magazines;
  

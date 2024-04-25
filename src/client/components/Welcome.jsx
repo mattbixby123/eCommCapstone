@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
 import { useWelcomeQuery } from '../../api_calls/api'
 
 
@@ -17,8 +18,8 @@ function Welcome() {
         <p>Not a member? No problem, you can register for an account here:</p>
         { token ? <Link to='/customer'>Go to Profile</Link> : <Link to='/customer/register'>Register Here!</Link>}
         <p>Already a member?  Login here:</p>
-        <button className="loginButton" onClick={() => navigate('/customer/login')}>Login Here!</button>
-        <button className="products" onClick={() => navigate('/product')}>Products</button>
+        <Button variant="contained" className="loginButton" onClick={() => navigate('/login')}>Login Here!</Button>
+        <Button variant="contained" className="products" onClick={() => navigate('/product')}>Products</Button>
       </div>
       {/* <img className=''
         src=''

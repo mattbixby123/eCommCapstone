@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectToken } from '../redux/authslice';
 
 
-const AllComics = () => {
+const Comics = () => {
   const { data: comicsData, error, isLoading } = useFetchAllComicsQuery();
   const [searchParam, setSearchParam] = useState('');
 
@@ -82,5 +82,5 @@ const AllComics = () => {
     );
 };
 
-export default AllComics;
+export default Comics;
  
