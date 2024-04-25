@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-// import { useRegistrationFormMutation } from '../API/api';
+import { useRegistrationFormMutation } from '../../api_calls/api';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../redux/authslice';
 import { useNavigate } from 'react-router-dom';
@@ -11,8 +11,8 @@ export default function RegistrationForm() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [addressLine1, setAddressLine1] = useState('');
   const [addressLine2, setAddressLine2] = useState('');
   const [city, setCity] = useState('');
@@ -37,7 +37,7 @@ export default function RegistrationForm() {
     }
 
     try {
-      const response = await register({ email, password, firstname, lastname }).unwrap();
+      const response = await register({ email, password, firstName, lastName }).unwrap();
    
 
       if(response.token) {
@@ -47,8 +47,8 @@ export default function RegistrationForm() {
       setEmail('');
       setUsername('');
       setPassword('');
-      setfirstname('')
-      setlastname('')
+      setFirstName('')
+      setLastName('')
       setAddressLine1('');
       setAddressLine2('');
       setCity('');
@@ -110,8 +110,8 @@ export default function RegistrationForm() {
           name="firstname"
           label="First Name"
           autoComplete="firstname"
-          value={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
         />
         <TextField
           margin="normal"
@@ -120,8 +120,8 @@ export default function RegistrationForm() {
           name="lastname"
           label="Last Name"
           autoComplete="lastname"
-          value={lastname}
-          onChange={(e) => setLastname(e.target.value)}
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
         />
         <TextField
           margin="normal"

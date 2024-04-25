@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFetchAllMagazinesQuery } from '../../server/api/magazines';
+import { useFetchAllMagazinesQuery } from '../../api_calls/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
 import { useSelector } from 'react-redux';

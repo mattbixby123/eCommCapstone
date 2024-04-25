@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFetchAllComicsQuery } from '../../server/api/comics';
+import { useFetchAllComicsQuery } from '../../api_calls/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
 import { useSelector } from 'react-redux';
