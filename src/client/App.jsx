@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Toolbar from './components/ToolBar';
+import Toolbar from './components/Toolbar';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Register from './components/Register';
