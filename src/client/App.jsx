@@ -16,7 +16,6 @@ function App() {
     
     <>
     <Toolbar />
-    <h1>...</h1>
     <div className='App'>
         <Routes>
           <Route path='/' element={<Welcome />} />
