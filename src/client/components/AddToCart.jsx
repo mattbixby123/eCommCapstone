@@ -9,4 +9,4 @@ const AddToCart = ({ handleAddToCartClick }) => {
   )
 }
 
-export default handleAddToCartClick
+export default AddToCart;

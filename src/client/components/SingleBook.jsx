@@ -1,7 +1,7 @@
 /* TODO - add your code to create a functional React component that renders details for a single book. Fetch the book data from the provided API. You may consider conditionally rendering a 'Checkout' button for logged in users. */
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
-import { useFetchBookByIdQuery, useAddToCartBookMutation } from '../API/api';
+import { useFetchBooksByIdQuery, useAddToCartBookMutation } from '../../api_calls/api';
 import AddToCart from './AddToCart';
 import { useSelector } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
@@ -9,17 +9,17 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const SingleBook= () => {
   const { bookId } = useParams();
-  const { data: book, error, isLoading, refetch } = useFetchBookByIdQuery(bookId);
+  const { data: book, error, isLoading, refetch } = useFetchBooksByIdQuery(bookId);
   const [addToCart, { isLoading: isUpdating, data}] = useAddToCartBookMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
 
-  async function handleCheckoutClick(e) {
+  async function handleAddToCartClick(e) {
     e.preventDefault();
 
     try {
      
-      const response = await AddToCart({ bookId, available: false }).unwrap();
+      const response = await addToCart({ bookId }).unwrap();
       refetch();
       
     } catch (error) {

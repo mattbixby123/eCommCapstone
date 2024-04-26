@@ -8,6 +8,9 @@ import Register from './components/Register';
 import Books from './components/Books';
 import Comics from './components/Comics';
 import Magazines from './components/Magazines'
+import SingleBook from './components/SingleBook';
+import SingleComic from './components/SingleComic';
+import SingleMagazine from './components/SingleMagazine';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,8 +26,11 @@ function App() {
           <Route path='/register' element={<Register />} />
           {/* May need for search bar <Route path='/product' element={<Product />} /> */}
           <Route path='/books' element={<Books />} />
-          <Route path='/comicBooks' element={<Comics />} />
+          <Route path= '/books/:id' element={<SingleBook />}/>
+          <Route path='/comic-books' element={<Comics />} />
+          <Route path= '/comic-books/:id' element={<SingleComic />}/>
           <Route path='/magazines' element={<Magazines />} />
+          <Route path= '/magazines/:id' element={<SingleMagazine />}/>
         </Routes>
         </div>
     </>

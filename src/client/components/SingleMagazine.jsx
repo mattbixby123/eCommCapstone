@@ -1,25 +1,24 @@
-/* TODO - add your code to create a functional React component that renders details for a single book. Fetch the book data from the provided API. You may consider conditionally rendering a 'Checkout' button for logged in users. */
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
-import { useFetchBookByIdQuery, useAddToCartMagazineMutation } from '../API/api';
+import { useFetchMagazinesByIdQuery, useAddToCartMagazineMutation } from '../../api_calls/api';
 import AddToCart from './AddToCart';
 import { useSelector } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-const SingleBook= () => {
-  const { bookId } = useParams();
-  const { data: book, error, isLoading, refetch } = useFetchBookByIdQuery(bookId);
+const SingleMagazine= () => {
+  const { magazineId } = useParams();
+  const { data: magazine, error, isLoading, refetch } = useFetchMagazinesByIdQuery(magazineId);
   const [addToCart, { isLoading: isUpdating, data}] = useAddToCartMagazineMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
 
-  async function handleCheckoutClick(e) {
+  async function handleAddToCartClick(e) {
     e.preventDefault();
 
     try {
      
-      const response = await addToCart({ bookId, available: false }).unwrap();
+      const response = await addToCart({ magazineId }).unwrap();
       refetch();
       
     } catch (error) {
@@ -39,25 +38,25 @@ const SingleBook= () => {
         >
         Back to Magazines
       </Button>
-      {book && (
+      {magazine && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'
-          image={book.book.coverimage}
-          alt={`Cover of ${book.book.title}`}
+          image={magazine.magazine.coverimage}
+          alt={`Cover of ${magazine.magazine.title}`}
           sx={{ width: 'auto', maxHeight: 600, margin: '15px auto' }}
           />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
-              {book.book.title}
+              {magazine.magazine.title}
             </Typography>
             <Typography variant='body2'color='text.secondary'>
-              Author: {book.book.author}
+              Author: {magazine.magazine.author}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-              Description: {book.book.description}
+              Description: {magazine.magazine.description}
             </Typography>
-            {token && book.book.available ? (
+            {token && magazine.magazine.available ? (
               <Button onClick={handleCheckoutClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Checkout
               </Button>
@@ -69,7 +68,7 @@ const SingleBook= () => {
           </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
           <Button variant='outlined' onClick={() => navigate('/')} sx={{ mr: 1 }}>Home</Button>
-          <Button variant='outlined' onClick={() => navigate('/books')}>Books</Button>
+          <Button variant='outlined' onClick={() => navigate('/magazines')}>Magazines</Button>
         </Box>
         </Card>
       )}
@@ -77,4 +76,4 @@ const SingleBook= () => {
   );
 };
 
-export default SingleBook;
+export default SingleMagazine;
