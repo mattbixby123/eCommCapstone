@@ -34,7 +34,7 @@ export const api = createApi({
     }),
     registrationForm: builder.mutation({
       query: (body) => ({
-        url: '/users/register',
+        url: '/register',
         method: 'POST',
         body,
       }),

@@ -16,7 +16,7 @@ function Welcome() {
       <div className='welcome-container'>
         <h2>Welcome to page title!!</h2>
         <p>Not a member? No problem, you can register for an account here:</p>
-        { token ? <Link to='/customer'>Go to Profile</Link> : <Link to='/customer/register'>Register Here!</Link>}
+        { token ? <Link to='/customer'>Go to Profile</Link> : <Link to='/register'>Register Here!</Link>}
         <p>Already a member?  Login here:</p>
         <Button variant="contained" className="loginButton" onClick={() => navigate('/login')}>Login Here!</Button>
         <Button variant="contained" className="products" onClick={() => navigate('/product')}>Products</Button>
