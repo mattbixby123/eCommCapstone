@@ -13,13 +13,27 @@ function Welcome() {
 
   return (
     <div>
-      <h2 className='welcome-title'>Welcome to Retro Rag Reads!!</h2>
+      <h2 className='welcome-title'>Retro Rag Reads</h2>
       <div className='welcome-container'>
         <p>Not a member? No problem, you can register for an account here:</p>
-        <Button variant="contained" className="registerButton" onClick={() => navigate('/register')}>Register Here!</Button>
+        <Button 
+        variant="contained" 
+        className="registerButton" 
+        onClick={() => navigate('/register')}
+        style={{ fontFamily: 'monospace' }}
+        >
+          Register Here!
+          </Button>
         {/* { token ? <Button to='/customer'>Go to Profile</Button> : <Link to='/register'>Register Here!</Link>} */}
         <p>Already a member?  Login here:</p>
-        <Button variant="contained" className="loginButton" onClick={() => navigate('/login')}>Login Here!</Button>
+        <Button 
+        variant="contained" 
+        className="loginButton" 
+        onClick={() => navigate('/login')}
+        style={{ fontFamily: 'monospace' }}
+        >
+          Login Here!
+          </Button>
         {/* <Button variant="contained" className="products" onClick={() => navigate('/product')}>Products</Button> */}
       </div>
       {/* <img className=''
