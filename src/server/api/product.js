@@ -33,6 +33,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// Middleware statement to be used in the POST/PUT/DELETE statements
 router.use((req, res, next) => {
   if (!req.customer) {
     return res.status(401).send("You must be logged in to do that.");

@@ -33,11 +33,23 @@ router.get("/:id", async (req, res) => {
   }
  });
  
+ // Middleware statement to be used in the POST/PUT/DELETE statements
+ router.use((req, res, next) => {
+  if (!req.customer) {
+    return res.status(401).send("You must be logged in to do that.");
+  }
+  next();
+});
 
 // POST /productCategory - Create a new productCategory.
  // in theory we may not need this specific route, unless we want to add extra feature for admin to add category.
 router.post("/", async (req, res) => {
  try {
+
+    if (!req.customer || !req.customer.isAdmin) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+
     const { name } = req.body;
     const newProductCategory = await prisma.productCategory.create({
       data: { name },
@@ -54,6 +66,11 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
+
+     if (!req.customer || !req.customer.isAdmin) {
+       return res.status(403).json({ error: "Forbidden" });
+     }
+
      const { id } = req.params;
      const { name } = req.body;
      const updatedProductCategory = await prisma.productCategory.update({
@@ -72,6 +89,11 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
+    
+     if (!req.customer || !req.customer.isAdmin) {
+       return res.status(403).json({ error: "Forbidden" });
+     }
+
      const { id } = req.params;
      const deletedProductCategory = await prisma.productCategory.delete({
        where: { id: parseInt(id) },
