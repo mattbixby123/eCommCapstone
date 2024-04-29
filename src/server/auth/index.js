@@ -20,7 +20,7 @@ router.post("/register", async (req, res, next) => {
         state: req.body.state,
         postalCode: req.body.postalCode,
         country: req.body.country,
-        isAdmin: req.body.isAdmin // We can add a check box on register for now, 
+        // isAdmin: req.body.isAdmin // We can add a check box on register for now, 
         // but ultimatly we will take it away and push admin registrations to specific emails
       }
     });
