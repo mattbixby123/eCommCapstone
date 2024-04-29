@@ -13,7 +13,7 @@ npm i
 2. Add a `.env` file with your secret value for auth
 
 ```
-JWT_SECRET='somesecretvalue'
+JWT='somesecretvalue'
 SALT_ROUNDS
 DATABASE_URL='postgresql://USER:PASSWORD@HOST:PORT/g1ecomm'
 etc.
