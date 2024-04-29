@@ -41,12 +41,12 @@ export const api = createApi({
     }),
     authenticate: builder.query({
       query: () => ({
-        url: '/users/me'
+        url: 'auth/me'
       })
     }),
     login: builder.mutation({
       query: (body) => ({
-        url: '/users/login',
+        url: 'auth/login',
         method: 'POST',
         body,
       }),
