@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const { prisma } =  require("../db");
 
-// done below, in review - ADD AUTH MIDDLEWARE TO THE ADMIN ROUTES FOR THE CONDITIONAL STATEMENTS TO WORK 'req.customer'.
-// Deny access if customer is not logged in -- this is needed on all routes where auth/login is required
+// Middleware is on POST, PUT, and DELETE, only allowed for admins
 
 // GET /product - Retrieve a list of all products.
 router.get("/", async (req, res, next) => {
@@ -47,7 +46,6 @@ router.use((req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
 
-    // - add authenticatoin and authorization middleware that sets req.customer to authenticated customer
     if (!req.customer || !req.customer.isAdmin) {
       return res.status(403).json({ error: "Forbidden" });
     }
@@ -78,7 +76,7 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
  try {
-    // - add authenticatoin and authorization middleware that sets req.customer to authenticated customer
+    
     if (!req.customer || !req.customer.isAdmin) {
       return res.status(403).json({ error: "Forbidden" });
     }
@@ -114,7 +112,7 @@ router.put("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
  try {
 
-    // - add authenticatoin and authorization middleware that sets req.customer to authenticated customer
+    
     if (!req.customer || !req.customer.isAdmin) {
       return res.status(403).json({ error: "Forbidden" });
     }
