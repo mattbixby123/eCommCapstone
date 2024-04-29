@@ -57,7 +57,7 @@ const SingleComic= () => {
               Description: {comic.comic.description}
             </Typography>
             {token && comic.comic.available ? (
-              <Button onClick={handleCheckoutClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
+              <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Checkout
               </Button>
             ) : (
@@ -68,7 +68,7 @@ const SingleComic= () => {
           </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
           <Button variant='outlined' onClick={() => navigate('/')} sx={{ mr: 1 }}>Home</Button>
-          <Button variant='outlined' onClick={() => navigate('/comics')}>Comics</Button>
+          <Button variant='outlined' onClick={() => navigate('/comic-books')}>Comics</Button>
         </Box>
         </Card>
       )}

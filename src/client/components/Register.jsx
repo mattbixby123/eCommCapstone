@@ -19,6 +19,7 @@ export default function RegistrationForm() {
   const [state, setState] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,7 +38,7 @@ export default function RegistrationForm() {
     }
 
     try {
-      const response = await register({ email, username, password, firstName, lastName, addressLine1, addressLine2, city, state, postalCode, country }).unwrap();
+      const response = await register({ email, username, password, firstName, lastName, addressLine1, addressLine2, city, state, postalCode, country, imageUrl }).unwrap();
    
 
       if(response.token) {
@@ -55,9 +56,11 @@ export default function RegistrationForm() {
       setState('');
       setPostalCode('');
       setCountry('')
-      navigate('/customer')
+      setImageUrl('')
+      navigate('/')
     } catch (error) {
-      console.log(error.message)
+      console.error("error during registration: ", error);
+      console.log("detailed error:", error.response?.data || error.message);
     }
   }
   return (

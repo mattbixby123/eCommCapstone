@@ -57,7 +57,7 @@ const SingleMagazine= () => {
               Description: {magazine.magazine.description}
             </Typography>
             {token && magazine.magazine.available ? (
-              <Button onClick={handleCheckoutClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
+              <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Checkout
               </Button>
             ) : (

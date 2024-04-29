@@ -20,6 +20,7 @@ router.post("/register", async (req, res, next) => {
         state: req.body.state,
         postalCode: req.body.postalCode,
         country: req.body.country,
+        imageUrl: req.body.imageUrl,
       }
     });
     // Create a token with the customer id
