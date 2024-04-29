@@ -37,7 +37,7 @@ export default function RegistrationForm() {
     }
 
     try {
-      const response = await register({ email, password, firstName, lastName, addressLine1, addressLine2, city, state, postalCode, country }).unwrap();
+      const response = await register({ email, username, password, firstName, lastName, addressLine1, addressLine2, city, state, postalCode, country }).unwrap();
    
 
       if(response.token) {
