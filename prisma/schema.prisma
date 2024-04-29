@@ -47,7 +47,7 @@ model customer {
   password         String            @db.VarChar(255)
   firstName        String            @db.VarChar(255)
   lastName         String            @db.VarChar(255)
-  imageUrl         String            @db.VarChar(8000)
+  imageUrl         String?           @db.VarChar(8000)
   addressLine1     String            @db.VarChar(46)
   addressLine2     String?           @db.VarChar(46)
   city             String            @db.VarChar(50)
