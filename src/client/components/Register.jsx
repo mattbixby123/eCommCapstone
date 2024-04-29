@@ -135,10 +135,9 @@ export default function RegistrationForm() {
         />
         <TextField
           margin="normal"
-          required
           fullWidth
           name="addressLine2"
-          label="Address Line 2"
+          label="Address Line 2 (optional)"
           autoComplete="addressLine2"
           value={addressLine2}
           onChange={(e) => setAddressLine2(e.target.value)}
