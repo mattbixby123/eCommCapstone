@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
 import { useWelcomeQuery } from '../../api_calls/api'
 import '../style.css'
-
+import Categories from './Categories';
 
 function Welcome() {
 
@@ -36,6 +36,7 @@ function Welcome() {
           </Button>
         {/* <Button variant="contained" className="products" onClick={() => navigate('/product')}>Products</Button> */}
       </div>
+      <Categories />
       {/* <img className=''
         src=''
         alt=''>
