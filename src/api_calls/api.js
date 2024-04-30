@@ -75,42 +75,42 @@ export const api = createApi({
         body: { magazineId, ...body}
       }),
     }),
-    removeFromCart: builder.mutation({
+    removeFromCartBook: builder.mutation({
       query: ({ bookId }) => ({
         url: '/cart/remove/books',
         method: 'DELETE',
         body: { bookId }
       }),
     }),
-    removeFromCart: builder.mutation({
+    removeFromCartComic: builder.mutation({
       query: ({ comicId }) => ({
         url: '/cart/remove/comics',
         method: 'DELETE',
         body: { comicId }
       }),
     }),
-    removeFromCart: builder.mutation({
+    removeFromCartMagazine: builder.mutation({
       query: ({ magazineId }) => ({
         url: '/cart/remove/magazines',
         method: 'DELETE',
         body: { magazineId }
       }),
     }),
-    saveForLater: builder.mutation({
+    saveForLaterBook: builder.mutation({
       query: ({ bookId }) => ({
         url: '/cart/save-for-later/books',
         method: 'POST',
         body: { bookId }
       }),
     }),
-    saveForLater: builder.mutation({
+    saveForLaterComic: builder.mutation({
       query: ({ comicId }) => ({
         url: '/cart/save-for-later/comics',
         method: 'POST',
         body: { comicId }
       }),
     }),
-    saveForLater: builder.mutation({
+    saveForLaterMagazine: builder.mutation({
       query: ({ magazineId }) => ({
         url: '/cart/save-for-later/magazines',
         method: 'POST',

@@ -21,7 +21,7 @@ app.use(express.static('public'))
 // app.use(express.static(path.join(__dirname, "..", "client/dist")));
 
 
-// Check requests for a token and attach the decoded id to the request
+// Check requests for a token and attach the decoded id to the request                                                                                            
 app.use((req, res, next) => {
   const auth = req.headers.authorization;
   const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
