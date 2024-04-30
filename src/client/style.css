@@ -15,13 +15,13 @@
   width: 250px;
 }
 
-.welcome-title {
+/* .welcome-title {
   font-family: monospace;
   position: relative;
   transform: translateX(-50%);
   text-align: center;
   font-size: xx-large;
-}
+} */
 
 .welcome-container {
   font-family:monospace;

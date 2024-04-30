@@ -51,6 +51,12 @@ export const api = createApi({
         body,
       }),
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: 'auth/logout',
+        method: 'POST',
+      }),
+    }),
     welcome: builder.query({
       query: () => '/',
     }),
@@ -143,5 +149,6 @@ export const {
   useRemoveFromCartMutation,
   useSaveForLaterMutation,
   useFetchUserDetailsQuery,
-  useFetchOrderHistoryQuery
+  useFetchOrderHistoryQuery,
+  useLogoutMutation
 } = api;
