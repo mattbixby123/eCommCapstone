@@ -7,6 +7,7 @@ import '../style.css'
 import Categories from './Categories';
 
 
+
 function Welcome() {
 
   const navigate = useNavigate();
