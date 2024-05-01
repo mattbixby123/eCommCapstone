@@ -7,7 +7,49 @@ const { prisma } =  require("../db");
 router.get("/", async (req, res, next) => {
   try {
     const allProducts = await prisma.product.findMany();
-    res.json(allProducts);
+    res.send(allProducts);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /product/comics - Retrieve all comics.
+router.get("/comics", async (req, res, next) => {
+  try {
+    const comics = await prisma.product.findMany({
+      where: {
+        categoryId: 1,
+      },
+    });
+    res.send(comics);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /product/books - Retrieve all comics.
+router.get("/books", async (req, res, next) => {
+  try {
+    const books = await prisma.product.findMany({
+      where: {
+        categoryId: 2,
+      },
+    });
+    res.send(books);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /product/comics - Retrieve all comics.
+router.get("/magazines", async (req, res, next) => {
+  try {
+    const magazines = await prisma.product.findMany({
+      where: {
+        categoryId: 3,
+      },
+    });
+    res.send(magazines);
   } catch (error) {
     next(error);
   }
@@ -27,11 +69,14 @@ router.get("/:id", async (req, res, next) => {
       return res.status(404).json({ error: "Product not found" });
     }
     
-    res.json(product);
+    res.send(product);
   } catch (error) {
     next(error);
   }
 });
+
+
+
 
 // Middleware statement to be used in the POST/PUT/DELETE statements
 router.use((req, res, next) => {

@@ -15,11 +15,14 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useSelector } from 'react-redux';
 
 const pages = ['Books', 'Comics', 'Magazines'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const auths = ['Log In', 'Register']
 
 function ResponsiveAppBar() {
+  const token = useSelector(state => state.auth.token)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -202,9 +205,14 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {token ? settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              )) : 
+              auths.map((auth) => (
+                <MenuItem key={auth} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{auth}</Typography>
                 </MenuItem>
               ))}
             </Menu>

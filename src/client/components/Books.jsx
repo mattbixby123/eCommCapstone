@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
 import { useFetchAllBooksQuery } from '../../api_calls/api';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
-import { useSelector } from 'react-redux';
-import { selectToken } from '../redux/authslice';
+// import { selectToken } from '../redux/authslice';
 
 
-const AllBooks = () => {
-  const { data: booksData, error, isLoading } = useFetchAllBooksQuery();
-  const [searchParam, setSearchParam] = useState('');
+function AllBooks() {
+  const token = useSelector(state => state.auth.token);
 
   const navigate = useNavigate();
-  const token = useSelector(selectToken);
-  const isLoggedIn = !!token;
+
+  const [searchParam, setSearchParam] = useState('');
+  
+  const { data, error, isLoading } = useFetchAllBooksQuery();
+  console.log(data);
+  // const isLoggedIn = !!token;
 
   if(isLoading) return <div>Loading...</div>;
-  if(error) return <div>Error: {error.message}</div>;
+  // if(error) return <div>Error: {error.message}</div>;
 
-  const books = booksData?.books || [];
+  // const bookstoDisplay = searchParam
+  //   ? data.filter((data) => 
+  //         data.name.toLowerCase().includes(searchParam))
+  //   : data;
 
-  const booksToDisplay = books.filter((book) =>
-  book.title.toLowerCase().includes(searchParam.toLowerCase())
-  );
+  // const books = booksData?.books || [];
+
+  // const booksToDisplay = books.filter((book) =>
+  // book.title.toLowerCase().includes(searchParam.toLowerCase())
+  // );
   
     return (
       <Box sx={{ padding: '3rem' }}>
@@ -37,7 +45,7 @@ const AllBooks = () => {
           />
         </Box>
         <Box sx={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          {!isLoggedIn && (  
+          {token && (  
             <Button 
               variant='contained' 
               color='primary' 
@@ -45,7 +53,7 @@ const AllBooks = () => {
               Register Here! 
             </Button>
           )}
-          {!isLoggedIn && (
+          {token && (
             <Button 
               variant='contained' 
               color='secondary' 
@@ -58,7 +66,7 @@ const AllBooks = () => {
             onClick={() => navigate('/')}>
               Home
           </Button> 
-          {isLoggedIn && (
+          {token && (
             <Button
               variant='contained'
               color='primary'
@@ -68,15 +76,25 @@ const AllBooks = () => {
           )}
         </Box>
          <List >
-          {booksToDisplay.map(books => (
-            <ListItem 
-            key={books.id} 
-            component={Link}
-            to={`/books/${books.id}`}
-            >
-              <ListItemText primary={books.title} sx={{ color: 'black' }} />
-            </ListItem>
-          ))}
+         {/* {booksToDisplay.map((data) => {
+            return (
+              <Grid item xs={4}>
+                <Item>
+                  <div 
+                  key={data.id}
+                  className="book-item"
+                  onClick={(e) => navigate(`/${data.id}`)}>
+                  <h3 
+                  key={data.id}
+                  className="title"
+                  >{data.name}</h3>
+                  <img src={data.imageUrl} alt={data.name} width={200} />
+                  {(token) && <h6>*Available for Checkout</h6>}
+                  </div>
+                </Item>
+              </Grid>
+            )
+          })} */}
         </List>
       </Box>
     );

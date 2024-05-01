@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { prisma } = require("../db");
 
 // GET /paymentDetail - Retrieve a list of all paymentDetails from the db. 
 
