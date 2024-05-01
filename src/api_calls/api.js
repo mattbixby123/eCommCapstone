@@ -1,22 +1,33 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+const baseUrl = 'http://localhost:3000/api'
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/',
+    baseUrl: 'http://localhost:3000/api',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
+      console.log(getState());
       if(token) {
-        headers.set('authorization', `Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`)
       }
       headers.set('Content-type', 'application/json')
       return headers;
     }
   }),
+  // tagTypes: ['Books'],
   endpoints: (builder) => ({
-    fetchAllBooks: builder.query({
-      query: () => '/books',
+    fetchAllProducts: builder.query({
+      query: () => '/product'
     }),
+
+    fetchAllBooks: builder.query({
+      query: () => '/product/books',
+      // transformResponse: response => response.books,
+      // providesTags: ['Books']
+    }),
+
     fetchBooksById: builder.query({
       query:(bookId) => `/books/${bookId}`,
     }),
@@ -127,6 +138,7 @@ export const api = createApi({
 })
 
 export const {
+  useFetchAllProductsQuery,
   useFetchAllBooksQuery,
   useFetchBooksByIdQuery,
   useFetchAllComicsQuery,

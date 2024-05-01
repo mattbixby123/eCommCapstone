@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { prisma } = require("../db");
 
 // ** TODO - add the conditional if statements to the routes, i believe we need them in conjunction with this router.use below
 // Deny access if customer is not logged in -- this is needed on all routes where auth/login is required
