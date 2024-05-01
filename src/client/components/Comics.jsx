@@ -41,7 +41,7 @@ const Comics = () => {
             <Button 
               variant='contained' 
               color='primary' 
-              onClick={() => navigate('/users/register')}>
+              onClick={() => navigate('/customer/register')}>
               Register Here! 
             </Button>
           )}
@@ -49,7 +49,7 @@ const Comics = () => {
             <Button 
               variant='contained' 
               color='secondary' 
-              onClick={() => navigate('/users/login')}>
+              onClick={() => navigate('/customer/login')}>
                 Login Here!
             </Button>
           )}
@@ -62,7 +62,7 @@ const Comics = () => {
             <Button
               variant='contained'
               color='primary'
-              onClick={() => navigate('/users/me')}>
+              onClick={() => navigate('/auth/me')}>
                 Profile
             </Button>
           )}

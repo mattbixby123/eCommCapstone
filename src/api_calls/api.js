@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const baseUrl = 'http://localhost:3000/api'
+const baseUrl = 'http://localhost:3000/'
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api',
+    baseUrl: 'http://localhost:3000/',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       console.log(getState());
@@ -19,29 +19,29 @@ export const api = createApi({
   // tagTypes: ['Books'],
   endpoints: (builder) => ({
     fetchAllProducts: builder.query({
-      query: () => '/product'
+      query: () => 'api/product'
     }),
 
     fetchAllBooks: builder.query({
-      query: () => '/product/books',
+      query: () => 'api/product/books',
       // transformResponse: response => response.books,
       // providesTags: ['Books']
     }),
 
     fetchBooksById: builder.query({
-      query:(bookId) => `/books/${bookId}`,
+      query:(bookId) => `api/books/${bookId}`,
     }),
     fetchAllComics: builder.query({
-      query: () => '/comics',
+      query: () => 'api/comics',
     }),
     fetchComicsById: builder.query({
-      query:(comicId) => `/comics/${comicId}`,
+      query:(comicId) => `api/comics/${comicId}`,
     }),
     fetchAllMagazines: builder.query({
-      query: () => '/magazines',
+      query: () => 'api/magazines',
     }),
     fetchMagazinesById: builder.query({
-      query:(magazineId) => `/magazines/${magazineId}`,
+      query:(magazineId) => `api/magazines/${magazineId}`,
     }),
     registrationForm: builder.mutation({
       query: (body) => ({
@@ -129,7 +129,7 @@ export const api = createApi({
       }),
     }),
     fetchUserDetails: builder.query({
-      query: () => '/users/me',
+      query: () => '/auth/me',
     }),
     fetchOrderHistory: builder.query({
       query: () => '/orderhistory',

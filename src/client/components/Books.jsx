@@ -49,7 +49,7 @@ function AllBooks() {
             <Button 
               variant='contained' 
               color='primary' 
-              onClick={() => navigate('/users/register')}>
+              onClick={() => navigate('/customer/register')}>
               Register Here! 
             </Button>
           )}
@@ -57,7 +57,7 @@ function AllBooks() {
             <Button 
               variant='contained' 
               color='secondary' 
-              onClick={() => navigate('/users/login')}>
+              onClick={() => navigate('/customer/login')}>
                 Login Here!
             </Button>
           )}
@@ -70,7 +70,7 @@ function AllBooks() {
             <Button
               variant='contained'
               color='primary'
-              onClick={() => navigate('/users/me')}>
+              onClick={() => navigate('/customer/me')}>
                 Profile
             </Button>
           )}

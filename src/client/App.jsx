@@ -21,15 +21,15 @@ function App() {
     <Toolbar />
     <div className='App'>
         <Routes>
-          <Route path='/' element={<Welcome />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+          <Route path= '/' element={<Welcome />} />
+          <Route path= '/login' element={<Login />} />
+          <Route path= '/register' element={<Register />} />
           {/* May need for search bar <Route path='/product' element={<Product />} /> */}
-          <Route path='/books' element={<Books />} />
+          <Route path= '/books' element={<Books />} />
           <Route path= '/books/:id' element={<SingleBook />}/>
-          <Route path='/comic-books' element={<Comics />} />
+          <Route path= '/comic-books' element={<Comics />} />
           <Route path= '/comic-books/:id' element={<SingleComic />}/>
-          <Route path='/magazines' element={<Magazines />} />
+          <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/magazines/:id' element={<SingleMagazine />}/>
         </Routes>
         </div>

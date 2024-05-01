@@ -13,7 +13,7 @@ function Welcome() {
 
   return (
     <div>
-      <h2 className='welcome-title'>Retro Rag Reads</h2>
+      
       <div className='welcome-container'>
         <p>Not a member? No problem, you can register for an account here:</p>
         <Button 
