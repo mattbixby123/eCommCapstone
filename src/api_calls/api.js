@@ -161,10 +161,10 @@ export const {
   useMeQuery,
   useLoginMutation,
   useWelcomeQuery,
-  // useAddToCartBookMutation,
-  // useAddToCartComicMutation,
-  // useAddToCartMagazineMutation,
-  // useRemoveFromCartMutation,
-  // useSaveForLaterMutation,
-  // useFetchOrderHistoryQuery
+  useAddToCartBookMutation,
+  useAddToCartComicMutation,
+  useAddToCartMagazineMutation,
+  useRemoveFromCartMutation,
+  useSaveForLaterMutation,
+  useFetchOrderHistoryQuery
 } = api;
