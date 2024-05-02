@@ -27,7 +27,7 @@ router.get("/comics", async (req, res, next) => {
   }
 });
 
-// GET /product/books - Retrieve all comics.
+// GET /product/books - Retrieve all books.
 router.get("/books", async (req, res, next) => {
   try {
     const books = await prisma.product.findMany({
@@ -41,7 +41,7 @@ router.get("/books", async (req, res, next) => {
   }
 });
 
-// GET /product/comics - Retrieve all comics.
+// GET /product/magazines - Retrieve all magazines.
 router.get("/magazines", async (req, res, next) => {
   try {
     const magazines = await prisma.product.findMany({
@@ -75,16 +75,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-
-
-
-// Middleware statement to be used in the POST/PUT/DELETE statements
-router.use((req, res, next) => {
-  if (!req.customer) {
-    return res.status(401).send("You must be logged in to do that.");
-  }
-  next();
-});
 // POST /product - Create a new product.
 // This route will allow an admin to create a new product.
   //***ADMIN STORY TIER 3***//
@@ -104,7 +94,7 @@ router.post("/", async (req, res, next) => {
         desc,
         imageUrl,
         SKU,
-        inventory,
+        inventory: parseInt(inventory),
         price,
         categoryId: parseInt(categoryId),
       },
@@ -130,17 +120,29 @@ router.put("/:id", async (req, res, next) => {
     const { id } = req.params;
     const { name, desc, imageUrl, inventory, price, categoryId } = req.body;
 
+    const existingProduct = await prisma.product.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
     const updatedProduct = await prisma.product.update({
       where: {
         id: parseInt(id),
       },
       data: {
-        name,
-        desc,
-        imageUrl,
-        inventory,
-        price,
-        categoryId: categoryId ? parseInt(categoryId) : undefined,
+        name: name !== undefined ? name : existingProduct.name,
+        desc: desc !== undefined ? desc : existingProduct.desc,
+        imageUrl: imageUrl !== undefined ? imageUrl : existingProduct.imageUrl,
+        inventory: inventory !== undefined ? inventory : existingProduct.inventory,
+        price: price !== undefined ? price : existingProduct.price,
+        categoryId: categoryId !== undefined ? parseInt(categoryId) : existingProduct.categoryId,
+        // name, ~~~ the above allows us to send any/no updates while retaining the original attribute if no update is passed
+        // desc,
+        // imageUrl,
+        // inventory,
+        // price,
+        // categoryId: categoryId ? parseInt(categoryId) : undefined,
       },
     });
 
@@ -171,7 +173,10 @@ router.delete("/:id", async (req, res, next) => {
       },
     });
 
-    res.json(deletedProduct);
+    res.json({ 
+      message: "Product deleted successfully",
+      deletedProduct: deletedProduct 
+    });
  } catch (error) {
     next(error);
  }

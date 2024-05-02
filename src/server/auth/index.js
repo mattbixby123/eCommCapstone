@@ -21,10 +21,12 @@ router.post("/register", async (req, res, next) => {
         postalCode: req.body.postalCode,
         country: req.body.country,
         imageUrl: req.body.imageUrl,
+        isAdmin: false,
       }
     });
     // Create a token with the customer id
-    const token = jwt.sign({ id: customer.id }, process.env.JWT);
+    // const token = jwt.sign({ id: customer.id }, process.env.JWT);
+    const token = jwt.sign({ id: customer.id, isAdmin: customer.isAdmin }, process.env.JWT);
     res.status(201).send ({ token })
 
   } catch (error) {
@@ -45,7 +47,8 @@ router.post("/login", async (req, res, next) => {
     }
     const passwordMatch = await bcrypt.compare(req.body.password, customer.password);
     if (passwordMatch) {
-      const token = jwt.sign({ id: customer.id }, process.env.JWT);
+      // const token = jwt.sign({ id: customer.id }, process.env.JWT);
+      const token = jwt.sign({ id: customer.id, isAdmin: customer.isAdmin }, process.env.JWT);
       res.send({ token })
     }
     else {
