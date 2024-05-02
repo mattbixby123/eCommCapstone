@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 import { useWelcomeQuery } from '../../api_calls/api'
 import '../style.css'
 import Categories from './Categories';
+import Logout from './Logout';
 
 function Welcome() {
 
@@ -37,6 +38,11 @@ function Welcome() {
           </Button>
         
       </div>
+      {/* <img className=''
+        src=''
+        alt=''>
+      </img> */}
+      <Logout/>
       
     </div>
   )
