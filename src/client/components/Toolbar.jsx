@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 const pages = ['books', 'comics', 'magazines'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const auths = ['Log In', 'Register']
+const auths = ['login', 'register']
 
 function ResponsiveAppBar() {
   const navigate = useNavigate()
@@ -42,8 +42,9 @@ function ResponsiveAppBar() {
 
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (auth) => {
     setAnchorElUser(null);
+    navigate(`/${auth}`)
   };
 
   const Search = styled('div')(({ theme }) => ({
@@ -142,7 +143,7 @@ function ResponsiveAppBar() {
                 }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={(e) => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -210,13 +211,14 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {token ? settings.map((setting) => (
+              {token 
+                ? settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               )) : 
               auths.map((auth) => (
-                <MenuItem key={auth} onClick={handleCloseUserMenu}>
+                <MenuItem key={auth} onClick={(e) => handleCloseUserMenu(auth)}>
                   <Typography textAlign="center">{auth}</Typography>
                 </MenuItem>
               ))}
