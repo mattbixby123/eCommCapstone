@@ -28,8 +28,8 @@ function App() {
           {/* May need for search bar <Route path='/product' element={<Product />} /> */}
           <Route path= '/books' element={<Books />} />
           <Route path= '/books/:id' element={<SingleBook />}/>
-          <Route path= '/comic-books' element={<Comics />} />
-          <Route path= '/comic-books/:id' element={<SingleComic />}/>
+          <Route path= '/comics' element={<Comics />} />
+          <Route path= '/comics/:id' element={<SingleComic />}/>
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/magazines/:id' element={<SingleMagazine />}/>
         </Routes>

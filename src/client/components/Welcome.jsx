@@ -12,8 +12,9 @@ function Welcome() {
   const token = useSelector(state => state.auth.token);
 
   return (
-    <div>
+    <div className='welcome-screen'>
       
+      <Categories />
       <div className='welcome-container'>
         <p>Not a member? No problem, you can register for an account here:</p>
         <Button 
@@ -36,7 +37,6 @@ function Welcome() {
           </Button>
         {/* <Button variant="contained" className="products" onClick={() => navigate('/product')}>Products</Button> */}
       </div>
-      <Categories />
       {/* <img className=''
         src=''
         alt=''>

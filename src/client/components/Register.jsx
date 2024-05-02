@@ -64,7 +64,7 @@ export default function RegistrationForm() {
     }
   }
   return (
-    <Container maxWidth='sm'>
+    <Container className='registration-form' maxWidth='sm'>
       <Typography marginTop= {20} variant='h4' component='h1' gutterBottom>
         Register
       </Typography>

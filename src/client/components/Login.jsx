@@ -34,6 +34,7 @@ const Login = () => {
         
         setEmail('');
         setPassword('');
+        navigate('/');
     } catch (err) {
         console.error(`${err.name}: ${err.message}`);
     }
