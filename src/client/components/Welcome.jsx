@@ -5,6 +5,7 @@ import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from
 import { useWelcomeQuery } from '../../api_calls/api'
 import '../style.css'
 import Categories from './Categories';
+import Logout from './Logout';
 
 function Welcome() {
 
@@ -41,6 +42,7 @@ function Welcome() {
         src=''
         alt=''>
       </img> */}
+      <Logout/>
     </div>
   )
 }

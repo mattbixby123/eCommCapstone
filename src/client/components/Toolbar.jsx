@@ -23,8 +23,9 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const auths = ['login', 'register']
 
 function ResponsiveAppBar() {
+  const isAuthenticated = useSelector(state => state.auth.token !== '');
   const navigate = useNavigate()
-  const token = useSelector(state => state.auth.token)
+  const token = useSelector(state => state.auth.token !== '');
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -36,15 +37,15 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseNavMenu = (page) => {
-    console.log(page);
+    // console.log(page);
     setAnchorElNav(null);
-    navigate(`/${page}`)
+    // navigate(`/${page}`)
 
   };
 
   const handleCloseUserMenu = (auth) => {
     setAnchorElUser(null);
-    navigate(`/${auth}`)
+    // navigate(`/${auth}`)
   };
 
   const Search = styled('div')(({ theme }) => ({
