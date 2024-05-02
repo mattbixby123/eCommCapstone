@@ -1,11 +1,10 @@
 const router = require("express").Router();
 const { prisma } = require("../db");
 
-// ** TODO - add the conditional if statements to the routes, i believe we need them in conjunction with this router.use below
-// Deny access if customer is not logged in -- this is needed on all routes where auth/login is required
+// Deny access if customer is not an Admin -- blanket statement for all routes below instead of applying route by route
 router.use((req, res, next) => {
-  if (!req.customer) {
-    return res.status(401).send("You must be logged in to do that.");
+  if (!req.customer.isAdmin) {
+    return res.status(401).send("You must be an Admin to do that.");
   }
   next();
 });
@@ -82,12 +81,30 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
  try {
     const { id } = req.params;
-    const { isAdmin } = req.body;
+    // Destructure the fields from the request body
+    const { email, username, password, firstName, lastName, addressLine1, addressLine2, city, state, postalCode, country, isAdmin } = req.body;
+
+    // Fetch the existing customer from the database
+    const existingCustomer = await prisma.customer.findUnique({
+      where: { id: parseInt(id) },
+    });
 
     const updatedCustomer = await prisma.customer.update({
       where: { id: parseInt(id) },
       data: {
-        isAdmin: isAdmin,
+        email: email !== undefined ? email : existingCustomer.email,
+        username: username !== undefined ? username : existingCustomer.username,
+        password: password !== undefined ? password : existingCustomer.password, // this assumes that password is hashed in the database (which ours are)
+        firstName: firstName !== undefined ? firstName : existingCustomer.firstName,
+        lastName: lastName !== undefined ? lastName : existingCustomer.lastName,
+        addressLine1: addressLine1 !== undefined ? addressLine1 : existingCustomer.addressLine1,
+        addressLine2: addressLine2 !== undefined ? addressLine2 : existingCustomer.addressLine2,
+        city: city !== undefined ? city : existingCustomer.city,
+        state: state !== undefined ? state : existingCustomer.state,
+        postalCode: postalCode !== undefined ? postalCode : existingCustomer.postalCode,
+        country: country !== undefined ? country : existingCustomer.country,
+        isAdmin: isAdmin !== undefined ? isAdmin : existingCustomer.isAdmin,
+        // Our logic above allows us to enter updates only - no need to pass current values they will keep the same.
       },
     });
 
@@ -107,7 +124,10 @@ router.delete("/:id", async (req, res) => {
     const deletedCustomer = await prisma.customer.delete({
       where: { id: parseInt(id) },
     });
-    res.json(deletedCustomer);
+    res.json({ 
+      message: "Customer deleted successfully",
+      deletedCustomer: deletedCustomer 
+    });
  } catch (error) {
     next (error);
  }

@@ -129,7 +129,7 @@ export const api = createApi({
       }),
     }),
     fetchUserDetails: builder.query({
-      query: () => '/auth/me',
+      query: () => 'auth/me',
     }),
     fetchOrderHistory: builder.query({
       query: () => '/orderhistory',

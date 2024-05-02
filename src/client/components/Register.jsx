@@ -55,9 +55,9 @@ export default function RegistrationForm() {
       setCity('');
       setState('');
       setPostalCode('');
-      setCountry('')
-      setImageUrl('')
-      navigate('/')
+      setCountry('');
+      setImageUrl('');
+      navigate('/');
     } catch (error) {
       console.error("error during registration: ", error);
       console.log("detailed error:", error.response?.data || error.message);
