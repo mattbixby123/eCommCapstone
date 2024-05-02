@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin-top: 2%;
   height: 100vh; 
 }
 
@@ -37,8 +37,7 @@
 }
 
 .main-content {
-  margin-top: 200%;
-  position: relative;
+  position: absolute;
 }
 
 /* Add more styling for other elements if needed */
