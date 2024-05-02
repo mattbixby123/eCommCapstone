@@ -29,19 +29,19 @@ export const api = createApi({
     }),
 
     fetchBooksById: builder.query({
-      query:(bookId) => `api/books/${bookId}`,
+      query:(bookId) => `api/product/books/${bookId}`,
     }),
     fetchAllComics: builder.query({
-      query: () => 'api/comics',
+      query: () => 'api/product/comics',
     }),
     fetchComicsById: builder.query({
-      query:(comicId) => `api/comics/${comicId}`,
+      query:(comicId) => `api/product/comics/${comicId}`,
     }),
     fetchAllMagazines: builder.query({
-      query: () => 'api/magazines',
+      query: () => 'api/product/magazines',
     }),
     fetchMagazinesById: builder.query({
-      query:(magazineId) => `api/magazines/${magazineId}`,
+      query:(magazineId) => `api/product/magazines/${magazineId}`,
     }),
     registrationForm: builder.mutation({
       query: (body) => ({

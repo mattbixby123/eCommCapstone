@@ -1,85 +1,61 @@
 import React, { useState } from 'react';
 import { useFetchAllComicsQuery } from '../../api_calls/api';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
+import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
 import { useSelector } from 'react-redux';
-import { selectToken } from '../redux/authslice';
+import '../style.css';
+import { Container } from '@mui/system';
+// import { selectToken } from '../redux/authslice';
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 const Comics = () => {
-  const { data: comicsData, error, isLoading } = useFetchAllComicsQuery();
-  const [searchParam, setSearchParam] = useState('');
-
+ const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
-  const token = useSelector(selectToken);
-  const isLoggedIn = !!token;
+  const [searchParam, setSearchParam] = useState('');
+  const { data: comicsData, error, isLoading } = useFetchAllComicsQuery();
+  console.log(comicsData);
 
   if(isLoading) return <div>Loading...</div>;
-  if(error) return <div>Error: {error.message}</div>;
+  if(error) return <div>Error Loading Comics</div>;
 
-  const comics = comicsData?.comics || [];
-
-  const comicsToDisplay = comics.filter((comic) =>
-  comic.title.toLowerCase().includes(searchParam.toLowerCase())
-  );
   
     return (
-      <Box sx={{ padding: '3rem' }}>
-        <Typography variant='h3' gutterBottom>
-          Comic Book Catalog
-        </Typography>
-        <Box sx={{ margin: '1rem 0', display: 'flex', justifyContent: 'center' }}>
-          <TextField
-          variant='outlined'
-          placeholder='Search comics...'
-          onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
-          fullWidth
-          />
-        </Box>
-        <Box sx={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          {!isLoggedIn && (  
-            <Button 
-              variant='contained' 
-              color='primary' 
-              onClick={() => navigate('/customer/register')}>
-              Register Here! 
-            </Button>
-          )}
-          {!isLoggedIn && (
-            <Button 
-              variant='contained' 
-              color='secondary' 
-              onClick={() => navigate('/customer/login')}>
-                Login Here!
-            </Button>
-          )}
-          <Button 
-            variant='outlined' 
-            onClick={() => navigate('/')}>
-              Home
-          </Button> 
-          {isLoggedIn && (
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={() => navigate('/auth/me')}>
-                Profile
-            </Button>
-          )}
-        </Box>
-         <List >
-          {comicsToDisplay.map(comics => (
-            <ListItem 
-            key={comics.id} 
-            component={Link}
-            to={`/comics/${comics.id}`}
-            >
-              <ListItemText primary={comics.title} sx={{ color: 'black' }} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    );
+  <Container>
+    <Box>
+      <Typography variant='h3' gutterBottom>
+        Comic Catalog
+      </Typography>
+      <TextField
+        variant='outlined'
+        placeholder='Search comics...'
+        onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+        fullWidth
+        sx={{ mb: 2 }}
+        />
+      <Grid container spacing={3}>
+        {comicsData && comicsData.map((comic) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={comic.id}>
+            <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
+              <img src={comic.imageUrl} alt={comic.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
+              <Typography variant="h6">{comic.name}</Typography>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/comics/${comic.id}`)}>
+                View Details
+              </Button>
+              {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}
+            </Item>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  </Container>
+  );
 };
 
 export default Comics;

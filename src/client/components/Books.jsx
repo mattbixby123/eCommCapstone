@@ -42,7 +42,7 @@ return (
       <Grid container spacing={3}>
         {data && data.map((book) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={book.id}>
-            <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> {/* Correct placement of sx */}
+            <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}>
               <img src={book.imageUrl} alt={book.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
               <Typography variant="h6">{book.name}</Typography>
               <Button variant="contained" color="primary" onClick={() => navigate(`/${book.id}`)}>
