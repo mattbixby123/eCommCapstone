@@ -35,4 +35,10 @@
   border-radius: 10px;
   background-color: rgb(190, 190, 196);
 }
+
+.main-content {
+  margin-top: 200%;
+  position: relative;
+}
+
 /* Add more styling for other elements if needed */
