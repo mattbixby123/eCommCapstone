@@ -158,14 +158,13 @@ export const {
   useFetchAllMagazinesQuery,
   useFetchMagazinesByIdQuery,
   useRegistrationFormMutation,
-  useAuthenticateQuery,
+  useMeQuery,
   useLoginMutation,
   useWelcomeQuery,
-  useAddToCartBookMutation,
-  useAddToCartComicMutation,
-  useAddToCartMagazineMutation,
-  useRemoveFromCartMutation,
-  useSaveForLaterMutation,
-  useFetchUserDetailsQuery,
-  useFetchOrderHistoryQuery
+  // useAddToCartBookMutation,
+  // useAddToCartComicMutation,
+  // useAddToCartMagazineMutation,
+  // useRemoveFromCartMutation,
+  // useSaveForLaterMutation,
+  // useFetchOrderHistoryQuery
 } = api;
