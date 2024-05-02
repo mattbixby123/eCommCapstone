@@ -28,7 +28,7 @@ function AllBooks() {
   
 return (
   <Container>
-    <Box className= "main-content">
+    <Box>
       <Typography variant='h3' gutterBottom>
         Book Catalog
       </Typography>
