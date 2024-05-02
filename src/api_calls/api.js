@@ -22,6 +22,33 @@ export const api = createApi({
       query: () => "auth/me",
       providesTags: ["Me"],
     }),
+    
+    registrationForm: builder.mutation({
+      query: (body) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ["Me"],
+    }),
+
+    login: builder.mutation({
+      query: (body) => ({
+        url: 'auth/login',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ["Me"],
+    }),
+
+    logout: builder.mutation ({
+      queryFn: () => ({ data: {} }),
+      invalidatesTags: ["Me"],
+    }),
+
+    welcome: builder.query({
+      query: () => '/',
+    }),
 
     fetchAllProducts: builder.query({
       query: () => 'api/product'
@@ -50,24 +77,7 @@ export const api = createApi({
     fetchMagazinesById: builder.query({
       query:(productId) => `api/product/${productId}`,
     }),
-    registrationForm: builder.mutation({
-      query: (body) => ({
-        url: 'auth/register',
-        method: 'POST',
-        body,
-      }),
-    }),
 
-    login: builder.mutation({
-      query: (body) => ({
-        url: 'auth/login',
-        method: 'POST',
-        body,
-      }),
-    }),
-    welcome: builder.query({
-      query: () => '/',
-    }),
     // addToCartBook: builder.mutation({
     //   query: ({ bookId, ...body }) => ({
     //     url: '/cart/add/books',
