@@ -1,16 +1,18 @@
 import { useDispatch } from "react-redux";
 import { clearToken } from '../redux/authslice';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Logout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  useEffect(() => {
     dispatch(clearToken());
     navigate('/')
-  }
-  return <button onClick={handleLogout}>Logout</button>;
+  }, []);
+
+    return <h1>Logging out...</h1>
 };
 
 export default Logout;
