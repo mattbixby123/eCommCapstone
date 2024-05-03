@@ -1,6 +1,6 @@
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
-import { useFetchMagazinesByIdQuery, useAddToCartMagazineMutation } from '../../api_calls/api';
+import { useFetchMagazinesByIdQuery, useAddToCartMagazineMutation } from '../redux/api';
 import AddToCart from './AddToCart';
 import { useSelector } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
