@@ -19,6 +19,7 @@ async function main() {
   const product = Array.from({ length: 300 }).map(() => ({
     name: faker.commerce.productName(),
     desc: faker.commerce.productDescription(),
+    author: faker.person.fullName(),
     imageUrl: faker.image.urlPicsumPhotos(),
     SKU: faker.commerce.isbn(),
     inventory: faker.number.int({ min: 1, max: 5 }),
