@@ -9,7 +9,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 const SingleMagazine= () => {
   const { magazineId } = useParams();
   const { data: magazine, error, isLoading, refetch } = useFetchMagazinesByIdQuery(magazineId);
-  const [addToCart, { isLoading: isUpdating, data}] = useAddToCartMagazineMutation();
+  // const [addToCart, { isLoading: isUpdating, data}] = useAddToCartMagazineMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
 
@@ -38,7 +38,7 @@ const SingleMagazine= () => {
         >
         Back to Magazines
       </Button>
-      {magazine && (
+      {magazine && magazine.magazine && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'

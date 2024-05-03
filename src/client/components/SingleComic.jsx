@@ -1,6 +1,6 @@
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
-import { useFetchComicsByIdQuery, useAddToCartComicMutation } from '../../api_calls/api';
+import { useFetchComicsByIdQuery, useAddToCartComicMutation} from '../../api_calls/api';
 import AddToCart from './AddToCart';
 import { useSelector } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
@@ -8,8 +8,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const SingleComic= () => {
   const { comicId } = useParams();
+  console.log(comicId, "the comic ID")
   const { data: comic, error, isLoading, refetch } = useFetchComicsByIdQuery(comicId);
-  const [addToCart, { isLoading: isUpdating, data}] = useAddToCartComicMutation();
+  // const [addToCart, { isLoading: isUpdating, data}] = useAddToCartComicMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
 
@@ -38,7 +39,7 @@ const SingleComic= () => {
         >
         Back to Comics
       </Button>
-      {comic && (
+      {comic && comic.comic && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'

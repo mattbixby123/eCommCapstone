@@ -10,7 +10,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 const SingleBook= () => {
   const { bookId } = useParams();
   const { data: book, error, isLoading, refetch } = useFetchBooksByIdQuery(bookId);
-  const [addToCart, { isLoading: isUpdating, data}] = useAddToCartBookMutation();
+  // const [addToCart, { isLoading: isUpdating, data}] = useAddToCartBookMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
 
@@ -39,7 +39,7 @@ const SingleBook= () => {
         >
         Back to Books
       </Button>
-      {book && (
+      {book && book.book && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'
