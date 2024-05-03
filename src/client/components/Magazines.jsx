@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectToken } from '../redux/authslice';
 import { Container } from '@mui/system';
 import '../style.css';
+import Pagination from './Pagination';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -39,7 +40,7 @@ const Magazines = () => {
         sx={{ mb: 2 }}
         />
       <Grid container spacing={3}>
-        {magazinesData && magazinesData.map((magazine) => (
+        {magazinesData && magazinesData.magazines.map((magazine) => ( // added .magazines here to show paginated magazines
           <Grid item xs={12} sm={6} md={4} lg={3} key={magazine.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={magazine.imageUrl} alt={magazine.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
@@ -52,6 +53,7 @@ const Magazines = () => {
           </Grid>
         ))}
       </Grid>
+      {/* <Pagination dataType="magazines" /> */}
     </Box>
   </Container>
     );

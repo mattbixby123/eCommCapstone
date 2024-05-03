@@ -51,11 +51,11 @@ export const api = createApi({
     }),
 
     fetchAllProducts: builder.query({
-      query: () => 'api/product'
+      query: (page = 1) => `api/product?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
     fetchAllBooks: builder.query({
-      query: () => 'api/product/books',
+      query: (page = 1) => `api/product/books?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
     fetchBooksById: builder.query({
@@ -63,7 +63,7 @@ export const api = createApi({
     }),
 
     fetchAllComics: builder.query({
-      query: () => 'api/product/comics',
+      query: (page = 1) => `api/product/comics?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
     fetchComicsById: builder.query({
@@ -71,7 +71,7 @@ export const api = createApi({
     }),
 
     fetchAllMagazines: builder.query({
-      query: () => 'api/product/magazines',
+      query: (page = 1) => `api/product/magazines?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
     fetchMagazinesById: builder.query({
