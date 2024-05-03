@@ -37,10 +37,6 @@ function Welcome() {
           </Button>
         
       </div>
-      {/* <img className=''
-        src=''
-        alt=''>
-      </img> */}
       
     </div>
   )

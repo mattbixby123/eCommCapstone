@@ -45,7 +45,7 @@ return (
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}>
               <img src={book.imageUrl} alt={book.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
               <Typography variant="h6">{book.name}</Typography>
-              <Button variant="contained" color="primary" onClick={() => navigate(`/${book.id}`)}>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/books/${book.id}`)}>
                 View Details
               </Button>
               {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}

@@ -48,6 +48,7 @@ const Comics = () => {
               <Button variant="contained" color="primary" onClick={() => navigate(`/comics/${comic.id}`)}>
                 View Details
               </Button>
+            
               {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}
             </Item>
           </Grid>

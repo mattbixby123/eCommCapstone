@@ -15,7 +15,7 @@ import Logout from './components/Logout';
 
 
 function App() {
-  const [count, setCount] = useState(0);
+  
 
   return (
     
@@ -25,15 +25,17 @@ function App() {
         <Routes>
           <Route path= '/' element={<Welcome />} />
           <Route path= '/login' element={<Login />} />
+          {/* <Route path= '/logout' element={<Logout />} /> */}
           <Route path= '/register' element={<Register />} />
           {/* May need for search bar <Route path='/product' element={<Product />} /> */}
           <Route path= '/books' element={<Books />} />
-          <Route path= '/books/:id' element={<SingleBook />}/>
+          <Route path= '/books/:bookId' element={<SingleBook />}/>
           <Route path= '/comics' element={<Comics />} />
-          <Route path= '/comics/:id' element={<SingleComic />}/>
+          <Route path= '/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/magazines/:id' element={<SingleMagazine />}/>
           <Route path='/logout' element={<Logout/>}/>
+          <Route path= '/magazines/:magazineId' element={<SingleMagazine />}/>
         </Routes>
         </div>
     </>
