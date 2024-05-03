@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,12 +20,17 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
   
   export default function Categories() {
+    const navigate = useNavigate();
+    const handleNavigate = () => {
+        navigate(route);
+    };
+
     return (
       <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Item>
-                        <Card sx={{ maxWidth: 345 }}>
+                        <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/books')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"
@@ -46,7 +52,7 @@ const Item = styled(Paper)(({ theme }) => ({
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/comics')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"
@@ -68,7 +74,7 @@ const Item = styled(Paper)(({ theme }) => ({
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/magazines')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"

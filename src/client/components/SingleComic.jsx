@@ -39,27 +39,33 @@ const SingleComic= () => {
         >
         Back to Comics
       </Button>
-      {comic && comic.comic && (
+      {comic && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'
-          image={comic.comic.coverimage}
-          alt={`Cover of ${comic.comic.title}`}
+          image={comic.imageUrl}
+          alt={`Cover of ${comic.name}`}
           sx={{ width: 'auto', maxHeight: 600, margin: '15px auto' }}
           />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
-              {comic.comic.title}
+              {comic.name}
             </Typography>
             <Typography variant='body2'color='text.secondary'>
-              Author: {comic.comic.author}
+              SKU: {comic.SKU}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-              Description: {comic.comic.description}
+              Description: {comic.desc}
             </Typography>
-            {token && comic.comic.available ? (
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {comic.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {comic.price}
+            </Typography>
+            {token && comic.inventory > 0 ? (
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
-                Checkout
+                Add to Cart
               </Button>
             ) : (
               <Button disabled variant='containted' sx={{ mt: 2, bgcolor: 'grey.500', color: 'white', '$.Mui-disabled': { color: 'white' }}}>
@@ -69,7 +75,7 @@ const SingleComic= () => {
           </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
           <Button variant='outlined' onClick={() => navigate('/')} sx={{ mr: 1 }}>Home</Button>
-          <Button variant='outlined' onClick={() => navigate('/comic-books')}>Comics</Button>
+          <Button variant='outlined' onClick={() => navigate('/comics')}>Comics</Button>
         </Box>
         </Card>
       )}

@@ -27,6 +27,7 @@ const SingleBook= () => {
     }
   }
 
+
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error: {error.message}</div>;
 
@@ -39,27 +40,33 @@ const SingleBook= () => {
         >
         Back to Books
       </Button>
-      {book && book.book && (
+      {book && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'
-          image={book.book.coverimage}
-          alt={`Cover of ${book.book.title}`}
+          image={book.imageUrl}
+          alt={`Cover of ${book.name}`}
           sx={{ width: 'auto', maxHeight: 600, margin: '15px auto' }}
           />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
-              {book.book.title}
+              {book.name}
             </Typography>
             <Typography variant='body2'color='text.secondary'>
-              Author: {book.book.author}
+              SKU: {book.SKU}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-              Description: {book.book.description}
+              Description: {book.desc}
             </Typography>
-            {token && book.book.available ? (
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {book.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {book.price}
+            </Typography>
+            {token && book.inventory > 0 ? (
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
-                Checkout
+                Add To Cart
               </Button>
             ) : (
               <Button disabled variant='containted' sx={{ mt: 2, bgcolor: 'grey.500', color: 'white', '$.Mui-disabled': { color: 'white' }}}>

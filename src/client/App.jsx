@@ -24,6 +24,7 @@ function App() {
         <Routes>
           <Route path= '/' element={<Welcome />} />
           <Route path= '/login' element={<Login />} />
+          {/* <Route path= '/logout' element={<Logout />} /> */}
           <Route path= '/register' element={<Register />} />
           {/* May need for search bar <Route path='/product' element={<Product />} /> */}
           <Route path= '/books' element={<Books />} />

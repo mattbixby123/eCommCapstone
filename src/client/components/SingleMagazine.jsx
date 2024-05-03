@@ -38,27 +38,33 @@ const SingleMagazine= () => {
         >
         Back to Magazines
       </Button>
-      {magazine && magazine.magazine && (
+      {magazine && (
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'
-          image={magazine.magazine.coverimage}
-          alt={`Cover of ${magazine.magazine.title}`}
+          image={magazine.imageUrl}
+          alt={`Cover of ${magazine.name}`}
           sx={{ width: 'auto', maxHeight: 600, margin: '15px auto' }}
           />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
-              {magazine.magazine.title}
+              {magazine.name}
             </Typography>
             <Typography variant='body2'color='text.secondary'>
-              Author: {magazine.magazine.author}
+              SKU: {magazine.SKU}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-              Description: {magazine.magazine.description}
+              Description: {magazine.desc}
             </Typography>
-            {token && magazine.magazine.available ? (
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {magazine.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {magazine.price}
+            </Typography>
+            {token && magazine.inventory > 0 ? (
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
-                Checkout
+                Add to Cart
               </Button>
             ) : (
               <Button disabled variant='containted' sx={{ mt: 2, bgcolor: 'grey.500', color: 'white', '$.Mui-disabled': { color: 'white' }}}>
