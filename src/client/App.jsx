@@ -11,6 +11,7 @@ import Magazines from './components/Magazines'
 import SingleBook from './components/SingleBook';
 import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
+import Logout from './components/Logout';
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
           <Route path= '/comics' element={<Comics />} />
           <Route path= '/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/magazines' element={<Magazines />} />
+          <Route path= '/magazines/:id' element={<SingleMagazine />}/>
+          <Route path='/logout' element={<Logout/>}/>
           <Route path= '/magazines/:magazineId' element={<SingleMagazine />}/>
         </Routes>
         </div>

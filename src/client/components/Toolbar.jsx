@@ -15,17 +15,19 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+
 const pages = ['Books', 'Comics', 'Magazines'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const auths = ['Login', 'Register']
+const customers = ['Logout'];
+const guests = ['Login', 'Register'];
 
 function ResponsiveAppBar() {
-  const isAuthenticated = useSelector(state => state.auth.token !== '');
+  // const isAuthenticated = useSelector(state => state.auth.token !== '');
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const token = useSelector(state => state.auth.token !== '');
+  const token = useSelector(state => state.auth.token);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -38,14 +40,22 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = (page) => {
     // console.log(page);
-    setAnchorElNav(null);
-    navigate(`/${page}`)
-
+    if (page) {
+      navigate(`/${page}`);
+      setAnchorElNav(null);
+    } else {
+      setAnchorElNav(null);
+    }
   };
 
-  const handleCloseUserMenu = (auth) => {
-    setAnchorElUser(null);
-    navigate(`/${auth}`)
+  const handleCloseUserMenu = (guest) => {
+    if (guest) {
+      navigate(`/${guest}`);
+      setAnchorElUser(null);}
+    
+    else {
+      setAnchorElUser(null);
+    } 
   };
 
   const Search = styled('div')(({ theme }) => ({
@@ -138,7 +148,7 @@ function ResponsiveAppBar() {
                   horizontal: 'left',
                 }}
               open={Boolean(anchorElNav)}
-              onClose={(e) => handleCloseNavMenu()}
+              onClose={(e) => handleCloseNavMenu('')}
               sx={{
                   display: { xs: 'block', md: 'none' },
                 }}
@@ -210,17 +220,17 @@ function ResponsiveAppBar() {
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              onClose={(e) => handleCloseUserMenu()}
+              onClose={(e) => handleCloseUserMenu('')}
             >
               {token 
-                ? settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                ? customers.map((customer) => (
+                <MenuItem key={customer} onClick={(e) => handleCloseUserMenu(customer)}>
+                  <Typography textAlign="center">{customer}</Typography>
                 </MenuItem>
               )) : 
-              auths.map((auth) => (
-                <MenuItem key={auth} onClick={(e) => handleCloseUserMenu(auth)}>
-                  <Typography textAlign="center">{auth}</Typography>
+              guests.map((guest) => (
+                <MenuItem key={guest} onClick={(e) => handleCloseUserMenu(guest)}>
+                  <Typography textAlign="center">{guest}</Typography>
                 </MenuItem>
               ))}
             </Menu>

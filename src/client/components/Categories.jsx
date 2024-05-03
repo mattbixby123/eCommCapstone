@@ -36,7 +36,7 @@ const Item = styled(Paper)(({ theme }) => ({
                                 component="img"
                                 height="500"
                                 image="https://m.media-amazon.com/images/I/51tLPDOa1RL._SY445_SX342_.jpg"
-                                alt="To Kill a Mockingbird"
+                                alt="To Kill a Mockingbird"s
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
