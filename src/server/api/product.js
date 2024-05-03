@@ -6,50 +6,91 @@ const { prisma } =  require("../db");
 // GET /product - Retrieve a list of all products.
 router.get("/", async (req, res, next) => {
   try {
-    const allProducts = await prisma.product.findMany();
-    res.send(allProducts);
+    const page = parseInt(req.query.page) || 1; //  default to page1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // default to 10 items/per if not provided
+
+    const allProducts = await prisma.product.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+
+    const totalProducts = await prisma.product.count(); // get total count of products
+
+    const totalPages = Math.ceil(totalProducts / pageSize);
+    
+    res.send({ products: allProducts, totalPages });
   } catch (error) {
     next(error);
   }
 });
 
-// GET /product/comics - Retrieve all comics.
+// GET /product/comics - Retrieve paginated list of comics.
 router.get("/comics", async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 1; 
+    const pageSize = parseInt(req.query.pageSize) || 10; 
+
     const comics = await prisma.product.findMany({
       where: {
         categoryId: 1,
       },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
-    res.send(comics);
+
+    const totalComics = await prisma.product.count({ where: { categoryId: 1 } }); // Get total count of comics
+
+    const totalPages = Math.ceil(totalComics / pageSize);
+
+    res.json({ comics, totalPages });
   } catch (error) {
     next(error);
   }
 });
 
-// GET /product/books - Retrieve all books.
+// GET /product/books - Retrieve paginated list of books.
 router.get("/books", async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 1; 
+    const pageSize = parseInt(req.query.pageSize) || 10; 
+
     const books = await prisma.product.findMany({
       where: {
         categoryId: 2,
       },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
-    res.send(books);
+
+    const totalBooks = await prisma.product.count({ where: { categoryId: 2 } }); // Get total count of books
+
+    const totalPages = Math.ceil(totalBooks / pageSize);
+
+    res.json({ books, totalPages });
   } catch (error) {
     next(error);
   }
 });
 
-// GET /product/magazines - Retrieve all magazines.
+// GET /product/magazines - Retrieve paginated list of magazines.
 router.get("/magazines", async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Default to 10 items per page if not provided
+
     const magazines = await prisma.product.findMany({
       where: {
         categoryId: 3,
       },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
-    res.send(magazines);
+
+    const totalMagazines = await prisma.product.count({ where: { categoryId: 3 } }); // Get total count of magazines
+
+    const totalPages = Math.ceil(totalMagazines / pageSize);
+
+    res.json({ magazines, totalPages });
   } catch (error) {
     next(error);
   }

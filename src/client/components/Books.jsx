@@ -40,7 +40,7 @@ return (
         sx={{ mb: 2 }}
         />
       <Grid container spacing={3}>
-        {data && data.map((book) => (
+        {data && data.books.map((book) => ( // added .books here so that the paginated books show
           <Grid item xs={12} sm={6} md={4} lg={3} key={book.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}>
               <img src={book.imageUrl} alt={book.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />

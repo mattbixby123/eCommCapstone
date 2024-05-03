@@ -40,7 +40,7 @@ const Comics = () => {
         sx={{ mb: 2 }}
         />
       <Grid container spacing={3}>
-        {comicsData && comicsData.map((comic) => (
+        {comicsData && comicsData.comics.map((comic) => ( // added .comics here so that the paginated comics would show
           <Grid item xs={12} sm={6} md={4} lg={3} key={comic.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={comic.imageUrl} alt={comic.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
