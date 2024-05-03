@@ -18,9 +18,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['books', 'comics', 'magazines'];
+const pages = ['Books', 'Comics', 'Magazines'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const auths = ['login', 'register']
+const auths = ['Login', 'Register']
 
 function ResponsiveAppBar() {
   const isAuthenticated = useSelector(state => state.auth.token !== '');
@@ -39,13 +39,13 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = (page) => {
     // console.log(page);
     setAnchorElNav(null);
-    // navigate(`/${page}`)
+    navigate(`/${page}`)
 
   };
 
   const handleCloseUserMenu = (auth) => {
     setAnchorElUser(null);
-    // navigate(`/${auth}`)
+    navigate(`/${auth}`)
   };
 
   const Search = styled('div')(({ theme }) => ({
@@ -138,7 +138,7 @@ function ResponsiveAppBar() {
                   horizontal: 'left',
                 }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={(e) => handleCloseNavMenu()}
               sx={{
                   display: { xs: 'block', md: 'none' },
                 }}
@@ -210,7 +210,7 @@ function ResponsiveAppBar() {
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              onClose={(e) => handleCloseUserMenu()}
             >
               {token 
                 ? settings.map((setting) => (
