@@ -1,39 +1,27 @@
-// Pagination.js
-// work in progress - pagination seems to be working but cannot get the react component to render and allow us to change pages.
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
-
-const Pagination = (endpoint, page) => {
+const Pagination = ({ endpoint, onDataUpdate }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [results, setResults] = useState([]);
 
-  const fetchResults = async (endpoint, page) => {
+  const fetchResults = async (page) => {
     try {
       const response = await axios.get(`api/product/${endpoint}?page=${page}&pageSize=10`);
       const { results, totalPages } = response.data;
       setResults(results);
       setTotalPages(totalPages);
+      onDataUpdate(response.data);
     } catch (error) {
-       console.log(error);
+      console.log(error);
     }
   };
-  
+
   useEffect(() => {
-    fetchResults('comics', currentPage); // For comics
+    fetchResults(currentPage);
   }, [currentPage]);
-  
-  useEffect(() => {
-    fetchResults('books', currentPage); // For books
-  }, [currentPage]);
-  
-  useEffect(() => {
-    fetchResults('magazines', currentPage); // For magazines
-  }, [currentPage]);
-  
-  
+
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -46,10 +34,9 @@ const Pagination = (endpoint, page) => {
     }
   };
 
-
   return (
     <div>
-            {/* Pagination controls */}
+      {/* Pagination controls */}
       <button onClick={handlePrevPage} disabled={currentPage === 1}>
         Previous Page
       </button>
@@ -58,7 +45,6 @@ const Pagination = (endpoint, page) => {
       </button>
     </div>
   );
-  
 };
 
 export default Pagination;
