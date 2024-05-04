@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFetchAllMagazinesQuery } from '../redux/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
@@ -18,11 +18,25 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Magazines = () => {
- const token = useSelector(state => state.auth.token);
+  const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const [searchParam, setSearchParam] = useState('');
-  const { data: magazinesData, error, isLoading } = useFetchAllMagazinesQuery();
-  console.log(magazinesData);
+  const [magazinesData, setMagazinesData] = useState(null); // State to hold magazines data
+
+  // Function to handle data update from Pagination component
+  const handlePaginationDataUpdate = (data) => {
+    setMagazinesData(data);
+  };
+
+  // Fetch magazines data
+  const { isLoading, error } = useFetchAllMagazinesQuery();
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setMagazinesData(magazinesData);
+    }
+  }, [isLoading, error]); // Update magazinesData when isLoading or error changes
+
 
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error Loading Magazines</div>;
@@ -53,7 +67,7 @@ const Magazines = () => {
           </Grid>
         ))}
       </Grid>
-      <Pagination />
+      <Pagination endpoint="magazines" onDataUpdate={handlePaginationDataUpdate} />
     </Box>
   </Container>
     );
