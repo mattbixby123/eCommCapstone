@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
 
     const totalPages = Math.ceil(totalProducts / pageSize);
     
-    res.send({ products: allProducts, totalPages, page, pageSize });
+    res.send({ allProducts, totalProducts, totalPages, page, pageSize });
   } catch (error) {
     next(error);
   }
@@ -42,7 +42,7 @@ router.get("/comics", async (req, res, next) => {
 
     const totalPages = Math.ceil(totalComics / pageSize);
 
-    res.json({ comics, totalPages, page, pageSize });
+    res.json({ comics, totalComics, totalPages, page, pageSize });
   } catch (error) {
     next(error);
   }
@@ -66,7 +66,7 @@ router.get("/books", async (req, res, next) => {
 
     const totalPages = Math.ceil(totalBooks / pageSize);
 
-    res.json({ books, totalPages, page, pageSize });
+    res.json({ books, totalBooks, totalPages, page, pageSize });
   } catch (error) {
     next(error);
   }
@@ -90,7 +90,7 @@ router.get("/magazines", async (req, res, next) => {
 
     const totalPages = Math.ceil(totalMagazines / pageSize);
 
-    res.json({ magazines, totalPages, page, pageSize });
+    res.json({ magazines, totalMagazines, totalPages, page, pageSize });
   } catch (error) {
     next(error);
   }
