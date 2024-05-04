@@ -53,7 +53,7 @@ const Magazines = () => {
           </Grid>
         ))}
       </Grid>
-      {/* <Pagination dataType="magazines" /> */}
+      <Pagination />
     </Box>
   </Container>
     );
