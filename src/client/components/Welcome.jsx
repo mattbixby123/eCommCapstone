@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 import { useWelcomeQuery } from '../../api_calls/api'
 import '../style.css'
 import Categories from './Categories';
+import HomeSearch from './HomeSearch';
 
 function Welcome() {
 
@@ -37,6 +38,7 @@ function Welcome() {
           </Button>
         
       </div>
+
       
     </div>
   )

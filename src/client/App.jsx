@@ -12,6 +12,7 @@ import SingleBook from './components/SingleBook';
 import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
 import Logout from './components/Logout';
+import HomeSearch from './components/HomeSearch';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path= '/magazines/:magazineId' element={<SingleMagazine />}/>
         </Routes>
         </div>
+    <HomeSearch />
     </>
   );
 }
