@@ -77,6 +77,7 @@ export const api = createApi({
     fetchMagazinesById: builder.query({
       query:(productId) => `api/product/${productId}`,
     }),
+     
 
     // addToCartBook: builder.mutation({
     //   query: ({ bookId, ...body }) => ({
