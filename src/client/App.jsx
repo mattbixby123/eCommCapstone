@@ -30,13 +30,12 @@ function App() {
           <Route path= '/register' element={<Register />} />
           {/* May need for search bar <Route path='/product' element={<Product />} /> */}
           <Route path= '/books' element={<Books />} />
-          <Route path= '/product/books' element={<SingleBook />}/>
+          <Route path= '/product/books/:bookId' element={<SingleBook />}/>
           <Route path= '/comics' element={<Comics />} />
-          <Route path= '/product/comics' element={<SingleComic />}/>
+          <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/magazines' element={<Magazines />} />
-          <Route path= '/product/magazines' element={<SingleMagazine />}/>
+          <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
           <Route path= '/logout' element={<Logout/>}/>
-          <Route path= '/magazines/:magazineId' element={<SingleMagazine />}/>
           <Route path= '/pagination' element={<Pagination />}/>
         </Routes>
         </div>

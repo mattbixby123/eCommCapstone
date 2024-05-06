@@ -59,7 +59,7 @@ const Magazines = () => {
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={magazine.imageUrl} alt={magazine.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
               <Typography variant="h6">{magazine.name}</Typography>
-              <Button variant="contained" color="primary" onClick={() => navigate(`/magazines/${magazine.id}`)}>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/product/magazines/${magazine.id}`)}>
                 View Details
               </Button>
               {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}

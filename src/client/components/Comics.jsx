@@ -58,7 +58,7 @@ const Comics = () => {
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={comic.imageUrl} alt={comic.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
               <Typography variant="h6">{comic.name}</Typography>
-              <Button variant="contained" color="primary" onClick={() => navigate(`/comics/${comic.id}`)}>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/product/comics/${comic.id}`)}>
                 View Details
               </Button>
             
