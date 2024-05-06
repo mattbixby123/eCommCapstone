@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@mui/material'
-import { useWelcomeQuery } from '../../api_calls/api'
+import { useWelcomeQuery } from '../redux/api'
 import '../style.css'
 import Categories from './Categories';
 import HomeSearch from './HomeSearch';

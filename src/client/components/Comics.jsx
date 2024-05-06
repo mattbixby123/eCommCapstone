@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useFetchAllComicsQuery } from '../../api_calls/api';
+import React, { useEffect, useState } from 'react';
+import { useFetchAllComicsQuery } from '../redux/api';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
 import { useSelector } from 'react-redux';
 import '../style.css';
 import { Container } from '@mui/system';
 // import { selectToken } from '../redux/authslice';
+import Pagination from './Pagination';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,11 +17,23 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Comics = () => {
- const token = useSelector(state => state.auth.token);
+  const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const [searchParam, setSearchParam] = useState('');
-  const { data: comicsData, error, isLoading } = useFetchAllComicsQuery();
-  console.log(comicsData);
+  const [comicsData, setComicsData] = useState(null); // state to hold comics data
+  // fetch comics data
+  const { isLoading, error } = useFetchAllComicsQuery();
+  
+  // function to handle data update from Pagination component
+  const handlePaginationDataUpdate = (data) => {
+    setComicsData(data);
+  };
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setComicsData(comicsData);
+    }
+  }, [isLoading, error]); // update comicsData when isLoading or error changes
 
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error Loading Comics</div>;
@@ -40,12 +53,12 @@ const Comics = () => {
         sx={{ mb: 2 }}
         />
       <Grid container spacing={3}>
-        {comicsData && comicsData.map((comic) => (
+        {comicsData && comicsData.comics.map((comic) => ( // added .comics here so that the paginated comics would show
           <Grid item xs={12} sm={6} md={4} lg={3} key={comic.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={comic.imageUrl} alt={comic.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
               <Typography variant="h6">{comic.name}</Typography>
-              <Button variant="contained" color="primary" onClick={() => navigate(`/comics/${comic.id}`)}>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/product/comics/${comic.id}`)}>
                 View Details
               </Button>
             
@@ -54,6 +67,7 @@ const Comics = () => {
           </Grid>
         ))}
       </Grid>
+      <Pagination endpoint="comics" onDataUpdate={handlePaginationDataUpdate} />
     </Box>
   </Container>
   );

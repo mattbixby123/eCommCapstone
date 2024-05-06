@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useRegistrationFormMutation } from '../../api_calls/api';
+import { useRegistrationFormMutation } from '../redux/api';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../redux/authslice';
 import { useNavigate } from 'react-router-dom';

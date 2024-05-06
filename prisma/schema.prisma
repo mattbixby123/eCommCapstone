@@ -17,6 +17,7 @@ model product {
   id         Int             @id @default(autoincrement())
   name       String          @db.VarChar(255)
   desc       String          @db.Text
+  author     String          @db.VarChar(255)
   imageUrl   String          @db.VarChar(8000)
   SKU        String          @unique @default(uuid()) @db.VarChar(100)
   inventory  Int
