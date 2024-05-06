@@ -12,6 +12,7 @@ class HomeSearch extends Component {
     const search = e.target.value;
     this.setState({ search });
     this.props.updateSearchQuery(search);
+    console.log(search);
  };
 
  handleQueryResultClick = (e) => {
