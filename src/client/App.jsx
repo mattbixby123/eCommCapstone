@@ -34,8 +34,8 @@ function App() {
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
           <Route path= '/products' element={<Products />}/>
-          {/* <Route path= '/products/:id' element={<SingProduct />}/> */}
-          {/* <Route path='/logout' element={<Logout/>}/> */}
+          {/* <Route path= '/products/:id' element={<SingleProduct />}/> */}
+          <Route path='/logout' element={<Logout/>}/>
         </Routes>
         </div>
     <HomeSearch />
