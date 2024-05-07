@@ -16,7 +16,7 @@ export const api = createApi({
       return headers;
     }
   }),
-  // tagTypes: ['Books'],
+  
   endpoints: (builder) => ({
     me: builder.query({
       query: () => "auth/me",
@@ -54,12 +54,16 @@ export const api = createApi({
       query: (page) => `api/product?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
+    fetchProductsById: builder.query({
+      query:(productId) => `api/product/${productId}`,
+    }),
+
     fetchAllBooks: builder.query({
       query: (page) => `api/product/books?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
     fetchBooksById: builder.query({
-      query:(productId) => `api/product/${productId}`,
+      query:(bookId) => `api/product/${bookId}`,
     }),
 
     fetchAllComics: builder.query({
@@ -67,7 +71,7 @@ export const api = createApi({
     }),
 
     fetchComicsById: builder.query({
-      query:(productId) => `api/product/${productId}`,
+      query:(comicId) => `api/product/${comicId}`,
     }),
 
     fetchAllMagazines: builder.query({
@@ -75,7 +79,7 @@ export const api = createApi({
     }),
 
     fetchMagazinesById: builder.query({
-      query:(productId) => `api/product/${productId}`,
+      query:(magazineId) => `api/product/${magazineId}`,
     }),
      
 
@@ -158,6 +162,7 @@ export const {
   useFetchComicsByIdQuery,
   useFetchAllMagazinesQuery,
   useFetchMagazinesByIdQuery,
+  useFetchProductsByIdQuery,
   useRegistrationFormMutation,
   useMeQuery,
   useLoginMutation,

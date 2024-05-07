@@ -4,7 +4,7 @@ import Toolbar from './components/Toolbar';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Register from './components/Register';
-import Product from './components/Product'
+import Products from './components/Products'
 import Books from './components/Books';
 import Comics from './components/Comics';
 import Magazines from './components/Magazines'
@@ -32,9 +32,10 @@ function App() {
           <Route path= '/comics' element={<Comics />} />
           <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/magazines' element={<Magazines />} />
-          {/* <Route path= '/magazines/:id' element={<SingleMagazine />}/> */}
-          <Route path='/logout' element={<Logout/>}/>
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
+          <Route path= '/products' element={<Products />}/>
+          {/* <Route path= '/products/:id' element={<SingProduct />}/> */}
+          {/* <Route path='/logout' element={<Logout/>}/> */}
         </Routes>
         </div>
     <HomeSearch />

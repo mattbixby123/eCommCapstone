@@ -3,13 +3,13 @@ const { prisma } =  require("../db");
 
 // Middleware is on POST, PUT, and DELETE, only allowed for admins
 
-// GET /product - Retrieve a list of all products.
+// GET /api/product - Retrieve a list of all products.
 router.get("/", async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1; //  default to page1 if not provided
     const pageSize = parseInt(req.query.pageSize) || 10; // default to 10 items/per if not provided
 
-    const allProducts = await prisma.product.findMany({
+    const product = await prisma.product.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
@@ -18,7 +18,27 @@ router.get("/", async (req, res, next) => {
 
     const totalPages = Math.ceil(totalProducts / pageSize);
     
-    res.send({ allProducts, totalProducts, totalPages, page, pageSize });
+    res.send({ product, totalProducts, totalPages, page, pageSize });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /product/:id - Retrieve a specific product by ID.
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await prisma.product.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    
+    res.send(product);
   } catch (error) {
     next(error);
   }
@@ -96,25 +116,6 @@ router.get("/magazines", async (req, res, next) => {
   }
 });
 
-// GET /product/:id - Retrieve a specific product by ID.
-router.get("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const product = await prisma.product.findUnique({
-      where: {
-        id: parseInt(id),
-      },
-    });
-    
-    if (!product) {
-      return res.status(404).json({ error: "Product not found" });
-    }
-    
-    res.send(product);
-  } catch (error) {
-    next(error);
-  }
-});
 
 // POST /product - Create a new product.
 // This route will allow an admin to create a new product.

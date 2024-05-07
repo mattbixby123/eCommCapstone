@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-const pages = ['Books', 'Comics', 'Magazines'];
+const pages = ['Books', 'Comics', 'Magazines', 'Products'];
 const customers = ['Logout'];
 const guests = ['Login', 'Register'];
 
