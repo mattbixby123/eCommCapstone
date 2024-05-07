@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateSearchQuery } from '../../api_calls/actions';
+import { updateSearchQuery } from '../redux/actions';
 
 class HomeSearch extends Component {
  state = {
