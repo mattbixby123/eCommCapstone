@@ -71,7 +71,7 @@ const AllProducts = () => {
             </Grid>
           ))}
         </Grid>
-        <Pagination endpoint="products" onDataUpdate={handlePaginationDataUpdate} />
+        <Pagination endpoint="all" onDataUpdate={handlePaginationDataUpdate} />
       </Box>
     </Container>
     );

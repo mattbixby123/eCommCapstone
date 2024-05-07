@@ -51,7 +51,7 @@ export const api = createApi({
     }),
 
     fetchAllProducts: builder.query({
-      query: (page) => `api/product?page=${page}&pageSize=10`, // Add pagination parameters
+      query: (page) => `api/product/all?page=${page}&pageSize=10`, // Add pagination parameters
     }),
 
     fetchProductsById: builder.query({
