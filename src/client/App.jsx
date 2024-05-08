@@ -11,6 +11,7 @@ import Magazines from './components/Magazines'
 import SingleBook from './components/SingleBook';
 import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
+import Checkout from './components/Checkout';
 import Logout from './components/Logout';
 import HomeSearch from './components/HomeSearch';
 
@@ -34,8 +35,9 @@ function App() {
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
           <Route path= '/products' element={<Products />}/>
-          {/* <Route path= '/products/:id' element={<SingleProduct />}/> */}
           <Route path='/logout' element={<Logout/>}/>
+          <Route path='/checkout' element={<Checkout />}/>
+          {/* <Route path= '/products/:id' element={<SingleProduct />}/> */}
         </Routes>
         </div>
     <HomeSearch />
