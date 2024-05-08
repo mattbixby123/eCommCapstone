@@ -11,6 +11,7 @@ router.use("/paymentDetail", require("./paymentDetail"));
 router.use("/product", require("./product"));
 router.use("/productCategory", require("./productCategory"));
 router.use("/shoppingSession", require("./shoppingSession"));
+// router.use("/stripe"), require("./stripe")
 
 
 module.exports = router;
