@@ -145,6 +145,10 @@ export const api = createApi({
     fetchOrderHistory: builder.query({
       query: () => '/api/orderhistory',
     }),
+
+    fetchAllCustomerData: builder.query({
+      query: () => '/api/customer',
+    }),
     
   })
 })
@@ -166,5 +170,6 @@ export const {
   useAddToCartMagazineMutation,
   useRemoveFromCartMutation,
   useSaveForLaterMutation,
-  useFetchOrderHistoryQuery
+  useFetchOrderHistoryQuery,
+  useFetchAllCustomerDataQuery
 } = api;

@@ -5,7 +5,6 @@ import { Button, Box, Paper, Grid, Typography, TextField, styled } from '@mui/ma
 import { useFetchAllProductsQuery } from '../redux/api';
 import Categories from './Categories';
 import Pagination from "@mui/material/Pagination";
-import axios from "axios";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
