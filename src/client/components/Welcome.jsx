@@ -5,17 +5,18 @@ import { Button } from '@mui/material'
 import { useWelcomeQuery } from '../redux/api'
 import '../style.css'
 import Categories from './Categories';
-import HomeSearch from './HomeSearch';
+
+
 
 function Welcome() {
 
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
+  
 
   return (
-    <div className='welcome-screen'>
-      
-      <Categories />
+    <div>
+      {/* <h2 className='welcome-title'>Retro Rag Reads</h2> */}
       <div className='welcome-container'>
         <p>Not a member? No problem, you can register for an account here:</p>
         <Button 
@@ -36,7 +37,15 @@ function Welcome() {
         >
           Login Here!
           </Button>
-        
+        <Button 
+        variant="contained" 
+        className="logoutButton" 
+        onClick={() => navigate('/logout')}
+        style={{ fontFamily: 'monospace' }}
+        >
+          Logout Here!
+          </Button>
+        {/* <Button variant="contained" className="products" onClick={() => navigate('/product')}>Products</Button> */}
       </div>
 
       
