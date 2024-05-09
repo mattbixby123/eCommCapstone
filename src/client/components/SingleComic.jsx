@@ -56,7 +56,19 @@ const SingleComic= () => {
             <Typography variant='body2' color='text.secondary'>
               Description: {comic.comic.description}
             </Typography>
+<<<<<<< Updated upstream
             {token && comic.comic.available ? (
+=======
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {comic.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {comic.price}
+            </Typography>
+            {
+            // token && 
+            comic.inventory > 0 ? (
+>>>>>>> Stashed changes
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Checkout
               </Button>

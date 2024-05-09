@@ -16,8 +16,15 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
+<<<<<<< Updated upstream
 const pages = ['Books', 'Comics', 'Magazines'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+=======
+
+const pages = ['Books', 'Comics', 'Magazines', 'Products'];
+const customers = ['Logout', 'Account'];
+const guests = ['Login', 'Register'];
+>>>>>>> Stashed changes
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -94,6 +101,7 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
+              flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',

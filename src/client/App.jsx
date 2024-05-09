@@ -11,6 +11,15 @@ import Magazines from './components/Magazines'
 import SingleBook from './components/SingleBook';
 import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
+<<<<<<< Updated upstream
+=======
+import Logout from './components/Logout';
+import HomeSearch from './components/HomeSearch';
+import Cart from './components/Cart';
+import Account from './components/Account';
+import Pagination from './components/Pagination';
+import OrderHistory from './components/OrderHistory';
+>>>>>>> Stashed changes
 
 
 function App() {
@@ -22,6 +31,7 @@ function App() {
     <Toolbar />
     <div className='App'>
         <Routes>
+<<<<<<< Updated upstream
           <Route path='/' element={<Welcome />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -32,6 +42,22 @@ function App() {
           <Route path= '/comic-books/:id' element={<SingleComic />}/>
           <Route path='/magazines' element={<Magazines />} />
           <Route path= '/magazines/:id' element={<SingleMagazine />}/>
+=======
+          <Route path= '/' element={<Welcome />} />
+          <Route path= '/login' element={<Login />} />   
+          <Route path= '/account' element={<Account />}></Route> 
+          <Route path= '/register' element={<Register />} />
+          <Route path= '/books' element={<Books />} />
+          <Route path= '/product/books/:bookId' element={<SingleBook />}/>
+          <Route path= '/comics' element={<Comics />} />
+          <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
+          <Route path= '/magazines' element={<Magazines />} />
+          <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
+          <Route path= '/logout' element={<Logout/>}/>
+          <Route path= '/pagination' element={<Pagination />}/>
+          <Route path= '/cart' element={<Cart />}/>
+          <Route path= '/auth/orderhistory' element={<OrderHistory />}/>
+>>>>>>> Stashed changes
         </Routes>
         </div>
     </>

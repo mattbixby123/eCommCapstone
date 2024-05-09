@@ -56,7 +56,19 @@ const SingleMagazine= () => {
             <Typography variant='body2' color='text.secondary'>
               Description: {magazine.magazine.description}
             </Typography>
+<<<<<<< Updated upstream
             {token && magazine.magazine.available ? (
+=======
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {magazine.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {magazine.price}
+            </Typography>
+            {
+            // token && 
+            magazine.inventory > 0 ? (
+>>>>>>> Stashed changes
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Checkout
               </Button>

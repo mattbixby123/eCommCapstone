@@ -3,6 +3,7 @@ import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useFetchBooksByIdQuery, useAddToCartBookMutation } from '../../api_calls/api';
 import AddToCart from './AddToCart';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -10,22 +11,27 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 const SingleBook= () => {
   const { bookId } = useParams();
   const { data: book, error, isLoading, refetch } = useFetchBooksByIdQuery(bookId);
+<<<<<<< Updated upstream
   const [addToCart, { isLoading: isUpdating, data}] = useAddToCartBookMutation();
+=======
+  const [addToCartBook, { isLoading: isUpdating, data}] = useAddToCartBookMutation();
+>>>>>>> Stashed changes
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
-
-    try {
-     
-      const response = await addToCart({ bookId }).unwrap();
-      refetch();
-      
+    try{
+      await addToCartBook({
+        sessionId: 1,
+        productId: parseInt(bookId),
+        quantity: 1,
+      })
+      console.log('Book added to cart successfully');
     } catch (error) {
-      console.log(error.message)
-    }
-  }
+      console.error('Error adding book to cart.', error.message)
+    }}
 
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error: {error.message}</div>;
@@ -57,12 +63,32 @@ const SingleBook= () => {
             <Typography variant='body2' color='text.secondary'>
               Description: {book.book.description}
             </Typography>
+<<<<<<< Updated upstream
             {token && book.book.available ? (
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Checkout
+=======
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {book.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {book.price}
+            </Typography>
+            {
+            // token && 
+            book.inventory > 0 ? (
+              <Button 
+              onClick={handleAddToCartClick} 
+              variant='contained' 
+              color='primary' 
+              sx={{ mt: 2, color: 'black' }}>
+                Add To Cart
+>>>>>>> Stashed changes
               </Button>
             ) : (
-              <Button disabled variant='containted' sx={{ mt: 2, bgcolor: 'grey.500', color: 'white', '$.Mui-disabled': { color: 'white' }}}>
+              <Button 
+              disabled variant='containted' 
+              sx={{ mt: 2, bgcolor: 'grey.500', color: 'white', '$.Mui-disabled': { color: 'white' }}}>
                 Unavailable
               </Button>
             )}
