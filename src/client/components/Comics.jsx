@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useFetchAllComicsQuery } from '../redux/api';
+import { useFetchAllProductsQuery } from '../redux/api';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
 import { useSelector } from 'react-redux';
 import '../style.css';
 import { Container } from '@mui/system';
-// import { selectToken } from '../redux/authslice';
-import Pagination from './Pagination';
+import Pagination from '@mui/material/Pagination';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,22 +20,36 @@ const Comics = () => {
   const navigate = useNavigate();
   const [searchParam, setSearchParam] = useState('');
   const [comicsData, setComicsData] = useState(null); // state to hold comics data
-  // fetch comics data
-  const { isLoading, error } = useFetchAllComicsQuery();
-  
-  // function to handle data update from Pagination component
-  const handlePaginationDataUpdate = (data) => {
-    setComicsData(data);
-  };
+  const [currentPage, setCurrentPage] = useState(1); // State to hold current page number
+  const [postPerPage] = useState(9); // Number of items per page
+
+  // fetch all products data
+  const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
   useEffect(() => {
-    if (!isLoading && !error) {
-      setComicsData(comicsData);
-    }
-  }, [isLoading, error]); // update comicsData when isLoading or error changes
+    console.log("Fetched Products Data:", fetchedProductsData);
 
-  if(isLoading) return <div>Loading...</div>;
-  if(error) return <div>Error Loading Comics</div>;
+    if (!isLoading && !error && fetchedProductsData) {
+      // Filter products based on the category ID for books
+      const comics = fetchedProductsData.products.filter(products => products.categoryId === 1);
+      console.log("Comics Data:", comics);
+
+      setComicsData({ products: comics });
+    }
+  }, [isLoading, error, fetchedProductsData]);
+
+  // Function to handle page change
+  const handlePageChange = (event, pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error Loading Books</div>;
+
+  // Calculate the index of the first and last items on the current page
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = comicsData ? comicsData.products.slice(indexOfFirstPost, indexOfLastPost) : [];
 
   
     return (
@@ -53,7 +66,7 @@ const Comics = () => {
         sx={{ mb: 2 }}
         />
       <Grid container spacing={3}>
-        {comicsData && comicsData.comics.map((comic) => ( // added .comics here so that the paginated comics would show
+        {currentPosts.map((comic) => ( // added .comics here so that the paginated comics would show
           <Grid item xs={12} sm={6} md={4} lg={3} key={comic.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={comic.imageUrl} alt={comic.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
@@ -67,7 +80,14 @@ const Comics = () => {
           </Grid>
         ))}
       </Grid>
-      <Pagination endpoint="comics" onDataUpdate={handlePaginationDataUpdate} />
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Pagination
+            count={Math.ceil((comicsData ? comicsData.products.length : 0) / postPerPage)}
+            color="primary"
+            onChange={handlePageChange}
+            page={currentPage}
+          />
+        </Box>
     </Box>
   </Container>
   );

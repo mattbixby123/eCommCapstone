@@ -55,32 +55,32 @@ export const api = createApi({
     //   }),
 
     fetchAllProducts: builder.query({
-      query: (page) => `api/product/all?page=${page}&pageSize=10`, // Add pagination parameters
+      query: (page) => `api/product`, // Add pagination parameters
     }),
 
     fetchProductsById: builder.query({
       query:(productId) => `api/product/${productId}`,
     }),
 
-    fetchAllBooks: builder.query({
-      query: (page) => `api/product/books?page=${page}&pageSize=10`, // Add pagination parameters
-    }),
+    // fetchAllBooks: builder.query({
+    //   query: (page) => `api/product/books?page=${page}&pageSize=10`, // Add pagination parameters
+    // }),
 
     fetchBooksById: builder.query({
       query:(bookId) => `api/product/${bookId}`,
     }),
 
-    fetchAllComics: builder.query({
-      query: (page) => `api/product/comics?page=${page}&pageSize=10`, // Add pagination parameters
-    }),
+    // fetchAllComics: builder.query({
+    //   query: (page) => `api/product/comics?page=${page}&pageSize=10`, // Add pagination parameters
+    // }),
 
     fetchComicsById: builder.query({
       query:(comicId) => `api/product/${comicId}`,
     }),
 
-    fetchAllMagazines: builder.query({
-      query: (page) => `api/product/magazines?page=${page}&pageSize=10`, // Add pagination parameters
-    }),
+    // fetchAllMagazines: builder.query({
+    //   query: (page) => `api/product/magazines?page=${page}&pageSize=10`, // Add pagination parameters
+    // }),
 
     fetchMagazinesById: builder.query({
       query:(magazineId) => `api/product/${magazineId}`,

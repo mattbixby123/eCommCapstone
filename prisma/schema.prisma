@@ -69,7 +69,7 @@ model shoppingSession {
   createdAt  DateTime   @default(now())
   modifiedAt DateTime   @updatedAt
   customer   customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  cartItem   cartItem[]
+  cartItems  cartItem[]
 }
 
 model orderDetail {
