@@ -10,14 +10,14 @@ const SingleBook = () => {
   const { data: book, error, isLoading } = useFetchBooksByIdQuery(bookId);
   const [addToCartBook, { isLoading: isUpdating }] = useAddToCartBookMutation();
   const navigate = useNavigate();
-  const token = useSelector(state => state.auth.token);
+  // const token = useSelector(state => state.auth.token);
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
       await addToCartBook({
         sessionId: 1, // Example session, update as per your logic
-        productId: parseInt(bookId),
+        productId: parseInt(productId),
         quantity: 1,
       });
       console.log('Book added to cart successfully');
@@ -64,7 +64,7 @@ const SingleBook = () => {
             </Typography>
 
             {/* Checkout and Add to Cart Button Logic */}
-            {token && book.inventory > 0 ? (
+            {book.inventory > 0 ? (
               <Button
                 onClick={handleAddToCartClick}
                 variant='contained'

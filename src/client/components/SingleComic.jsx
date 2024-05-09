@@ -11,16 +11,19 @@ const SingleComic = () => {
   const { data: comic, error, isLoading, refetch } = useFetchComicsByIdQuery(comicId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartComicMutation();
   const navigate = useNavigate();
-  const token = useSelector(state => state.auth.token);
+  // const token = useSelector(state => state.auth.token);
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
-
     try {
-      const response = await addToCart({ comicId }).unwrap();
-      refetch(); 
+      await addToCartComic({
+        sessionId: 1, // Example session, update as per your logic
+        productId: parseInt(productId),
+        quantity: 1,
+      });
+      console.log('Book added to cart successfully');
     } catch (error) {
-      console.error(error.message);
+      console.error('Error adding book to cart.', error.message);
     }
   }
 
@@ -63,7 +66,7 @@ const SingleComic = () => {
             </Typography>
 
             {/* Only show "Add to Cart" if the token exists and the comic is available */}
-            {token && comic.inventory > 0 ? (
+            {comic.inventory > 0 ? (
               <Button
                 onClick={handleAddToCartClick}
                 variant='contained'
