@@ -11,10 +11,8 @@ import SingleBook from './components/SingleBook';
 import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
 import Logout from './components/Logout';
-
 import Cart from './components/Cart';
 import Account from './components/Account';
-import Pagination from './components/Pagination';
 import OrderHistory from './components/OrderHistory';
 
 
@@ -37,8 +35,8 @@ function App() {
           {/*<Route path= '/product/books/:bookId' element={<SingleBook />}/>
           <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
+        <Route path= '/pagination' element={<Pagination />}/> */}
           <Route path= '/logout' element={<Logout/>}/>
-          <Route path= '/pagination' element={<Pagination />}/> */}
           <Route path= '/cart' element={<Cart />}/>
           <Route path= '/orderhistory' element={<OrderHistory />}/>
         </Routes>
