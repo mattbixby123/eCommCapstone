@@ -159,6 +159,7 @@ export const {
   useFetchCustomerDetailsQuery,
   useMeQuery,
   useLoginMutation,
+  useLogoutMutation,
   useWelcomeQuery,
   useAddToCartBookMutation,
   useAddToCartComicMutation,

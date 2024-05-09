@@ -30,7 +30,16 @@ const Item = styled(Paper)(({ theme }) => ({
             <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Item>
-                        <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/books')}>
+                        <Card sx={{ 
+                            maxWidth: 345,
+                            maxWidth: 345,
+                            height: 650, 
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: 'auto',
+                            }} onClick={() => navigate('/books')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"
@@ -52,29 +61,46 @@ const Item = styled(Paper)(({ theme }) => ({
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                    <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/comics')}>
+                    <Card sx={{ 
+                        maxWidth: 345,
+                        height: 650, 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 'auto',
+                        }} onClick={() => navigate('/comics')}>
                             <CardActionArea>
-                                <CardMedia
-                                component="img"
-                                height="500"
-                                image="https://www.classicmomentsusa.com/wp-content/uploads/2020/02/dc-SupermanCar-11x14-framed.jpg"
-                                alt="Action Comics #1"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                    Comics
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                    Browse hundreds of comics and graphics novels spanning dozens of titles and numerous publishers
-                                    </Typography>
-                                </CardContent>
+                                    <CardMedia
+                                    component="img"
+                                    height="500"
+                                    image="https://www.classicmomentsusa.com/wp-content/uploads/2020/02/dc-SupermanCar-11x14-framed.jpg"
+                                    alt="Action Comics #1"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                        Comics
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                        Browse hundreds of comics and graphics novels spanning dozens of titles and numerous publishers
+                                        </Typography>
+                                    </CardContent>
                             </CardActionArea>
                         </Card>
                     </Item>
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                    <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/magazines')}>
+                    <Card sx={{ 
+                        maxWidth: 345,
+                        maxWidth: 345,
+                        height: 650, 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 'auto',   
+                     }} onClick={() => navigate('/magazines')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"

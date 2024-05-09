@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Box, Paper, Grid, Typography, TextField, styled } from '@mui/material';
 import { useFetchAllProductsQuery } from '../redux/api';
 import Categories from './Categories';
-import Pagination from "@material-ui/lab/Pagination";
+import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -57,7 +57,7 @@ const Welcome = () => {
     <div className='welcome-screen'>
       <Categories />
       <div className='welcome-container'>
-        <Typography variant='h3' gutterBottom>
+        <Typography variant='h3' gutterBottom sx={{ mt:4 }}>
           All Products
         </Typography>
         <TextField

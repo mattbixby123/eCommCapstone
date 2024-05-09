@@ -12,11 +12,12 @@
     "seed": "node src/server/db/seed.js"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@faker-js/faker": "^8.4.1",
-    "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.17",
     "@mui/styled-engine": "^5.15.14",
     "@prisma/client": "^5.12.1",
     "@reduxjs/toolkit": "^2.2.3",
