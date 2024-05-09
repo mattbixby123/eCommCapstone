@@ -3,11 +3,96 @@ const { prisma } =  require("../db");
 
 // Middleware is on POST, PUT, and DELETE, only allowed for admins
 
-// GET /product - Retrieve a list of all products.
-router.get("/", async (req, res, next) => {
+// GET /api/product - Retrieve a list of all products.
+router.get("/all", async (req, res, next) => {
   try {
-    const allProducts = await prisma.product.findMany();
-    res.json(allProducts);
+    console.log(req.query);
+    const page = parseInt(req.query.page) || 1; //  default to page1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // default to 10 items/per if not provided
+
+    const products = await prisma.product.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+
+    const totalProducts = await prisma.product.count(); // get total count of products
+
+    const totalPages = Math.ceil(totalProducts / pageSize);
+    
+    res.send({ products, totalProducts, totalPages, page, pageSize });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// GET /product/comics - Retrieve paginated list of comics.
+router.get("/comics", async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1; 
+    const pageSize = parseInt(req.query.pageSize) || 10; 
+    
+    const comics = await prisma.product.findMany({
+      where: {
+        categoryId: 1,
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+    
+    const totalComics = await prisma.product.count({ where: { categoryId: 1 } }); // Get total count of comics
+    
+    const totalPages = Math.ceil(totalComics / pageSize);
+    
+    res.json({ comics, totalComics, totalPages, page, pageSize });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /product/books - Retrieve paginated list of books.
+router.get("/books", async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1; 
+    const pageSize = parseInt(req.query.pageSize) || 10; 
+    
+    const books = await prisma.product.findMany({
+      where: {
+        categoryId: 2,
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+    
+    const totalBooks = await prisma.product.count({ where: { categoryId: 2 } }); // Get total count of books
+    
+    const totalPages = Math.ceil(totalBooks / pageSize);
+    
+    res.json({ books, totalBooks, totalPages, page, pageSize });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /product/magazines - Retrieve paginated list of magazines.
+router.get("/magazines", async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Default to 10 items per page if not provided
+    
+    const magazines = await prisma.product.findMany({
+      where: {
+        categoryId: 3,
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+    
+    const totalMagazines = await prisma.product.count({ where: { categoryId: 3 } }); // Get total count of magazines
+    
+    const totalPages = Math.ceil(totalMagazines / pageSize);
+    
+    res.json({ magazines, totalMagazines, totalPages, page, pageSize });
   } catch (error) {
     next(error);
   }
@@ -27,19 +112,12 @@ router.get("/:id", async (req, res, next) => {
       return res.status(404).json({ error: "Product not found" });
     }
     
-    res.json(product);
+    res.send(product);
   } catch (error) {
     next(error);
   }
 });
 
-// Middleware statement to be used in the POST/PUT/DELETE statements
-router.use((req, res, next) => {
-  if (!req.customer) {
-    return res.status(401).send("You must be logged in to do that.");
-  }
-  next();
-});
 // POST /product - Create a new product.
 // This route will allow an admin to create a new product.
   //***ADMIN STORY TIER 3***//
@@ -59,7 +137,7 @@ router.post("/", async (req, res, next) => {
         desc,
         imageUrl,
         SKU,
-        inventory,
+        inventory: parseInt(inventory),
         price,
         categoryId: parseInt(categoryId),
       },
@@ -85,17 +163,29 @@ router.put("/:id", async (req, res, next) => {
     const { id } = req.params;
     const { name, desc, imageUrl, inventory, price, categoryId } = req.body;
 
+    const existingProduct = await prisma.product.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
     const updatedProduct = await prisma.product.update({
       where: {
         id: parseInt(id),
       },
       data: {
-        name,
-        desc,
-        imageUrl,
-        inventory,
-        price,
-        categoryId: categoryId ? parseInt(categoryId) : undefined,
+        name: name !== undefined ? name : existingProduct.name,
+        desc: desc !== undefined ? desc : existingProduct.desc,
+        imageUrl: imageUrl !== undefined ? imageUrl : existingProduct.imageUrl,
+        inventory: inventory !== undefined ? inventory : existingProduct.inventory,
+        price: price !== undefined ? price : existingProduct.price,
+        categoryId: categoryId !== undefined ? parseInt(categoryId) : existingProduct.categoryId,
+        // name, ~~~ the above allows us to send any/no updates while retaining the original attribute if no update is passed
+        // desc,
+        // imageUrl,
+        // inventory,
+        // price,
+        // categoryId: categoryId ? parseInt(categoryId) : undefined,
       },
     });
 
@@ -126,7 +216,10 @@ router.delete("/:id", async (req, res, next) => {
       },
     });
 
-    res.json(deletedProduct);
+    res.json({ 
+      message: "Product deleted successfully",
+      deletedProduct: deletedProduct 
+    });
  } catch (error) {
     next(error);
  }

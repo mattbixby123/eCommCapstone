@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useRegistrationFormMutation } from '../../api_calls/api';
+import { useRegistrationFormMutation } from '../redux/api';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../redux/authslice';
 import { useNavigate } from 'react-router-dom';
@@ -55,17 +55,17 @@ export default function RegistrationForm() {
       setCity('');
       setState('');
       setPostalCode('');
-      setCountry('')
-      setImageUrl('')
-      navigate('/')
+      setCountry('');
+      setImageUrl('');
+      navigate('/');
     } catch (error) {
       console.error("error during registration: ", error);
       console.log("detailed error:", error.response?.data || error.message);
     }
   }
   return (
-    <Container maxWidth='sm'>
-      <Typography marginTop= {20} variant='h4' component='h1' gutterBottom>
+    <Container className='registration-form' maxWidth='sm'>
+      <Typography marginTop= {4} variant='h4' component='h1' gutterBottom>
         Register
       </Typography>
         <Box

@@ -15,6 +15,9 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 <<<<<<< Updated upstream
 const pages = ['Books', 'Comics', 'Magazines'];
@@ -27,6 +30,10 @@ const guests = ['Login', 'Register'];
 >>>>>>> Stashed changes
 
 function ResponsiveAppBar() {
+  // const isAuthenticated = useSelector(state => state.auth.token !== '');
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const token = useSelector(state => state.auth.token);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -37,12 +44,24 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseNavMenu = (page) => {
+    // console.log(page);
+    if (page) {
+      navigate(`/${page}`);
+      setAnchorElNav(null);
+    } else {
+      setAnchorElNav(null);
+    }
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleCloseUserMenu = (guest) => {
+    if (guest) {
+      navigate(`/${guest}`);
+      setAnchorElUser(null);}
+    
+    else {
+      setAnchorElUser(null);
+    } 
   };
 
   const Search = styled('div')(({ theme }) => ({
@@ -89,12 +108,13 @@ function ResponsiveAppBar() {
   
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
+            onClick={() => navigate('/')}
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
@@ -109,7 +129,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Retro Rag Reads
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -136,13 +156,13 @@ function ResponsiveAppBar() {
                   horizontal: 'left',
                 }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={(e) => handleCloseNavMenu('')}
               sx={{
                   display: { xs: 'block', md: 'none' },
                 }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={(e) => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -165,7 +185,7 @@ function ResponsiveAppBar() {
                 textDecoration: 'none',
             }}
           >
-            LOGO
+            Retro Rag Reads
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -180,7 +200,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={(e) => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -208,11 +228,17 @@ function ResponsiveAppBar() {
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              onClose={(e) => handleCloseUserMenu('')}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {token 
+                ? customers.map((customer) => (
+                <MenuItem key={customer} onClick={(e) => handleCloseUserMenu(customer)}>
+                  <Typography textAlign="center">{customer}</Typography>
+                </MenuItem>
+              )) : 
+              guests.map((guest) => (
+                <MenuItem key={guest} onClick={(e) => handleCloseUserMenu(guest)}>
+                  <Typography textAlign="center">{guest}</Typography>
                 </MenuItem>
               ))}
             </Menu>

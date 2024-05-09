@@ -1,85 +1,76 @@
-import React, { useState } from 'react';
-import { useFetchAllComicsQuery } from '../../api_calls/api';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import { useFetchAllComicsQuery } from '../redux/api';
+import { useNavigate } from 'react-router-dom';
+import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
 import { useSelector } from 'react-redux';
-import { selectToken } from '../redux/authslice';
+import '../style.css';
+import { Container } from '@mui/system';
+// import { selectToken } from '../redux/authslice';
+import Pagination from './Pagination';
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 const Comics = () => {
-  const { data: comicsData, error, isLoading } = useFetchAllComicsQuery();
-  const [searchParam, setSearchParam] = useState('');
-
+  const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
-  const token = useSelector(selectToken);
-  const isLoggedIn = !!token;
+  const [searchParam, setSearchParam] = useState('');
+  const [comicsData, setComicsData] = useState(null); // state to hold comics data
+  // fetch comics data
+  const { isLoading, error } = useFetchAllComicsQuery();
+  
+  // function to handle data update from Pagination component
+  const handlePaginationDataUpdate = (data) => {
+    setComicsData(data);
+  };
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setComicsData(comicsData);
+    }
+  }, [isLoading, error]); // update comicsData when isLoading or error changes
 
   if(isLoading) return <div>Loading...</div>;
-  if(error) return <div>Error: {error.message}</div>;
+  if(error) return <div>Error Loading Comics</div>;
 
-  const comics = comicsData?.comics || [];
-
-  const comicsToDisplay = comics.filter((comic) =>
-  comic.title.toLowerCase().includes(searchParam.toLowerCase())
-  );
   
     return (
-      <Box sx={{ padding: '3rem' }}>
-        <Typography variant='h3' gutterBottom>
-          Comic Book Catalog
-        </Typography>
-        <Box sx={{ margin: '1rem 0', display: 'flex', justifyContent: 'center' }}>
-          <TextField
-          variant='outlined'
-          placeholder='Search comics...'
-          onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
-          fullWidth
-          />
-        </Box>
-        <Box sx={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          {!isLoggedIn && (  
-            <Button 
-              variant='contained' 
-              color='primary' 
-              onClick={() => navigate('/users/register')}>
-              Register Here! 
-            </Button>
-          )}
-          {!isLoggedIn && (
-            <Button 
-              variant='contained' 
-              color='secondary' 
-              onClick={() => navigate('/users/login')}>
-                Login Here!
-            </Button>
-          )}
-          <Button 
-            variant='outlined' 
-            onClick={() => navigate('/')}>
-              Home
-          </Button> 
-          {isLoggedIn && (
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={() => navigate('/users/me')}>
-                Profile
-            </Button>
-          )}
-        </Box>
-         <List >
-          {comicsToDisplay.map(comics => (
-            <ListItem 
-            key={comics.id} 
-            component={Link}
-            to={`/comics/${comics.id}`}
-            >
-              <ListItemText primary={comics.title} sx={{ color: 'black' }} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    );
+  <Container>
+    <Box>
+      <Typography variant='h3' gutterBottom>
+        Comic Catalog
+      </Typography>
+      <TextField
+        variant='outlined'
+        placeholder='Search comics...'
+        onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+        fullWidth
+        sx={{ mb: 2 }}
+        />
+      <Grid container spacing={3}>
+        {comicsData && comicsData.comics.map((comic) => ( // added .comics here so that the paginated comics would show
+          <Grid item xs={12} sm={6} md={4} lg={3} key={comic.id}>
+            <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
+              <img src={comic.imageUrl} alt={comic.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
+              <Typography variant="h6">{comic.name}</Typography>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/product/comics/${comic.id}`)}>
+                View Details
+              </Button>
+            
+              {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}
+            </Item>
+          </Grid>
+        ))}
+      </Grid>
+      <Pagination endpoint="comics" onDataUpdate={handlePaginationDataUpdate} />
+    </Box>
+  </Container>
+  );
 };
 
 export default Comics;

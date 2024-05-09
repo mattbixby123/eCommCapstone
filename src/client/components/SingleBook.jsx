@@ -1,7 +1,7 @@
 /* TODO - add your code to create a functional React component that renders details for a single book. Fetch the book data from the provided API. You may consider conditionally rendering a 'Checkout' button for logged in users. */
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
-import { useFetchBooksByIdQuery, useAddToCartBookMutation } from '../../api_calls/api';
+import { useFetchBooksByIdQuery, useAddToCartBookMutation } from '../redux/api';
 import AddToCart from './AddToCart';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -49,19 +49,25 @@ const SingleBook= () => {
         <Card sx={{ backgroundColor: 'lightgrey'}}>
           <CardMedia
           component='img'
-          image={book.book.coverimage}
-          alt={`Cover of ${book.book.title}`}
+          image={book.imageUrl}
+          alt={`Cover of ${book.name}`}
           sx={{ width: 'auto', maxHeight: 600, margin: '15px auto' }}
           />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
-              {book.book.title}
+              {book.name}
             </Typography>
             <Typography variant='body2'color='text.secondary'>
-              Author: {book.book.author}
+              SKU: {book.SKU}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-              Description: {book.book.description}
+              Description: {book.desc}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Number in Stock: {book.inventory}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Price in USD: {book.price}
             </Typography>
 <<<<<<< Updated upstream
             {token && book.book.available ? (

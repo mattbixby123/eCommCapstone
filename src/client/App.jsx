@@ -4,7 +4,7 @@ import Toolbar from './components/Toolbar';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Register from './components/Register';
-// import Product from './components/Product'
+import Products from './components/Products'
 import Books from './components/Books';
 import Comics from './components/Comics';
 import Magazines from './components/Magazines'
@@ -23,7 +23,7 @@ import OrderHistory from './components/OrderHistory';
 
 
 function App() {
-  const [count, setCount] = useState(0);
+  
 
   return (
     
@@ -31,7 +31,6 @@ function App() {
     <Toolbar />
     <div className='App'>
         <Routes>
-<<<<<<< Updated upstream
           <Route path='/' element={<Welcome />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -42,24 +41,9 @@ function App() {
           <Route path= '/comic-books/:id' element={<SingleComic />}/>
           <Route path='/magazines' element={<Magazines />} />
           <Route path= '/magazines/:id' element={<SingleMagazine />}/>
-=======
-          <Route path= '/' element={<Welcome />} />
-          <Route path= '/login' element={<Login />} />   
-          <Route path= '/account' element={<Account />}></Route> 
-          <Route path= '/register' element={<Register />} />
-          <Route path= '/books' element={<Books />} />
-          <Route path= '/product/books/:bookId' element={<SingleBook />}/>
-          <Route path= '/comics' element={<Comics />} />
-          <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
-          <Route path= '/magazines' element={<Magazines />} />
-          <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
-          <Route path= '/logout' element={<Logout/>}/>
-          <Route path= '/pagination' element={<Pagination />}/>
-          <Route path= '/cart' element={<Cart />}/>
-          <Route path= '/auth/orderhistory' element={<OrderHistory />}/>
->>>>>>> Stashed changes
         </Routes>
         </div>
+    <HomeSearch />
     </>
   );
 }

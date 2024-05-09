@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-// import { useLoginMutation } from '../../api_calls/'
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../redux/api';
+import { setToken } from '../redux/authslice';
+import { useDispatch } from 'react-redux';
 import { Button, Box, List, ListItem, ListItemText, Typography, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [loginUser, { isLoading }] = useLoginMutation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -18,23 +27,15 @@ const Login = () => {
 
   const login = async() => {
     try {
-        const response = await fetch('http://localhost:3000/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json'
-            }, 
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
-        const result = await response.json();
-        setMessage(result.message);
-        if(!response.ok) {
-          throw(result)
-        }
+      const response = await loginUser({email, password}).unwrap();
+
+      if (response.token) {
+        dispatch(setToken(response.token));
+      }
+        
         setEmail('');
         setPassword('');
+        navigate('/');
     } catch (err) {
         console.error(`${err.name}: ${err.message}`);
     }

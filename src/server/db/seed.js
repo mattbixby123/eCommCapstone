@@ -15,10 +15,11 @@ async function main() {
       desc: "Vintage architectural, fashion, encyclopaedia, and, research"}
     ]
   })
-  // creating the 1000 random products with a random category assigned from the 3 created
-  const product = Array.from({ length: 1000 }).map(() => ({
+  // creating the 300 random products with a random category assigned from the 3 created
+  const product = Array.from({ length: 300 }).map(() => ({
     name: faker.commerce.productName(),
     desc: faker.commerce.productDescription(),
+    author: faker.person.fullName(),
     imageUrl: faker.image.urlPicsumPhotos(),
     SKU: faker.commerce.isbn(),
     inventory: faker.number.int({ min: 1, max: 5 }),

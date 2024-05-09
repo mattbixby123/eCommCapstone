@@ -21,6 +21,12 @@ app.use(express.static('public'))
 // Static file-serving middleware / only needed for deployment
 // app.use(express.static(path.join(__dirname, "..", "client/dist")));
 
+// express-paginate middleware
+app.all(function(req, res, next) {
+  // set default or minimum is 10 (as it was prior to v0.2.0)
+  if (req.query.limit <= 10) req.query.limit = 10;
+  next();
+});
 
 // Check requests for a token and attach the decoded id to the request                                                                                            
 app.use((req, res, next) => {
