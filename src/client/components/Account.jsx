@@ -8,8 +8,8 @@ const Account = () => {
   const { data: customerDetails, error, isLoading } = useMeQuery();
   const navigate = useNavigate();
 
-  const [orderHistoryOpen, setOrderHistoryOpen] = useState(false);
-  console.log(Account, 'this is the account page')
+  // const [orderHistoryOpen, setOrderHistoryOpen] = useState(false);
+  // console.log(Account, 'this is the account page')
 
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error: {JSON.stringify(error)}</div>;
@@ -38,8 +38,6 @@ const Account = () => {
           Back to Homepage
         </Button>
       </Box>
-
-     
       <Box
         sx={{
           display: 'flex',
@@ -79,7 +77,7 @@ const Account = () => {
           <Grid item xs={12} textAlign='center'>
             <Button
               variant='outlined'
-              onClick={() => navigate('/auth/orderhistory')}
+              onClick={() => navigate('/orderhistory')}
               sx={{ mt: 2 }}
             >
               View Order History

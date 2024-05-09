@@ -56,7 +56,7 @@ const Welcome = () => {
     <div className='welcome-screen'>
       <Categories />
       <div className='welcome-container'>
-        <Typography variant='h3' gutterBottom>
+        <Typography variant='h3' gutterBottom sx={{ mt:4 }}>
           All Products
         </Typography>
         <TextField
