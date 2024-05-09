@@ -11,13 +11,13 @@ router.get("/", async (req, res, next) => {
   }
  });
  
-// GET /orderDetail/:id - Retrieve a specific orderDetail by ID.
+// GET /orderDetail/:id - Retrieve a specific orderDetail by Customer ID.
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:customerId", async (req, res, next) => {
   try {
      const { id } = req.params;
      const orderDetail = await prisma.orderDetail.findUnique({
-       where: { id: parseInt(id) },
+       where: { customerId: parseInt(id) },
      });
      if (!orderDetail) {
        return res.status(404).json({ error: "Order detail not found" });

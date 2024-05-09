@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const port = process.env.PORT;
 const path = require('path')
 
+
 // Import body-parser middleware for parsing JSON request bodies
 const bodyParser = require('body-parser')
 // Use body-parser middleware to parse JSON bodies
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 // Backend routes
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

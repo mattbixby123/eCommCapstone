@@ -19,9 +19,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-const pages = ['Books', 'Comics', 'Magazines'];
-const customers = ['Logout'];
+const pages = ['Books', 'Comics', 'Magazines', 'Products'];
+const customers = ['Logout', 'Account'];
 const guests = ['Login', 'Register'];
+
 
 function ResponsiveAppBar() {
   // const isAuthenticated = useSelector(state => state.auth.token !== '');
@@ -115,6 +116,7 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
+              flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',

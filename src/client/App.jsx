@@ -12,6 +12,10 @@ import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
 import Logout from './components/Logout';
 
+import Cart from './components/Cart';
+import Account from './components/Account';
+import Pagination from './components/Pagination';
+import OrderHistory from './components/OrderHistory';
 
 
 function App() {
@@ -24,7 +28,8 @@ function App() {
     <div className='App'>
         <Routes>
           <Route path= '/' element={<Welcome />} />
-          <Route path= '/login' element={<Login />} />    
+          <Route path= '/login' element={<Login />} />   
+          <Route path= 'account' element={<Account />}></Route> 
           <Route path= '/register' element={<Register />} />
           <Route path= '/books' element={<Books />} />
           <Route path= '/magazines' element={<Magazines />} />
@@ -32,9 +37,10 @@ function App() {
           {/*<Route path= '/product/books/:bookId' element={<SingleBook />}/>
           <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
-          <Route path= '/products' element={<Products />}/> */}
-          {/* <Route path= '/products/:id' element={<SingleProduct />}/> */}
-          <Route path='/logout' element={<Logout/>}/>
+          <Route path= '/logout' element={<Logout/>}/>
+          <Route path= '/pagination' element={<Pagination />}/> */}
+          <Route path= '/cart' element={<Cart />}/>
+          <Route path= '/orderhistory' element={<OrderHistory />}/>
         </Routes>
         </div>
     </>
