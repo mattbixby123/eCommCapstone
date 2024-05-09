@@ -19,15 +19,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-<<<<<<< Updated upstream
-const pages = ['Books', 'Comics', 'Magazines'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-=======
-
 const pages = ['Books', 'Comics', 'Magazines', 'Products'];
 const customers = ['Logout', 'Account'];
 const guests = ['Login', 'Register'];
->>>>>>> Stashed changes
+
 
 function ResponsiveAppBar() {
   // const isAuthenticated = useSelector(state => state.auth.token !== '');
