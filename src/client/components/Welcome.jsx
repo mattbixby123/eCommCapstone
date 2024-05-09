@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Box, Paper, Grid, Typography, TextField, styled } from '@mui/material';
 import { useFetchAllProductsQuery } from '../redux/api';
 import Categories from './Categories';
-import Pagination from "@material-ui/lab/Pagination";
-import axios from "axios";
+import Pagination from "@mui/material/Pagination";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
