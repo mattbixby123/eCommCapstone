@@ -10,6 +10,7 @@ import Magazines from './components/Magazines'
 import SingleBook from './components/SingleBook';
 import SingleComic from './components/SingleComic';
 import SingleMagazine from './components/SingleMagazine';
+import SingleProduct from './components/SingleProduct';
 import Logout from './components/Logout';
 import Cart from './components/Cart';
 import Account from './components/Account';
@@ -27,15 +28,15 @@ function App() {
         <Routes>
           <Route path= '/' element={<Welcome />} />
           <Route path= '/login' element={<Login />} />   
-          <Route path= 'account' element={<Account />}></Route> 
+          <Route path= '/account' element={<Account />}></Route> 
           <Route path= '/register' element={<Register />} />
           <Route path= '/books' element={<Books />} />
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/comics' element={<Comics />} />
-          {/*<Route path= '/product/books/:bookId' element={<SingleBook />}/>
+          <Route path= '/product/books/:bookId' element={<SingleBook />}/>
           <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
-        <Route path= '/pagination' element={<Pagination />}/> */}
+          <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />}/>
           <Route path= '/orderhistory' element={<OrderHistory />}/>

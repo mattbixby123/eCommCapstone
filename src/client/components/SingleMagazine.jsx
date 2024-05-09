@@ -9,20 +9,21 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 const SingleMagazine= () => {
   const { magazineId } = useParams();
   const { data: magazine, error, isLoading, refetch } = useFetchMagazinesByIdQuery(magazineId);
-  // const [addToCart, { isLoading: isUpdating, data}] = useAddToCartMagazineMutation();
+  const [addToCartMagazine, { isLoading: isUpdating }] = useAddToCartMagazineMutation();
   const navigate = useNavigate();
-  const token = useSelector(state => state.auth.token);
+  // const token = useSelector(state => state.auth.token);
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
-
     try {
-     
-      const response = await addToCart({ magazineId }).unwrap();
-      refetch();
-      
+      await addToCartMagazine({
+        sessionId: 1, // Example session, update as per your logic
+        productId: parseInt(productId),
+        quantity: 1,
+      });
+      console.log('Magazine added to cart successfully');
     } catch (error) {
-      console.log(error.message)
+      console.error('Error adding magazine to cart.', error.message);
     }
   }
 
@@ -62,7 +63,7 @@ const SingleMagazine= () => {
             <Typography variant='body2' color='text.secondary'>
               Price in USD: {magazine.price}
             </Typography>
-            {token && magazine.inventory > 0 ? (
+            {magazine.inventory > 0 ? (
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Add to Cart
               </Button>
