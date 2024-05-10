@@ -32,7 +32,6 @@ const Item = styled(Paper)(({ theme }) => ({
                     <Item>
                         <Card sx={{ 
                             maxWidth: 345,
-                            maxWidth: 345,
                             height: 650, 
                             display: 'flex',
                             flexDirection: 'column',
@@ -92,7 +91,6 @@ const Item = styled(Paper)(({ theme }) => ({
                 <Grid item xs={4}>
                     <Item>
                     <Card sx={{ 
-                        maxWidth: 345,
                         maxWidth: 345,
                         height: 650, 
                         display: 'flex',
