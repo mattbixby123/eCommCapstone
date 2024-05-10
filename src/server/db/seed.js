@@ -47,6 +47,37 @@ async function main() {
       },
     });
   }));
+
+  customers.forEach(async (customer) => {
+    await prisma.customer.update({
+      where: {
+        id: customer.id
+      },
+      data: {
+        shoppingSessions: {
+          create: {
+            total: float(1.99)
+          }
+        }
+      }
+    })
+  })
+
+  shoppingSession.forEach(async (shoppingSession) => {
+    await prisma.shoppingSession.update({
+      where: {
+        id: shoppingSession.id
+      },
+      data: {
+        cartItems: {
+          createMany: {
+            data: Array.from({length: 4}).map
+            (() => ({}))
+          }
+        }
+      }
+    })
+  })
 // I reworked the customer faker seed function to include password hashing for the seeded users.
 
 // In this case, using create inside a loop works because you're generating unique data for each user, 
