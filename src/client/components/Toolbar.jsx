@@ -207,13 +207,11 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
- 
               {customer ? (
       <Avatar alt={customer.firstName} src={customer.imageUrl} />
     ) : (
       <Avatar alt="Default" src="/default-avatar.png" />
-    )}
-                <Avatar/>
+    )}               
               </IconButton>
             </Tooltip>
             <Menu
