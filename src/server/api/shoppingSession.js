@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { prisma } =  require("../db");
 
 // GET /shoppingSession - Retrieve a list of all shoppingSessions. 
   // This route fetches all shopping sessions from the database.
