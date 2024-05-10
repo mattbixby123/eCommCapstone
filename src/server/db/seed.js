@@ -16,7 +16,7 @@ async function main() {
     ]
   })
   // creating the 300 random products with a random category assigned from the 3 created
-  const product = Array.from({ length: 300 }).map(() => ({
+  const products = Array.from({ length: 300 }).map(() => ({
     name: faker.commerce.productName(),
     desc: faker.commerce.productDescription(),
     author: faker.person.fullName(),
@@ -28,7 +28,7 @@ async function main() {
 
   }))
   // creating 10 random customers with hashed passwords
-  const customer = await Promise.all(Array.from({ length: 10 }).map(async () => {
+  const customers = await Promise.all(Array.from({ length: 10 }).map(async () => {
     const passwordHash = await bcrypt.hash(faker.internet.password(), Number(process.env.SALT_ROUNDS));
     return prisma.customer.create({
       data: {
@@ -56,14 +56,17 @@ async function main() {
       data: {
         shoppingSessions: {
           create: {
-            total: float(1.99)
+            total: 1.99
           }
         }
       }
     })
   })
+  await prisma.product.createMany({data: products});
+  
+  const shoppingSessions = await prisma.shoppingSession.findMany();
 
-  shoppingSession.forEach(async (shoppingSession) => {
+  shoppingSessions.forEach(async (shoppingSession) => {
     await prisma.shoppingSession.update({
       where: {
         id: shoppingSession.id
@@ -72,7 +75,10 @@ async function main() {
         cartItems: {
           createMany: {
             data: Array.from({length: 4}).map
-            (() => ({}))
+            (() => ({
+              productId: faker.number.int({min: 1, max: 300}),
+              quantity: 1
+            }))
           }
         }
       }
@@ -94,7 +100,6 @@ async function main() {
   // await prisma.customer.createMany({data: customer}); // dont need this line with the updated customer code above
 
   
-  await prisma.product.createMany({data: product});
 }
 
 main()
