@@ -31,8 +31,7 @@ function ResponsiveAppBar() {
   const token = useSelector(state => state.auth.token);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { data: user } = useMeQuery();
-  console.log(user);
+  const { data: customer } = useMeQuery();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -208,7 +207,11 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                 <Avatar  />
+              {customer ? (
+      <Avatar alt={customer.firstName} src={customer.imageUrl} />
+    ) : (
+      <Avatar alt="Default" src="/default-avatar.png" />
+    )}               
               </IconButton>
             </Tooltip>
             <Menu

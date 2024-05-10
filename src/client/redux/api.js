@@ -87,14 +87,14 @@ export const api = createApi({
     }),
     addToCartComic: builder.mutation({
       query: ({ comicId, ...body }) => ({
-        url: '/cartItem',
+        url: '/cartitem',
         method: 'POST',
         body: { comicId, ...body}
       }),
     }),
     addToCartMagazine: builder.mutation({
       query: ({ magazineId, ...body }) => ({
-        url: '/cartItem',
+        url: '/cartitem',
         method: 'POST',
         body: { magazineId, ...body}
       }),
@@ -143,7 +143,7 @@ export const api = createApi({
     }),
 
     fetchOrderHistory: builder.query({
-      query: () => '/api/orderhistory',
+      query: (customerId) => `/api/orderDetail/${customerId}`,
     }),
 
     fetchAllCustomerData: builder.query({

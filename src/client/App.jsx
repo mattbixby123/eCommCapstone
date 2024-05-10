@@ -15,6 +15,7 @@ import Logout from './components/Logout';
 import Cart from './components/Cart';
 import Account from './components/Account';
 import OrderHistory from './components/OrderHistory';
+import AdminView from './components/AdminView';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
         <Routes>
           <Route path= '/' element={<Welcome />} />
           <Route path= '/login' element={<Login />} />   
-          <Route path= '/account' element={<Account />}></Route> 
+          <Route path= '/account' element={<Account />} /> 
           <Route path= '/register' element={<Register />} />
           <Route path= '/books' element={<Books />} />
           <Route path= '/magazines' element={<Magazines />} />
@@ -39,7 +40,9 @@ function App() {
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />}/>
-          <Route path= '/orderhistory' element={<OrderHistory />}/>
+          <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
+          <Route path= '/admin' element={<AdminView />} />
+
         </Routes>
         </div>
     </>
