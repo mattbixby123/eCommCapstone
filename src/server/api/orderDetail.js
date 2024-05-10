@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const { prisma } = require('../db')
 // GET /orderDetail - Retrieve a list of all orderDetails. 
 
 router.get("/", async (req, res, next) => {
@@ -13,20 +13,31 @@ router.get("/", async (req, res, next) => {
  
 // GET /orderDetail/:id - Retrieve a specific orderDetail by Customer ID.
 
-router.get("/:customerId", async (req, res, next) => {
+router.get('/:customerId', async (req, res, next) => {
   try {
-     const { id } = req.params;
-     const orderDetail = await prisma.orderDetail.findUnique({
-       where: { customerId: parseInt(id) },
-     });
-     if (!orderDetail) {
-       return res.status(404).json({ error: "Order detail not found" });
-     }
-     res.json(orderDetail);
+    const { customerId } = req.params;
+    const parsedCustomerId = parseInt(customerId, 10);
+    
+    console.log(`Received customerId: ${customerId}`);
+    console.log(`Parsed customer ID: ${parsedCustomerId}`);
+
+    if (isNaN(parsedCustomerId) || parsedCustomerId < 1) {
+      return res.status(400).json({ error: 'Invalid Customer ID' });
+    }
+    const orderDetails = await prisma.orderDetail.findMany({
+      where: { customerId: parsedCustomerId },
+    });
+    console.log(`Order Details Found:`, orderDetails);
+
+    if (!orderDetails || orderDetails.length === 0) {
+      return res.status(404).json({ error: 'No orders found for this customer' });
+    }
+
+    res.json(orderDetails);
   } catch (error) {
-     next (error);
+    next(error);
   }
- });
+});
  
 
 // POST /orderDetail - Create a new orderDetail.
@@ -67,6 +78,21 @@ router.put("/:id", async (req, res, next) => {
      next (error);
   }
  });
+
+//  router.get("/:customerId", async (req, res, next) => {
+//   try {
+//     const { customerId } = req.params;
+//     const orderHistory = await prisma.orderDetail.findMany({
+//       where: { customerId: parseInt(customerId) },
+//     });
+//     if (!orderHistory || orderHistory.length === 0) {
+//       return res.status(404).json({ error: "Order history not found for the specified customer" });
+//     }
+//     res.json(orderHistory);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
  
 
 // DELETE /orderDetail/:id - Delete a specific orderDetail by Id.
