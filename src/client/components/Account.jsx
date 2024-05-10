@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {useMeQuery} from '../redux/api';
-import {Typography, Button, Collapse, List, ListItem, ListItemText, Box, Grid } from '@mui/material';
+import {Typography, Button, Box, Grid } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 
@@ -8,14 +8,11 @@ const Account = () => {
   const { data: customerDetails, error, isLoading } = useMeQuery();
   const navigate = useNavigate();
 
-  // const [orderHistoryOpen, setOrderHistoryOpen] = useState(false);
-  // console.log(Account, 'this is the account page')
-
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error: {JSON.stringify(error)}</div>;
-
   if(!customerDetails) return <div>No Customer Data Found</div>
 
+  const customerId = customerDetails.id;
     
     return (
     <Box
@@ -77,7 +74,7 @@ const Account = () => {
           <Grid item xs={12} textAlign='center'>
             <Button
               variant='outlined'
-              onClick={() => navigate('/orderhistory')}
+              onClick={() => navigate(`/orderdetail/${customerId}`)}
               sx={{ mt: 2 }}
             >
               View Order History
