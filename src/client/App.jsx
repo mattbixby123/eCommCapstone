@@ -39,7 +39,7 @@ function App() {
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />}/>
-          <Route path= '/orderhistory' element={<OrderHistory />}/>
+          <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
         </Routes>
         </div>
     </>
