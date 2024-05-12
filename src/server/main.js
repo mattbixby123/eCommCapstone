@@ -7,6 +7,7 @@ const app = express(); // Create an Express application instance
 const jwt = require("jsonwebtoken");
 const port = process.env.PORT;
 const path = require('path')
+const cartItemRouter = require('./api/cartItem');
 
 
 // Import body-parser middleware for parsing JSON request bodies
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 // Serve static files from the 'public' directory
 app.use(express.static('public'))
 // app.use("/", express.static(path.join(__dirname, "public")));
-
+app.use('/cartitem', cartItemRouter);
 // Static file-serving middleware / only needed for deployment
 // app.use(express.static(path.join(__dirname, "..", "client/dist")));
 

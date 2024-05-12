@@ -44,6 +44,9 @@ const Cart = () => {
                     <Typography variant="body2" color="text.secondary">
                       Quantity: {product.quantity}
                     </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Category: {product.type}
+                    </Typography>
                   </CardContent>
                   <CardActions>
                     <Button

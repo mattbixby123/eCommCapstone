@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { prisma } =  require("../db");
 
 // GET /cartItem - Retrieve a list of all cartItems (items in carts)
 
@@ -31,11 +32,14 @@ router.get("/:id", async (req, res, next) => {
  
 
 // POST /cartItem - Create a new cartItem.
-
 router.post("/", async (req, res, next) => {
   try {
      const { sessionId, productId, quantity } = req.body;
  
+     if (!sessionId || !productId || !quantity) {
+       return res.status(400).json({ message: "Missing required fields" });
+     }
+
      const newCartItem = await prisma.cartItem.create({
        data: {
          sessionId: parseInt(sessionId),
@@ -46,9 +50,11 @@ router.post("/", async (req, res, next) => {
  
      res.status(201).json(newCartItem);
   } catch (error) {
-     next (error);
+     console.error("Error handling cart item addition:", error);
+     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
- });
+  console.log(req.body)
+});
  
 
 // PUT /cartItem/:id - Update a specific cartItem by ID.

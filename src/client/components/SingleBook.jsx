@@ -1,30 +1,40 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFetchBooksByIdQuery, useAddToCartBookMutation } from '../redux/api';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { addProductToCart } from '../redux/cartslice';
 
 const SingleBook = () => {
   const { bookId } = useParams();
   const { data: book, error, isLoading } = useFetchBooksByIdQuery(bookId);
   const [addToCartBook, { isLoading: isUpdating }] = useAddToCartBookMutation();
   const navigate = useNavigate();
-  // const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
-    e.preventDefault();
-    try {
-      await addToCartBook({
-        sessionId: 1, // Example session, update as per your logic
-        productId: parseInt(productId),
-        quantity: 1,
-      });
-      console.log('Book added to cart successfully');
-    } catch (error) {
-      console.error('Error adding book to cart.', error.message);
-    }
+  e.preventDefault();
+  try {
+    const response = await addToCartBook({
+      sessionId: 1,
+      productId: parseInt(bookId),
+      quantity: 1,
+    }).unwrap();
+
+    console.log('Book added to cart successfully', response);
+
+    dispatch(addProductToCart({
+      id: bookId,
+      name: book.name,
+      price: book.price,
+      quantity: 1,
+      type: 'Book'
+    }));
+  } catch (error) {
+    console.error('Error adding book to cart:', error.data?.message || error.message);
   }
+}
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

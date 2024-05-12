@@ -1,27 +1,34 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFetchComicsByIdQuery, useAddToCartComicMutation } from '../redux/api';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { addProductToCart } from '../redux/cartslice';
 
 const SingleComic = () => {
   const { comicId } = useParams();
-  console.log(comicId, "the comic ID");
-  const { data: comic, error, isLoading, refetch } = useFetchComicsByIdQuery(comicId);
-  const [addToCart, { isLoading: isUpdating }] = useAddToCartComicMutation();
+  const { data: comic, error, isLoading } = useFetchComicsByIdQuery(comicId);
+  const [addToCartComic, { isLoading: isUpdating }] = useAddToCartComicMutation();
   const navigate = useNavigate();
-  // const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
-      await addToCartComic({
-        sessionId: 1, // Example session, update as per your logic
-        productId: parseInt(productId),
+      const response = await addToCartComic({
+        sessionId: 1, 
+        productId: parseInt(comicId),
         quantity: 1,
       });
-      console.log('Book added to cart successfully');
+      console.log('Comic added to cart successfully');
+      dispatch(addProductToCart({
+      id: comicId,
+      name: comic.name,
+      price: comic.price,
+      quantity: 1,
+      type: 'Comic'
+    }));
     } catch (error) {
       console.error('Error adding book to cart.', error.message);
     }
