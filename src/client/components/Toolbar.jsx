@@ -18,6 +18,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useMeQuery } from '../redux/api';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const pages = ['Books', 'Comics', 'Magazines'];
 const customers = ['Logout', 'Account'];
@@ -58,6 +59,9 @@ function ResponsiveAppBar() {
     else {
       setAnchorElUser(null);
     } 
+  };
+  const handleCartClick = () => {
+    navigate('/cart');
   };
 
   const Search = styled('div')(({ theme }) => ({
@@ -203,15 +207,25 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
+          <Tooltip title="Cart">
+            <IconButton
+              onClick={handleCartClick}
+              sx={{ p: 0, marginRight: '10px' }}
+              color="inherit"
+            >
+              <ShoppingCartIcon />
+            </IconButton>
+          </Tooltip>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+ 
               {customer ? (
       <Avatar alt={customer.firstName} src={customer.imageUrl} />
     ) : (
       <Avatar alt="Default" src="/default-avatar.png" />
-    )}               
+    )}
+                {/* <Avatar/> */}
               </IconButton>
             </Tooltip>
             <Menu

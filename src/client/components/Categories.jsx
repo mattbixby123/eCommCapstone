@@ -44,7 +44,13 @@ const Item = styled(Paper)(({ theme }) => ({
                                 component="img"
                                 height="500"
                                 image="https://m.media-amazon.com/images/I/51tLPDOa1RL._SY445_SX342_.jpg"
-                                alt="To Kill a Mockingbird"s
+                                alt="To Kill a Mockingbird"
+                                sx={{
+                                    transition: "transform 0.3s ease-in-out",
+                                    "&:hover": {
+                                        transform: "scale(1.05)"
+                                    }
+                                }}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
@@ -75,6 +81,12 @@ const Item = styled(Paper)(({ theme }) => ({
                                     height="500"
                                     image="https://www.classicmomentsusa.com/wp-content/uploads/2020/02/dc-SupermanCar-11x14-framed.jpg"
                                     alt="Action Comics #1"
+                                    sx={{
+                                        transition: "transform 0.3s ease-in-out",
+                                        "&:hover": {
+                                            transform: "scale(1.05)"
+                                        }
+                                    }}
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="div">
@@ -105,6 +117,12 @@ const Item = styled(Paper)(({ theme }) => ({
                                 height="500"
                                 image="https://i.natgeofe.com/n/60c573d7-8b45-4f4d-be8d-26e5baef327c/national-geographic-magazine-january-2024-monarchs.jpg"
                                 alt="National Geographic"
+                                sx={{
+                                    transition: "transform 0.3s ease-in-out",
+                                    "&:hover": {
+                                        transform: "scale(1.05)"
+                                    }
+                                }}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
