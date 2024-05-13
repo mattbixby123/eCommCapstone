@@ -43,13 +43,23 @@ const Comics = () => {
     setCurrentPage(pageNumber);
   };
 
+  // Function to handle search input change
+  const handleSearchChange = (e) => {
+    setSearchParam(e.target.value.toLowerCase());
+  };
+
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error Loading Books</div>;
+  if (error) return <div>Error Loading Comics</div>;
+
+  // Filter comics based on search parameter
+  const filteredComics = comicsData ? comicsData.products.filter(comic =>
+    comic.name.toLowerCase().includes(searchParam)
+  ) : [];
 
   // Calculate the index of the first and last items on the current page
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = comicsData ? comicsData.products.slice(indexOfFirstPost, indexOfLastPost) : [];
+  const currentPosts = filteredComics.slice(indexOfFirstPost, indexOfLastPost);
 
   
     return (
@@ -61,7 +71,7 @@ const Comics = () => {
       <TextField
         variant='outlined'
         placeholder='Search comics...'
-        onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+        onChange={handleSearchChange}
         fullWidth
         sx={{ mb: 2 }}
         />
@@ -82,7 +92,7 @@ const Comics = () => {
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Pagination
-            count={Math.ceil((comicsData ? comicsData.products.length : 0) / postPerPage)}
+            count={Math.ceil(filteredComics.length / postPerPage)}
             color="primary"
             onChange={handlePageChange}
             page={currentPage}

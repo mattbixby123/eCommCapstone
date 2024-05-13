@@ -4,6 +4,7 @@ import { useFetchProductByIdQuery, useAddToCartBookMutation} from '../redux/api'
 import { useSelector } from 'react-redux';
 import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { addProductToCart } from '../redux/cartslice';
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -20,7 +21,15 @@ const SingleProduct = () => {
         productId: parseInt(productId),
         quantity: 1,
       });
-      console.log('Book added to cart successfully');
+      console.log('Product added to cart successfully');
+
+      dispatch(addProductToCart({
+        id: productId,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        type: 'Product'
+      }));
     } catch (error) {
       console.error('Error adding book to cart.', error.message);
     }

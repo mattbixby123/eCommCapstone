@@ -42,14 +42,23 @@ const Magazines = () => {
   const handlePageChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
   };
+   // Function to handle search input change
+   const handleSearchChange = (e) => {
+    setSearchParam(e.target.value.toLowerCase());
+  };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error Loading Magazines</div>;
+
+  // Filter books based on search parameter
+  const filteredMagazines = magazinesData ? magazinesData.products.filter(magazine => magazine.name.toLowerCase().includes(searchParam)) : [];
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error Loading Magazines</div>;
 
   // Calculate the index of the first and last items on the current page
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = magazinesData ? magazinesData.products.slice(indexOfFirstPost, indexOfLastPost) : [];
+  const currentPosts = filteredMagazines.slice(indexOfFirstPost, indexOfLastPost);
   return (
     <Container>
       <Box>
@@ -59,7 +68,7 @@ const Magazines = () => {
         <TextField
           variant='outlined'
           placeholder='Search magazines...'
-          onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+          onChange={handleSearchChange}
           fullWidth
           sx={{ mb: 2 }}
         />
@@ -79,7 +88,7 @@ const Magazines = () => {
         </Grid>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Pagination
-            count={Math.ceil((magazinesData ? magazinesData.products.length : 0) / postPerPage)}
+            count={Math.ceil(filteredMagazines.length / postPerPage)}
             color="primary"
             onChange={handlePageChange}
             page={currentPage}
