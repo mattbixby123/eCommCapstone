@@ -49,11 +49,7 @@ export const api = createApi({
     welcome: builder.query({
       query: () => '/',
     }),
-
-    // fetchCustomerDetails: builder.query({
-    //     query: () => 'auth/me',
-    //   }),
-
+    
     fetchAllProducts: builder.query({
       query: () => `api/product`, // Add pagination parameters
     }),
@@ -107,6 +103,13 @@ export const api = createApi({
         url: '/cartitem',
         method: 'POST',
         body: { magazineId, ...body}
+      }),
+    }),
+    removeFromCartProduct: builder.mutation({
+      query: ({ productId }) => ({
+        url: '/cart/remove/products',
+        method: 'DELETE',
+        body: { productId }
       }),
     }),
     removeFromCartBook: builder.mutation({
@@ -170,7 +173,6 @@ export const {
   useFetchMagazinesByIdQuery,
   useFetchProductByIdQuery,
   useRegistrationFormMutation,
-  useFetchCustomerDetailsQuery,
   useMeQuery,
   useLoginMutation,
   useLogoutMutation,
@@ -179,7 +181,10 @@ export const {
   useAddToCartBookMutation,
   useAddToCartComicMutation,
   useAddToCartMagazineMutation,
-  useRemoveFromCartMutation,
+  useRemoveFromCartProductMutation,
+  useRemoveFromCartBookMutation,
+  useRemoveFromCartComicMutation,
+  useRemoveFromCartMagazineMutation,
   useSaveForLaterMutation,
   useFetchOrderHistoryQuery,
   useFetchAllCustomerDataQuery
