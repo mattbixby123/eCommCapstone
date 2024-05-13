@@ -2,9 +2,6 @@
 require('dotenv').config()
 const router = require("express").Router();
 const stripe = require("stripe")(process.env.TEST_KEY);
-const express = require('express');
-const app = express();
-app.use(express.static('public'));
 
 apiUrl = 'localhost:3000/api/checkout'
 
@@ -34,4 +31,4 @@ router.post('/create-checkout-session', async (req, res) => {
   res.redirect(303, session.url);
 });
 
-router.listen(3000, () => console.log('Running on port 3000'));
+// router.listen(3000, () => console.log('Running on port 3000'));
