@@ -2,27 +2,37 @@ import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useFetchMagazinesByIdQuery, useAddToCartMagazineMutation } from '../redux/api';
 import AddToCart from './AddToCart';
-import { useSelector } from 'react-redux';
-import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { addProductToCart } from '../redux/cartslice';
 
 const SingleMagazine= () => {
   const { magazineId } = useParams();
-  const { data: magazine, error, isLoading, refetch } = useFetchMagazinesByIdQuery(magazineId);
-  // const [addToCart, { isLoading: isUpdating, data}] = useAddToCartMagazineMutation();
+  const { data: magazine, error, isLoading } = useFetchMagazinesByIdQuery(magazineId);
+  const [addToCartMagazine, { isLoading: isUpdating }] = useAddToCartMagazineMutation();
   const navigate = useNavigate();
-  const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
-
     try {
-     
-      const response = await addToCart({ magazineId }).unwrap();
-      refetch();
-      
+      await addToCartMagazine({
+        sessionId: 1, 
+        productId: parseInt(magazineId),
+        quantity: 1,
+      });
+      console.log('Magazine added to cart successfully');
+
+      dispatch(addProductToCart({
+      id: magazineId,
+      name: magazine.name,
+      price: magazine.price,
+      quantity: 1,
+      type: 'Magazine'
+    }));
     } catch (error) {
-      console.log(error.message)
+      console.error('Error adding magazine to cart.', error.message);
     }
   }
 
@@ -62,7 +72,7 @@ const SingleMagazine= () => {
             <Typography variant='body2' color='text.secondary'>
               Price in USD: {magazine.price}
             </Typography>
-            {token && magazine.inventory > 0 ? (
+            {magazine.inventory > 0 ? (
               <Button onClick={handleAddToCartClick} variant='contained' color='primary' sx={{ mt: 2, color: 'black' }}>
                 Add to Cart
               </Button>

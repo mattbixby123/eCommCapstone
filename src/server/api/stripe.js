@@ -1,28 +1,37 @@
 // This is your test secret API key.
 require('dotenv').config()
 const router = require("express").Router();
-const stripe = require("stripe")(TEST_KEY);
+const stripe = require("stripe")(process.env.TEST_KEY);
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
 
-const YOUR_DOMAIN = 'http://localhost:3000';
+apiUrl = 'localhost:3000/api/checkout'
 
-app.post('/create-checkout-session', async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
-        quantity: 1,
+
+router.post('/create-checkout-session', async (req, res) => {
+  const {products} = req.body;
+  const lineItems = products.map((product) => ({
+    price_data: {
+      currency: "usd",
+      product_data: {
+        name: product.name,
+        image: product.imageUrl
       },
-    ],
+      unit_amount:product.price*100
+    },
+    quantity:product.quantity
+  }));
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
     mode: 'payment',
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    success_url: `${apiUrl}?success=true`,
+    cancel_url: `${apiUrl}?canceled=true`,
   });
 
   res.redirect(303, session.url);
 });
 
-app.listen(3000, () => console.log('Running on port 4242'));
+router.listen(3000, () => console.log('Running on port 3000'));

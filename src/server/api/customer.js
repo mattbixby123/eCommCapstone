@@ -2,12 +2,12 @@ const router = require("express").Router();
 const { prisma } = require("../db");
 
 // Deny access if customer is not an Admin -- blanket statement for all routes below instead of applying route by route
-router.use((req, res, next) => {
-  if (!req.customer.isAdmin) {
-    return res.status(401).send("You must be an Admin to do that.");
-  }
-  next();
-});
+// router.use((req, res, next) => {
+//   if (!req.customer.isAdmin) {
+//     return res.status(401).send("You must be an Admin to do that.");
+//   }
+//   next();
+// });
 
 // GET /customer - Retrieve a list of all customers 
   //***ADMIN STORY TIER 3***//
@@ -16,7 +16,11 @@ router.use((req, res, next) => {
 
 router.get("/", async (req, res, next) => {
  try {
-    const customers = await prisma.customer.findMany();
+    const customers = await prisma.customer.findMany({
+      include: {
+        shoppingSessions: true
+      }
+    });
     res.json(customers);
  } catch (error) {
     next (error);
@@ -40,6 +44,29 @@ router.get("/", async (req, res, next) => {
     next (error);
  }
 });
+
+// GET /shoppingSession/:customerId - Retrieve a specific shoppingSession by customer ID.
+  // This route fetches a specific shopping session by the customer's ID.
+  router.get("/shoppingSession/:id", async (req, res, next) => {
+    try {
+      const { id } = req.params;
+       const customer = await prisma.customer.findUnique({
+        where: { 
+          id: Number(id)
+        },
+        include: {
+          shoppingSessions: true
+        }
+       });
+
+       if (!customer) {
+         return res.status(404).json({ error: "Shopping session not found" });
+       }
+       res.json(customer);
+    } catch (error) {
+       next (error);
+    }
+   });
 
 // POST /customer - Create a new customer
   //***ADMIN STORY TIER 3***//

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useFetchAllMagazinesQuery } from '../redux/api';
+import { useFetchAllProductsQuery } from '../redux/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
 import { useSelector } from 'react-redux';
 import { selectToken } from '../redux/authslice';
 import { Container } from '@mui/system';
 import '../style.css';
-import Pagination from './Pagination';
+import Pagination from '@mui/material/Pagination';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -22,39 +22,49 @@ const Magazines = () => {
   const navigate = useNavigate();
   const [searchParam, setSearchParam] = useState('');
   const [magazinesData, setMagazinesData] = useState(null); // State to hold magazines data
-
-  // Function to handle data update from Pagination component
-  const handlePaginationDataUpdate = (data) => {
-    setMagazinesData(data);
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(9);
 
   // Fetch magazines data
-  const { isLoading, error } = useFetchAllMagazinesQuery();
+  const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
   useEffect(() => {
-    if (!isLoading && !error) {
-      setMagazinesData(magazinesData);
-    }
-  }, [isLoading, error]); // Update magazinesData when isLoading or error changes
+    if (!isLoading && !error && fetchedProductsData) {
+      // Filter products based on the category ID for magazines
+      const magazines = fetchedProductsData.products.filter(products => products.categoryId === 3);
+      console.log("Magazines Data:", magazines);
 
+      setMagazinesData({ products: magazines });
+    }
+  }, [isLoading, error, fetchedProductsData]);
+
+  // Function to handle page change
+  const handlePageChange = (event, pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error Loading Magazines</div>;
-    return (
-       <Container>
-    <Box>
-      <Typography variant='h3' gutterBottom>
-        Magazine Catalog
-      </Typography>
-      <TextField
-        variant='outlined'
-        placeholder='Search magazines...'
-        onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
-        fullWidth
-        sx={{ mb: 2 }}
+
+  // Calculate the index of the first and last items on the current page
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = magazinesData ? magazinesData.products.slice(indexOfFirstPost, indexOfLastPost) : [];
+  return (
+    <Container>
+      <Box>
+        <Typography variant='h3' gutterBottom>
+          Magazine Catalog
+        </Typography>
+        <TextField
+          variant='outlined'
+          placeholder='Search magazines...'
+          onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+          fullWidth
+          sx={{ mb: 2 }}
         />
-      <Grid container spacing={3}>
-        {magazinesData && magazinesData.magazines.map((magazine) => ( // added .magazines here to show paginated magazines
+        <Grid container spacing={3}>
+        {currentPosts.map((magazine) => ( 
           <Grid item xs={12} sm={6} md={4} lg={3} key={magazine.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
               <img src={magazine.imageUrl} alt={magazine.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
@@ -66,8 +76,15 @@ const Magazines = () => {
             </Item>
           </Grid>
         ))}
-      </Grid>
-      <Pagination endpoint="magazines" onDataUpdate={handlePaginationDataUpdate} />
+        </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Pagination
+            count={Math.ceil((magazinesData ? magazinesData.products.length : 0) / postPerPage)}
+            color="primary"
+            onChange={handlePageChange}
+            page={currentPage}
+          />
+        </Box>
     </Box>
   </Container>
     );

@@ -30,13 +30,27 @@ const Item = styled(Paper)(({ theme }) => ({
             <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Item>
-                        <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/books')}>
+                        <Card sx={{ 
+                            maxWidth: 345,
+                            height: 650, 
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: 'auto',
+                            }} onClick={() => navigate('/books')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"
                                 height="500"
                                 image="https://m.media-amazon.com/images/I/51tLPDOa1RL._SY445_SX342_.jpg"
-                                alt="To Kill a Mockingbird"s
+                                alt="To Kill a Mockingbird"
+                                sx={{
+                                    transition: "transform 0.3s ease-in-out",
+                                    "&:hover": {
+                                        transform: "scale(1.05)"
+                                    }
+                                }}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
@@ -52,35 +66,63 @@ const Item = styled(Paper)(({ theme }) => ({
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                    <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/comics')}>
+                    <Card sx={{ 
+                        maxWidth: 345,
+                        height: 650, 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 'auto',
+                        }} onClick={() => navigate('/comics')}>
                             <CardActionArea>
-                                <CardMedia
-                                component="img"
-                                height="500"
-                                image="https://www.classicmomentsusa.com/wp-content/uploads/2020/02/dc-SupermanCar-11x14-framed.jpg"
-                                alt="Action Comics #1"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                    Comics
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                    Browse hundreds of comics and graphics novels spanning dozens of titles and numerous publishers
-                                    </Typography>
-                                </CardContent>
+                                    <CardMedia
+                                    component="img"
+                                    height="500"
+                                    image="https://www.classicmomentsusa.com/wp-content/uploads/2020/02/dc-SupermanCar-11x14-framed.jpg"
+                                    alt="Action Comics #1"
+                                    sx={{
+                                        transition: "transform 0.3s ease-in-out",
+                                        "&:hover": {
+                                            transform: "scale(1.05)"
+                                        }
+                                    }}
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                        Comics
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                        Browse hundreds of comics and graphics novels spanning dozens of titles and numerous publishers
+                                        </Typography>
+                                    </CardContent>
                             </CardActionArea>
                         </Card>
                     </Item>
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                    <Card sx={{ maxWidth: 345 }} onClick={() => navigate('/magazines')}>
+                    <Card sx={{ 
+                        maxWidth: 345,
+                        height: 650, 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 'auto',   
+                     }} onClick={() => navigate('/magazines')}>
                             <CardActionArea>
                                 <CardMedia
                                 component="img"
                                 height="500"
                                 image="https://i.natgeofe.com/n/60c573d7-8b45-4f4d-be8d-26e5baef327c/national-geographic-magazine-january-2024-monarchs.jpg"
                                 alt="National Geographic"
+                                sx={{
+                                    transition: "transform 0.3s ease-in-out",
+                                    "&:hover": {
+                                        transform: "scale(1.05)"
+                                    }
+                                }}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">

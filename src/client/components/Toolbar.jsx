@@ -17,11 +17,13 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useMeQuery } from '../redux/api';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-
-const pages = ['Books', 'Comics', 'Magazines', 'Products'];
-const customers = ['Logout'];
+const pages = ['Books', 'Comics', 'Magazines'];
+const customers = ['Logout', 'Account'];
 const guests = ['Login', 'Register'];
+
 
 function ResponsiveAppBar() {
   // const isAuthenticated = useSelector(state => state.auth.token !== '');
@@ -30,6 +32,7 @@ function ResponsiveAppBar() {
   const token = useSelector(state => state.auth.token);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { data: customer } = useMeQuery();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -56,6 +59,9 @@ function ResponsiveAppBar() {
     else {
       setAnchorElUser(null);
     } 
+  };
+  const handleCartClick = () => {
+    navigate('/cart');
   };
 
   const Search = styled('div')(({ theme }) => ({
@@ -115,6 +121,7 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
+              flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
@@ -200,11 +207,25 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
+          <Tooltip title="Cart">
+            <IconButton
+              onClick={handleCartClick}
+              sx={{ p: 0, marginRight: '10px' }}
+              color="inherit"
+            >
+              <ShoppingCartIcon />
+            </IconButton>
+          </Tooltip>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+ 
+              {customer ? (
+      <Avatar alt={customer.firstName} src={customer.imageUrl} />
+    ) : (
+      <Avatar alt="Default" src="/default-avatar.png" />
+    )}
+                {/* <Avatar/> */}
               </IconButton>
             </Tooltip>
             <Menu
