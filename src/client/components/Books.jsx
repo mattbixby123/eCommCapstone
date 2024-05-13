@@ -42,13 +42,21 @@ function AllBooks() {
     setCurrentPage(pageNumber);
   };
 
+  // Function to handle search input change
+  const handleSearchChange = (e) => {
+    setSearchParam(e.target.value.toLowerCase());
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error Loading Books</div>;
+
+  // Filter books based on search parameter
+  const filteredBooks = booksData ? booksData.products.filter(book => book.name.toLowerCase().includes(searchParam)) : [];
 
   // Calculate the index of the first and last items on the current page
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = booksData ? booksData.products.slice(indexOfFirstPost, indexOfLastPost) : [];
+  const currentPosts = filteredBooks.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <Container>
@@ -59,7 +67,7 @@ function AllBooks() {
         <TextField
           variant='outlined'
           placeholder='Search books...'
-          onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+          onChange={handleSearchChange}
           fullWidth
           sx={{ mb: 2 }}
         />
@@ -79,7 +87,7 @@ function AllBooks() {
         </Grid>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Pagination
-            count={Math.ceil((booksData ? booksData.products.length : 0) / postPerPage)}
+            count={Math.ceil(filteredBooks.length / postPerPage)}
             color="primary"
             onChange={handlePageChange}
             page={currentPage}
