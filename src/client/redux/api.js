@@ -73,7 +73,17 @@ export const api = createApi({
     fetchMagazinesById: builder.query({
       query:(magazineId) => `api/product/${magazineId}`,
     }),
-     
+    addToCartProduct: builder.mutation({
+      query: ({ sessionId, productId, quantity }) => ({
+        url: '/cartitem',
+        method: 'POST',
+        body: { 
+          sessionId: parseInt(sessionId), 
+          productId: parseInt(productId), 
+          quantity: parseInt(quantity) 
+        },
+      }),
+    }),
     addToCartBook: builder.mutation({
       query: ({ sessionId, productId, quantity }) => ({
         url: '/cartitem',
@@ -165,6 +175,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useWelcomeQuery,
+  useAddToCartProductMutation,
   useAddToCartBookMutation,
   useAddToCartComicMutation,
   useAddToCartMagazineMutation,
