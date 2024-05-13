@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useFetchProductByIdQuery, useAddToCartBookMutation} from '../redux/api';
-import { useSelector } from 'react-redux';
+import { useFetchProductByIdQuery, useAddToCartProductMutation} from '../redux/api';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { addProductToCart } from '../redux/cartslice';
@@ -9,14 +9,15 @@ import { addProductToCart } from '../redux/cartslice';
 const SingleProduct = () => {
   const { productId } = useParams();
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
-  const [addToCartBook, { isLoading: isUpdating }] = useAddToCartBookMutation();
+  const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartProductMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
-      await addToCartBook({
+      await addToCartProduct({
         sessionId: 1, // Example session, update as per your logic
         productId: parseInt(productId),
         quantity: 1,
