@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
+import '../style.css'
 
 const Cart = () => {
   const cartProducts = useSelector((state) => state.cart.products);
@@ -21,68 +22,78 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+  
+  const handleProceedToCheckout = () => {
+    dispatch(proceedToCheckout());
+  };
 
 
   const totalPrice = cartProducts.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
+    <Box className='cart-container'>
+      <Typography variant="h4" className="cart-header">
         Shopping Cart
       </Typography>
-      {cartProducts.length > 0 ? (
-        <>
-          <Grid container spacing={2}>
-            {cartProducts.map((product) => (
-              <Grid item xs={12} md={6} lg={4} key={product.id}>
-                <Card sx={{ bgcolor: 'lightblue', borderRadius: 2, boxShadow: 2 }}>
-                  <CardContent>
-                    <Typography variant="h6">{product.name}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Price: ${product.price}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Quantity: {product.quantity}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Category: {product.type}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="error"
-                      onClick={() => handleRemoveFromCart(product.id)}
-                    >
-                      Remove
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="h5">Summary:</Typography>
-            <Typography>Total Items: {cartProducts.length}</Typography>
-            <Typography>Total Cost: ${totalPrice.toFixed(2)}</Typography>
-          </Box>
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              variant="contained"
-              color="warning"
-              onClick={handleClearCart}
-              sx={{ bgcolor: 'orange', ':hover': { bgcolor: 'darkorange' } }}
-            >
-              Clear Cart
-            </Button>
-          </Box>
-        </>
-      ) : (
-        <Typography variant="body1">Your cart is empty.</Typography>
-      )}
+      <Box className='cart-page'>
+        <Box className="card-items-cart">
+          {cartProducts.map((product) => (
+            <Box key={product.id}>
+              <Card sx={{
+                bgcolor: 'lightgrey',
+                boxShadow: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '250px',
+                margin: 2, 
+                maxWidth: '300px'
+              }}>
+                <CardContent>
+                  <Typography gutterBottom variant="h6">{product.name}</Typography>
+                  <Typography variant="body2">Price: ${product.price}</Typography>
+                  <Typography variant="body2">Quantity: {product.quantity}</Typography>
+                  <Typography variant="body2">Category: {product.type}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleRemoveFromCart(product.id)}
+                  >
+                    Remove
+                  </Button>
+                </CardActions>
+              </Card>
+            </Box>
+          ))}
+        </Box>
+        <Box className='cart-summary'>
+          <Typography variant="h5">Summary:</Typography>
+          <Typography>Total Items: {cartProducts.length}</Typography>
+          <Typography>Total Cost: ${totalPrice.toFixed(2)}</Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{ mt: 2 }}
+            onClick={handleProceedToCheckout}
+          >
+            Proceed To Checkout
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ mt: 1 }}
+            onClick={handleClearCart}
+          >
+            Clear Cart
+          </Button>
+        </Box>
+      </Box>
     </Box>
   );
 };
+
 
 export default Cart;

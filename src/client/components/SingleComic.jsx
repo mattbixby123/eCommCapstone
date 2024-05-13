@@ -22,6 +22,7 @@ const SingleComic = () => {
         quantity: 1,
       });
       console.log('Comic added to cart successfully');
+      
       dispatch(addProductToCart({
       id: comicId,
       name: comic.name,

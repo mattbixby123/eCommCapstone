@@ -37,11 +37,40 @@
   background-color: rgb(190, 190, 196);
 }
 
+.cart-container {
+  width: 100%;
+  padding: 20px;
+}
 
-/* .main-content { */
-/* .main-content {
-  position: absolute;
-} */
+.cart-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;/
+}
+
+.cart-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card-items-cart {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 40px;
+}
+
+.cart-summary {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    position: sticky;
+    top: 50px;
+}
 
 
-/* Add more styling for other elements if needed */
