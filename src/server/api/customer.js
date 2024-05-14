@@ -16,11 +16,7 @@ const { prisma } = require("../db");
 
 router.get("/", async (req, res, next) => {
  try {
-    const customers = await prisma.customer.findMany({
-      include: {
-        shoppingSessions: true
-      }
-    });
+    const customers = await prisma.customer.findMany();
     res.json(customers);
  } catch (error) {
     next (error);

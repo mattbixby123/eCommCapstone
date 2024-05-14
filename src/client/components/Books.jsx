@@ -20,7 +20,7 @@ function AllBooks() {
   const [searchParam, setSearchParam] = useState('');
   const [booksData, setBooksData] = useState(null); // State to hold books data
   const [currentPage, setCurrentPage] = useState(1); // State to hold current page number
-  const [postPerPage] = useState(9); // Number of items per page
+  const [postPerPage] = useState(12); // Number of items per page
 
   // Fetch all products data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();

@@ -21,7 +21,7 @@ const Welcome = () => {
   const [searchParam, setSearchParam] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [postPerPage] = useState(9);
+  const [postPerPage] = useState(12);
 
   useEffect(() => {
     if (productsData) {
