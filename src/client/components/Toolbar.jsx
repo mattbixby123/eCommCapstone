@@ -229,33 +229,43 @@ function ResponsiveAppBar() {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={(e) => handleCloseUserMenu('')}
-            >
-              {token 
-                ? customers.map((customer) => (
-                <MenuItem key={customer} onClick={(e) => handleCloseUserMenu(customer)}>
-                  <Typography textAlign="center">{customer}</Typography>
-                </MenuItem>
-              )) : 
+            sx={{ mt: '45px' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={(e) => handleCloseUserMenu('')}
+          >
+            {token ? (
+              <>
+                {customers.map((customer) => (
+                  <MenuItem key={customer} onClick={(e) => handleCloseUserMenu(customer)}>
+                    <Typography textAlign="center">{customer}</Typography>
+                  </MenuItem>
+                ))}
+                {/* Conditional rendering for Admin View */}
+                {customer && customer.isAdmin && (
+                  <MenuItem onClick={() => navigate('/admin')}>
+                    <Typography textAlign="center">Admin View</Typography>
+                  </MenuItem>
+                )}
+              </>
+            ) : (
               guests.map((guest) => (
                 <MenuItem key={guest} onClick={(e) => handleCloseUserMenu(guest)}>
                   <Typography textAlign="center">{guest}</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
+              ))
+            )}
+          </Menu>
           </Box>
         </Toolbar>
       </Container>

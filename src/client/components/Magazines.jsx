@@ -23,7 +23,7 @@ const Magazines = () => {
   const [searchParam, setSearchParam] = useState('');
   const [magazinesData, setMagazinesData] = useState(null); // State to hold magazines data
   const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(9);
+  const [postPerPage] = useState(12);
 
   // Fetch magazines data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();

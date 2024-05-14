@@ -21,7 +21,7 @@ const Comics = () => {
   const [searchParam, setSearchParam] = useState('');
   const [comicsData, setComicsData] = useState(null); // state to hold comics data
   const [currentPage, setCurrentPage] = useState(1); // State to hold current page number
-  const [postPerPage] = useState(9); // Number of items per page
+  const [postPerPage] = useState(12); // Number of items per page
 
   // fetch all products data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
