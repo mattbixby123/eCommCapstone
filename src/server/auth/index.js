@@ -82,4 +82,39 @@ router.get("/me", async (req, res, next) => {
   }
 });
 
+  // Middleware to verify JWT token
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).send("Access denied. No token provided.");
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT);
+    req.customer = decoded; // Set the decoded customer object in the request for further use
+    next();
+  } catch (error) {
+    res.status(400).send("Invalid token.");
+  }
+}
+
+// Middleware to check if the customer is an admin
+function isAdmin(req, res, next) {
+  if (!req.customer.isAdmin) {
+    return res.status(403).send("Access denied. Not an admin.");
+  }
+  next();
+}
+
+// Protected route to check if the customer is an admin
+router.get("/auth/admin", verifyToken, isAdmin, async (req, res, next) => {
+  try {
+    // If the middleware isAdmin passed, that means the customer is an admin
+    res.send("You are an admin.");
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
