@@ -71,7 +71,7 @@ export const api = createApi({
     }),
     addToCartProduct: builder.mutation({
       query: ({ sessionId, productId, quantity }) => ({
-        url: '/cartitem',
+        url: 'api/cartitem',
         method: 'POST',
         body: { 
           sessionId: parseInt(sessionId), 
@@ -82,7 +82,7 @@ export const api = createApi({
     }),
     addToCartBook: builder.mutation({
       query: ({ sessionId, productId, quantity }) => ({
-        url: '/cartitem',
+        url: 'api/cartitem',
         method: 'POST',
         body: { 
           sessionId: parseInt(sessionId), 
@@ -93,14 +93,14 @@ export const api = createApi({
     }),
     addToCartComic: builder.mutation({
       query: ({ comicId, ...body }) => ({
-        url: '/cartitem',
+        url: 'api/cartitem',
         method: 'POST',
         body: { comicId, ...body}
       }),
     }),
     addToCartMagazine: builder.mutation({
       query: ({ magazineId, ...body }) => ({
-        url: '/cartitem',
+        url: 'api/cartitem',
         method: 'POST',
         body: { magazineId, ...body}
       }),
