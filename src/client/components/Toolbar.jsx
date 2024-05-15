@@ -26,7 +26,6 @@ const guests = ['Login', 'Register'];
 
 
 function ResponsiveAppBar() {
-  // const isAuthenticated = useSelector(state => state.auth.token !== '');
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = useSelector(state => state.auth.token);
@@ -94,7 +93,7 @@ function ResponsiveAppBar() {
     width: '100%',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
+      
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
       [theme.breakpoints.up('sm')]: {
@@ -244,28 +243,25 @@ function ResponsiveAppBar() {
             open={Boolean(anchorElUser)}
             onClose={(e) => handleCloseUserMenu('')}
           >
-            {token ? (
-              <>
-                {customers.map((customer) => (
-                  <MenuItem key={customer} onClick={(e) => handleCloseUserMenu(customer)}>
-                    <Typography textAlign="center">{customer}</Typography>
-                  </MenuItem>
-                ))}
-                {/* Conditional rendering for Admin View */}
-                {customer && customer.isAdmin && (
-                  <MenuItem onClick={() => navigate('/admin')}>
-                    <Typography textAlign="center">Admin View</Typography>
-                  </MenuItem>
-                )}
-              </>
-            ) : (
-              guests.map((guest) => (
-                <MenuItem key={guest} onClick={(e) => handleCloseUserMenu(guest)}>
-                  <Typography textAlign="center">{guest}</Typography>
-                </MenuItem>
-              ))
-            )}
-          </Menu>
+             {token
+                ? [
+                    ...customers.map((customer) => (
+                      <MenuItem key={customer} onClick={(e) => handleCloseUserMenu(customer)}>
+                        <Typography textAlign="center">{customer}</Typography>
+                      </MenuItem>
+                    )),
+                    customer?.isAdmin && (
+                      <MenuItem key="admin" onClick={() => navigate('/admin')}>
+                        <Typography textAlign="center">Admin View</Typography>
+                      </MenuItem>
+                    ),
+                  ]
+                : guests.map((guest) => (
+                    <MenuItem key={guest} onClick={(e) => handleCloseUserMenu(guest)}>
+                      <Typography textAlign="center">{guest}</Typography>
+                    </MenuItem>
+                  ))}
+            </Menu>
           </Box>
         </Toolbar>
       </Container>

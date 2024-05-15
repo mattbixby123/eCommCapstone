@@ -31,15 +31,16 @@ router.post('/create-checkout-session', async (req, res) => {
           quantity: item.quantity
         }
       }),
-      success_url: `${process.env.SERVER_URL}/success.html`,
-      cancel_url: `${process.env.SERVER_URL}/cancel.html`
-    })
-    res.json({ url: session.url })
+      success_url: `${process.env.SERVER_URL}/cart`,
+      cancel_url: `${process.env.SERVER_URL}/cart`
+    });
+
+    return res.json({ url: session.url })
 
   } catch (e) {
+    if (!res.headersSent)
     res.status(500).json({ error: e.message })
   }
-  res.json({ url: 'Hi' })
 })
 
 
