@@ -29,12 +29,7 @@ const Cart = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        items: [
-          { id: 1, quantity: 2 },
-          { id: 2, quantity: 1 }
-        ]
-      })
+      body: JSON.stringify({ cartProducts })
     }).then(res => {
       if (res.ok) return res.json()
     }).then(({ url }) => {

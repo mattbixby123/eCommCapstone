@@ -15,20 +15,20 @@ const storeItems = new Map([
 
 router.post('/create-checkout-session', async (req, res) => {
   try {
+    console.log(req.body);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: req.body.items.map(item => {
-        const storeItem = storeItems.get(item.id)
+      line_items: req.body.cartProducts.map(cartProduct => {
         return {
           price_data: {
             currency: "usd",
             product_data: {
-              name: storeItem.name
+              name: cartProduct.name
             },
-            unit_amount: storeItem.priceInCents
+            unit_amount: cartProduct.price*100
           },
-          quantity: item.quantity
+          quantity: cartProduct.quantity
         }
       }),
       success_url: `${process.env.SERVER_URL}/cart`,
