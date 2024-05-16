@@ -1,6 +1,6 @@
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
-import { useFetchMagazinesByIdQuery, useAddToCartMagazineMutation } from '../redux/api';
+import { useFetchMagazinesByIdQuery, useAddToCartMutation } from '../redux/api';
 import AddToCart from './AddToCart';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
@@ -10,14 +10,14 @@ import { addProductToCart } from '../redux/cartslice';
 const SingleMagazine= () => {
   const { magazineId } = useParams();
   const { data: magazine, error, isLoading } = useFetchMagazinesByIdQuery(magazineId);
-  const [addToCartMagazine, { isLoading: isUpdating }] = useAddToCartMagazineMutation();
+  const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
-      await addToCartMagazine({
+      await addToCart({
         sessionId: 1, 
         productId: parseInt(magazineId),
         quantity: 1,

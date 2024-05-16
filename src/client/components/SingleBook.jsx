@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useFetchBooksByIdQuery, useAddToCartBookMutation } from '../redux/api';
+import { useFetchBooksByIdQuery, useAddToCartMutation } from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -9,14 +9,14 @@ import { addProductToCart } from '../redux/cartslice';
 const SingleBook = () => {
   const { bookId } = useParams();
   const { data: book, error, isLoading } = useFetchBooksByIdQuery(bookId);
-  const [addToCartBook, { isLoading: isUpdating }] = useAddToCartBookMutation();
+  const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
   e.preventDefault();
   try {
-    const response = await addToCartBook({
+    const response = await addToCart({
       sessionId: 1,
       productId: parseInt(bookId),
       quantity: 1,

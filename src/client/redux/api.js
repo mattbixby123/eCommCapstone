@@ -69,91 +69,33 @@ export const api = createApi({
     fetchMagazinesById: builder.query({
       query:(magazineId) => `api/product/${magazineId}`,
     }),
-    addToCartProduct: builder.mutation({
-      query: ({ sessionId, productId, quantity }) => ({
+    addToCart: builder.mutation({
+      query: ({ sessionId, productId, quantity, type }) => ({
         url: 'api/cartitem',
         method: 'POST',
         body: { 
           sessionId: parseInt(sessionId), 
           productId: parseInt(productId), 
-          quantity: parseInt(quantity) 
+          quantity: parseInt(quantity),
+          type,
         },
       }),
     }),
-    addToCartBook: builder.mutation({
-      query: ({ sessionId, productId, quantity }) => ({
-        url: 'api/cartitem',
-        method: 'POST',
-        body: { 
-          sessionId: parseInt(sessionId), 
-          productId: parseInt(productId), 
-          quantity: parseInt(quantity) 
-        },
-      }),
-    }),
-    addToCartComic: builder.mutation({
-      query: ({ comicId, ...body }) => ({
-        url: 'api/cartitem',
-        method: 'POST',
-        body: { comicId, ...body}
-      }),
-    }),
-    addToCartMagazine: builder.mutation({
-      query: ({ magazineId, ...body }) => ({
-        url: 'api/cartitem',
-        method: 'POST',
-        body: { magazineId, ...body}
-      }),
-    }),
-    removeFromCartProduct: builder.mutation({
-      query: ({ productId }) => ({
-        url: '/cart/remove/products',
-        method: 'DELETE',
-        body: { productId }
-      }),
-    }),
-    removeFromCartBook: builder.mutation({
-      query: ({ bookId }) => ({
-        url: '/cart/remove/books',
-        method: 'DELETE',
-        body: { bookId }
-      }),
-    }),
-    removeFromCartComic: builder.mutation({
-      query: ({ comicId }) => ({
-        url: '/cart/remove/comics',
-        method: 'DELETE',
-        body: { comicId }
-      }),
-    }),
-    removeFromCartMagazine: builder.mutation({
-      query: ({ magazineId }) => ({
-        url: '/cart/remove/magazines',
-        method: 'DELETE',
-        body: { magazineId }
-      }),
-    }),
-    saveForLaterBook: builder.mutation({
-      query: ({ bookId }) => ({
-        url: '/cart/save-for-later/books',
-        method: 'POST',
-        body: { bookId }
-      }),
-    }),
-    saveForLaterComic: builder.mutation({
-      query: ({ comicId }) => ({
-        url: '/cart/save-for-later/comics',
-        method: 'POST',
-        body: { comicId }
-      }),
-    }),
-    saveForLaterMagazine: builder.mutation({
-      query: ({ magazineId }) => ({
-        url: '/cart/save-for-later/magazines',
-        method: 'POST',
-        body: { magazineId }
-      }),
-    }),
+    // removeFromCart: builder.mutation({
+    //   query: ({ sessionId, productId }) => ({
+    //     url: `api/cart/cartitem/${sessionId}/${productId}`,
+    //     method: 'DELETE',
+    //     // body: { productId }
+    //   }),
+    // }),
+    //   createCheckoutSession: builder.mutation({
+    //   query: ({ cartProducts }) => ({
+    //     url: 'checkout/create-checkout-session',
+    //     method: 'POST',
+    //     body: { cartProducts },
+    //   }),
+    // }),
+    
 
     fetchOrderHistory: builder.query({
       query: (customerId) => `/api/orderDetail/${customerId}`,
@@ -177,15 +119,9 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useWelcomeQuery,
-  useAddToCartProductMutation,
-  useAddToCartBookMutation,
-  useAddToCartComicMutation,
-  useAddToCartMagazineMutation,
-  useRemoveFromCartProductMutation,
-  useRemoveFromCartBookMutation,
-  useRemoveFromCartComicMutation,
-  useRemoveFromCartMagazineMutation,
-  useSaveForLaterMutation,
+  useAddToCartMutation,
+  // useCreateCheckoutSessionMutation,
+  // useRemoveFromCartMutation,
   useFetchOrderHistoryQuery,
   useFetchAllCustomerDataQuery
 } = api;
