@@ -63,6 +63,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/me", async (req, res, next) => {
   try {
     let customer;
+    let shoppingSession;
     
 
     // Check if customer is authenticated
@@ -76,6 +77,17 @@ router.get("/me", async (req, res, next) => {
 
       res.send(customer);
     }
+    if (req.shoppingSession) {
+      shoppingSession = await prisma.shoppingSession.findUnique({
+        where: {
+          customerId: req.customer.id,
+        },
+      });
+      console.log('session - ', shoppingSession);
+
+      res.send(shoppingSession);
+    }
+
 
   } catch (error) {
     next(error);

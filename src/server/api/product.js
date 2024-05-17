@@ -7,6 +7,11 @@ const { prisma } =  require("../db");
 router.get("/", async (req, res, next) => {
   try {
     const products = await prisma.product.findMany({
+      include: {
+        category: true,
+        cartItem: true,
+        orderItems: true
+      }
     });
 
     res.send({ products });

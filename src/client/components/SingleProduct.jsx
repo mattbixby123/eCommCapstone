@@ -6,6 +6,7 @@ import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/mate
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { addProductToCart } from '../redux/cartslice';
 
+
 const SingleProduct = () => {
   const { productId } = useParams();
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
