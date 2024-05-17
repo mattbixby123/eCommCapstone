@@ -6,7 +6,12 @@ const { prisma } =  require("../db");
 
 router.get("/", async (req, res, next) => {
  try {
-    const shoppingSessions = await prisma.shoppingSession.findMany();
+    const shoppingSessions = await prisma.shoppingSession.findMany({
+      include: {
+        customer: true,
+        cartItems: true
+      }
+    });
     res.json(shoppingSessions);
  } catch (error) {
     next (error);
@@ -16,10 +21,15 @@ router.get("/", async (req, res, next) => {
 // GET /shoppingSession/:id - Retrieve a specific shoppingSession by ID.
   // This route fetches a specific shopping session by its ID.
 router.get("/:id", async (req, res, next) => {
+
+  // const customerId = req.params.customerId;
+
   try {
-     const { id } = req.params;
      const shoppingSession = await prisma.shoppingSession.findUnique({
-       where: { id: parseInt(id) },
+       where: { customerId: parseInt(customerId) },
+       data: {
+        customerId: parseInt(customerId)
+       }
      });
      if (!shoppingSession) {
        return res.status(404).json({ error: "Shopping session not found" });

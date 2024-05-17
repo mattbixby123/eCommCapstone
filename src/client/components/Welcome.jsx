@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Paper, Grid, Typography, TextField, styled } from '@mui/material';
 import { useFetchAllProductsQuery } from '../redux/api';
 import Categories from './Categories';
 import Pagination from "@mui/material/Pagination";
+import { addTotalToSession } from '../redux/sessionSlice';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Welcome = () => { 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const { data: productsData, isLoading, error } = useFetchAllProductsQuery(); 
   const [searchParam, setSearchParam] = useState('');
@@ -44,6 +46,12 @@ const Welcome = () => {
       setFilteredProducts(filtered);
     }
   }, [searchParam, productsData]);
+
+  useEffect(() => {
+    if (productsData) {
+      dispatch(addTotalToSession())
+    }
+  })
 
   const handlePageChange = (event, value) => {
     setPage(value);

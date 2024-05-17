@@ -5,7 +5,12 @@ const { prisma } =  require("../db");
 
 router.get("/", async (req, res, next) => {
   try {
-     const cartItems = await prisma.cartItem.findMany();
+     const cartItems = await prisma.cartItem.findMany({
+      include: {
+        session: true,
+        product: true
+      }
+     });
      res.json(cartItems);
   } catch (error) {
      next (error);
