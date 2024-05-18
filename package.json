@@ -19,7 +19,7 @@
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.17",
     "@mui/styled-engine": "^5.15.14",
-    "@mui/x-charts": "^7.4.0",
+    "@mui/x-charts": "^7.5.0",
     "@prisma/client": "^5.12.1",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",

@@ -19,7 +19,7 @@ const SingleProduct = () => {
     e.preventDefault();
     try {
       await addToCartProduct({
-        sessionId: 1, // Example session, update as per your logic
+        sessionId: 1, 
         productId: parseInt(productId),
         quantity: 1,
       });
