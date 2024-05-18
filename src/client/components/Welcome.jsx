@@ -27,7 +27,6 @@ const Welcome = () => {
   const [postPerPage] = useState(12);
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
     if (productsData) {
@@ -51,25 +50,13 @@ const Welcome = () => {
     );
   };
 
-   const handleCategoryChange = (event) => {
-    const { value } = event.target;
-    setSelectedCategories((prev) =>
-      prev.includes(value)
-        ? prev.filter((product) => product !== value)
-        : [...prev, value]
-    );
-  };
-
    const handleFilterApply = () => {
     let filtered = productsData.products;
-     console.log("Initial Products:", productsData.products);
 
     if (searchParam) {
       filtered = filtered.filter((product) =>
         product.name.toLowerCase().includes(searchParam)
       );
-      console.log("After Search Filter:", filtered);
-
     }
     if (selectedPriceRanges.length > 0) {
       filtered = filtered.filter((product) => {
@@ -78,10 +65,7 @@ const Welcome = () => {
           return product.price >= min && product.price <= max;
         });
       });
-      console.log("After Price Range Filter:", filtered);
-
     }
-
     setFilteredProducts(filtered);
     setFilterOpen(false);
   };
@@ -124,7 +108,6 @@ const Welcome = () => {
           placeholder='Search all products...'
           onChange={handleSearchChange}
           fullWidth
-          // sx={{ mb: 2 }}
           />
           <IconButton onClick={handleFilterOpen} sx={{ m1: 1 }}>
             <FilterList />
