@@ -27,6 +27,7 @@ async function main() {
     categoryId: faker.number.int({ min: 1, max: 3 })
 
   }))
+  await prisma.product.createMany({data: products});
   // creating 10 random customers with hashed passwords
   const customers = await Promise.all(Array.from({ length: 10 }).map(async () => {
     const passwordHash = await bcrypt.hash(faker.internet.password(), Number(process.env.SALT_ROUNDS));
@@ -48,42 +49,41 @@ async function main() {
     });
   }));
 
-  customers.forEach(async (customer) => {
-    await prisma.customer.update({
-      where: {
-        id: customer.id
-      },
-      data: {
-        shoppingSessions: {
-          create: {
-            total: 1.99
-          }
-        }
-      }
-    })
-  })
-  await prisma.product.createMany({data: products});
+  // customers.forEach(async (customer) => {
+  //   await prisma.customer.update({
+  //     where: {
+  //       id: customer.id
+  //     },
+  //     data: {
+  //       shoppingSessions: {
+  //         create: {
+  //           total: 1.99
+  //         }
+  //       }
+  //     }
+  //   })
+  // })
   
-  const shoppingSessions = await prisma.shoppingSession.findMany();
+  // const shoppingSessions = await prisma.shoppingSession.findMany();
 
-  shoppingSessions.forEach(async (shoppingSession) => {
-    await prisma.shoppingSession.update({
-      where: {
-        id: shoppingSession.id
-      },
-      data: {
-        cartItems: {
-          createMany: {
-            data: Array.from({length: 4}).map
-            (() => ({
-              productId: faker.number.int({min: 1, max: 300}),
-              quantity: 1
-            }))
-          }
-        }
-      }
-    })
-  })
+  // shoppingSessions.forEach(async (shoppingSession) => {
+  //   await prisma.shoppingSession.update({
+  //     where: {
+  //       id: shoppingSession.id
+  //     },
+  //     data: {
+  //       cartItems: {
+  //         createMany: {
+  //           data: Array.from({length: 4}).map
+  //           (() => ({
+  //             productId: faker.number.int({min: 1, max: 300}),
+  //             quantity: 1
+  //           }))
+  //         }
+  //       }
+  //     }
+  //   })
+  // })
 // I reworked the customer faker seed function to include password hashing for the seeded users.
 
 // In this case, using create inside a loop works because you're generating unique data for each user, 

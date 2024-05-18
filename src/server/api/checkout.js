@@ -8,11 +8,6 @@ app.use(express.static('public'))
 
 const stripe = require('stripe')(process.env.TEST_KEY)
 
-const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "First Product" }],
-  [2, { priceInCents: 20000, name: "Second Product" }],
-])
-
 router.post('/create-checkout-session', async (req, res) => {
   try {
     console.log(req.body);
