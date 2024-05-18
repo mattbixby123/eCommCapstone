@@ -24,6 +24,15 @@ router.post("/register", async (req, res, next) => {
         isAdmin: false,
       }
     });
+
+    // Create a new shopping session for the customer
+    await prisma.shoppingSession.create({
+      data: {
+        customerId: customer.id,
+        total: 0.00, // Initial total for a new shopping session
+      }
+    });
+    
     // Create a token with the customer id
     // const token = jwt.sign({ id: customer.id }, process.env.JWT);
     const token = jwt.sign({ id: customer.id, isAdmin: customer.isAdmin }, process.env.JWT);
