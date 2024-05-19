@@ -40,7 +40,6 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
      const { sessionId, productId, quantity } = req.body;
- 
      if (!sessionId || !productId || !quantity) {
        return res.status(400).json({ message: "Missing required fields" });
      }

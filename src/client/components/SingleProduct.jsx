@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useFetchProductByIdQuery, useAddToCartMutation} from '../redux/api';
+import { useFetchProductByIdQuery, useAddToCartMutation, useMeQuery} from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -9,17 +9,21 @@ import { addProductToCart } from '../redux/cartslice';
 
 const SingleProduct = () => {
   const { productId } = useParams();
+  const {data: customer} = useMeQuery();
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
   const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
   const dispatch = useDispatch();
 
+  const sessionId = (customer.shoppingSessions[0]).id;
+  console.log(sessionId);
+
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
       await addToCartProduct({
-        sessionId: 1, 
+        sessionId: sessionId, 
         productId: parseInt(productId),
         quantity: 1,
       });
