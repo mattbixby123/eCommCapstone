@@ -84,9 +84,7 @@ export const api = createApi({
     }),
 
     getShoppingSession: builder.query({
-      query: (customerId) => `api/shoppingSession/${customerId}`,
-      }),
-      invalidatesTags: ["Me"],
+      query: (customerId) => `/api/shoppingSession/${customerId}`,
     }),
 
     
