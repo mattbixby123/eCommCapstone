@@ -69,6 +69,7 @@ export const api = createApi({
     fetchMagazinesById: builder.query({
       query:(magazineId) => `api/product/${magazineId}`,
     }),
+
     addToCart: builder.mutation({
       query: ({ sessionId, productId, quantity, type }) => ({
         url: 'api/cartitem',
@@ -81,6 +82,22 @@ export const api = createApi({
         },
       }),
     }),
+
+    getShoppingSession: builder.query({
+      query: (customerId) => `api/shoppingSession/${customerId}`,
+      }),
+      invalidatesTags: ["Me"],
+    }),
+
+    
+    fetchOrderHistory: builder.query({
+      query: (customerId) => `/api/orderDetail/${customerId}`,
+    }),
+    
+    fetchAllCustomerData: builder.query({
+      query: () => '/api/customer',
+    }),
+    
     // removeFromCart: builder.mutation({
     //   query: ({ sessionId, productId }) => ({
     //     url: `api/cart/cartitem/${sessionId}/${productId}`,
@@ -96,17 +113,8 @@ export const api = createApi({
     //   }),
     // }),
     
-
-    fetchOrderHistory: builder.query({
-      query: (customerId) => `/api/orderDetail/${customerId}`,
-    }),
-
-    fetchAllCustomerData: builder.query({
-      query: () => '/api/customer',
-    }),
-    
-  })
-})
+  }),
+});
 
 export const {
   useFetchAllProductsQuery,
@@ -120,6 +128,7 @@ export const {
   useLogoutMutation,
   useWelcomeQuery,
   useAddToCartMutation,
+  useGetShoppingSessionQuery,
   // useCreateCheckoutSessionMutation,
   // useRemoveFromCartMutation,
   useFetchOrderHistoryQuery,
