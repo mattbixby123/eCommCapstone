@@ -1,61 +1,60 @@
-# 🚀 Group 1 - eComm Capstone
+Project Overview:
+Retro Rag Reads is an e-commerce website designed to offer a unique shopping experience for enthusiasts of vintage books, magazines, and comic books. Our platform provides a diverse range of reading materials from various genres, ensuring there is something for everyone.
 
-A template for building web applications using the PERN (PostgreSQL, Express.js, React, Node.js) stack.
+Purpose:
+The purpose of this project is to create a user-friendly and visually appealing e-commerce platform that allows users to browse, search, and purchase collecatable vintage reading materials with ease. This project demonstrates the implementation of modern web development techniques and best practices.
 
-## 🏁 Getting Started
+Features:
+*Browse and Search: Users can explore a wide range of the available books, magazines, and comic books. Advanced search functionality allows users to find specific titles or genres.
+*Filtering: Users can filter products by price range and categories using checkboxes for a more customized shopping experience.
+*Cart Management: Users can add items to their cart, view their selections, and proceed to checkout.
+*User Authentication: Secure user registration and login to manage orders and preferences.
 
-1. Install packages
+Technologies Used:
+Frontend: React, Redux Toolkit Query (RTK Query)
+Backend: Node.js, Express
+Database: Prisma, SQL
+Styling: CSS, styled-components
+Version Control: Git, GitHub
 
-```bash
-npm i
-```
+**Installation:
 
-2. Add a `.env` file with your secret value for auth
+1. Clone repo:
 
-```
-JWT='somesecretvalue'
-SALT_ROUNDS
-DATABASE_URL='postgresql://USER:PASSWORD@HOST:PORT/g1ecomm'
-etc.
-```
+   git@github.com:mattbixby123/eCommCapstone.git
 
-3. Create the database
 
-```bash
-createdb g1ecomm
-```
+2. Navigate to the project directory:
 
-4. install prisma
+   cd eCommCapstone
 
-```
-npm install prisma --save-dev ( this step happens automatically upon initial npm i because it was already in the package.json)
-```
+3. Install packages
 
-```
-npx prisma init ( this step is only needed for the first person to set up the prisma on the project )
-```
+   npm install
+   npm install prisma --save-dev
 
-5. Migrate table data - review the prisma/schema.prisma (PSL file) & migrate the tables to your local 'g1econn' db
+4. Create a database from your terminal
 
-```
-npx prisma migrate dev --name init (npx prisma migrate dev --name "name" after init)
-```
+    a: Ensure postgreSQL is installed, use command in termial: postgres --version
+    b: createdb (**db_name_here**)
 
-6. Install and generate Prisma Client
+5. Migrate table data
 
-```
-npm install @prisma/client ( this is installed automatically upon migrating )
-```
+   npx prisma migrate dev
 
-7. Start the server
+6. Start the development server
 
-```bash
-npm run dev
-```
+   npm start
 
-8. Open your browser at `http://localhost:3000`
+**Usage:
 
-<!-- 9. Seed the database
-```bash
-npm run seed
-``` -->
+Start the program on your localhost:
+
+   a: npm run dev
+   b: Open localhost: http://localhost:3000
+   c: Browse available vintage books, comics, and magazines for purchase
+   d: Use filter by price, or search by category
+   e: Add items to your cart and proceed to checkout
+   
+Conclusion
+Retro Rag Reads is a comprehensive e-commerce platform for vintage print media enthusiasts. This project demonstrates the integration of various technologies and the implementation of essential e-commerce functionalities. Feedback is welcome to further enhance this platform.
