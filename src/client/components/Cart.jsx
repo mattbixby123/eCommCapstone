@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
+import { useFetchShoppingSessionQuery } from "../redux/api";
 
 const Cart = () => {
   const cartProducts = useSelector((state) => state.cart.products);
   console.log("Current Cart Products:", cartProducts); 
 
- 
-  const bookProducts = cartProducts.filter((product) => product.type === 'book');
-  const comicProducts = cartProducts.filter((product) => product.type === 'comic');
-  const magazineProducts = cartProducts.filter((product) => product.type === 'magazine');
+  const { data: shoppingSession, isLoading, error } = useFetchShoppingSessionQuery(customerId);
+  const [cart, setCart] = useState();
+
+  // const bookProducts = cartProducts.filter((product) => product.type === 'book');
+  // const comicProducts = cartProducts.filter((product) => product.type === 'comic');
+  // const magazineProducts = cartProducts.filter((product) => product.type === 'magazine');
+
+  console.log("Current Cart Products:", cartProducts);
+  console.log("Shopping Session Data:", shoppingSession);
 
   const dispatch = useDispatch();
 

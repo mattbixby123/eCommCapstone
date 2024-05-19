@@ -83,7 +83,7 @@ export const api = createApi({
       }),
     }),
 
-    getShoppingSession: builder.query({
+    fetchShoppingSession: builder.query({
       query: (customerId) => `/api/shoppingSession/${customerId}`,
     }),
 
@@ -125,7 +125,7 @@ export const {
   useLogoutMutation,
   useWelcomeQuery,
   useAddToCartMutation,
-  useGetShoppingSessionQuery,
+  useFetchShoppingSessionQuery,
   // useCreateCheckoutSessionMutation,
   // useRemoveFromCartMutation,
   useFetchOrderHistoryQuery,
