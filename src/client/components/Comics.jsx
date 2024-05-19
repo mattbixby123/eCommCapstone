@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useFetchAllProductsQuery } from '../redux/api';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
+import { Button, Box, Typography, TextField, Grid, Paper, styled, IconButton, Modal, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
 import { useSelector } from 'react-redux';
 import '../style.css';
 import { Container } from '@mui/system';
 import Pagination from '@mui/material/Pagination';
+import { FilterList } from '@mui/icons-material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -22,7 +23,8 @@ const Comics = () => {
   const [comicsData, setComicsData] = useState(null); // state to hold comics data
   const [currentPage, setCurrentPage] = useState(1); // State to hold current page number
   const [postPerPage] = useState(12); // Number of items per page
-
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   // fetch all products data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
@@ -30,7 +32,7 @@ const Comics = () => {
     console.log("Fetched Products Data:", fetchedProductsData);
 
     if (!isLoading && !error && fetchedProductsData) {
-      // Filter products based on the category ID for books
+      // Filter products based on the category ID for comics
       const comics = fetchedProductsData.products.filter(products => products.categoryId === 1);
       console.log("Comics Data:", comics);
 
@@ -46,6 +48,36 @@ const Comics = () => {
   // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchParam(e.target.value.toLowerCase());
+  };
+  
+  const handleFilterOpen = () => setFilterOpen(true);
+  const handleFilterClose = () => setFilterOpen(false);
+
+  const handlePriceRangeChange = (e) => {
+    const { value } = e.target;
+    setSelectedPriceRanges((prev) =>
+      prev.includes(value) ? prev.filter((range) => range !== value) : [...prev, value]
+    );
+  };
+
+  const handleFilterApply = () => {
+    let filtered = comicsData.products;
+
+    if (searchParam) {
+      filtered = filtered.filter((comic) =>
+        comic.name.toLowerCase().includes(searchParam)
+      );
+    }
+    if (selectedPriceRanges.length > 0) {
+      filtered = filtered.filter((comic) => {
+        return selectedPriceRanges.some((range) => {
+          const [min, max] = range.split('-').map(Number);
+          return comic.price >= min && comic.price <= max;
+        });
+      });
+    }
+    setComicsData({ products: filtered });
+    setFilterOpen(false);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -68,13 +100,18 @@ const Comics = () => {
       <Typography variant='h3' gutterBottom>
         Comic Catalog
       </Typography>
-      <TextField
-        variant='outlined'
-        placeholder='Search comics...'
-        onChange={handleSearchChange}
-        fullWidth
-        sx={{ mb: 2 }}
-        />
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <TextField
+          variant='outlined'
+          placeholder='Search comics...'
+          onChange={handleSearchChange}
+          fullWidth
+          sx={{ mb: 2 }}
+          />
+          <IconButton onClick={handleFilterOpen} sx={{ m1:1 }}>
+            <FilterList />
+          </IconButton>
+      </Box>
       <Grid container spacing={3}>
         {currentPosts.map((comic) => ( // added .comics here so that the paginated comics would show
           <Grid item xs={12} sm={6} md={4} lg={3} key={comic.id}>
@@ -99,6 +136,56 @@ const Comics = () => {
           />
         </Box>
     </Box>
+    <Modal
+      open={filterOpen}
+      onClose={handleFilterClose}
+      aria-labelledby='filter-modal-title'
+      aria-describedby='filter-modal-description'  
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        }}>
+          <Typography id='filter-modal-title' variant='h5' component='h2'>
+            Filter By Price
+          </Typography>
+          <FormControl variant='outlined' fullWidth sx={{ mt: 2 }}>
+            <FormGroup>
+              {[
+                '0-100',
+                '101-200',
+                '201-300',
+                '301-400',
+                '401-500'
+              ].map((range) => (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedPriceRanges.includes(range)}
+                      onChange={handlePriceRangeChange}
+                      value={range}
+                    />
+                  }
+                  label={`$${range}`}
+                  key={range}
+                />
+              ))}
+            </FormGroup>
+          </FormControl>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
+            <Button onClick={handleFilterClose} sx={{ mr: 2 }}>Cancel</Button>
+            <Button variant='contained' color='primary' onClick={handleFilterApply}>Apply Filters</Button>
+          </Box>
+        </Box>
+      </Modal>
   </Container>
   );
 };

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useFetchAllProductsQuery } from '../redux/api';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Box, Typography, TextField, Grid, Paper, styled} from '@mui/material'
+import { Button, Box, Typography, TextField, Grid, Paper, styled, IconButton, Modal, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
 import { useSelector } from 'react-redux';
 import { selectToken } from '../redux/authslice';
 import { Container } from '@mui/system';
 import '../style.css';
 import Pagination from '@mui/material/Pagination';
-
+import { FilterList } from '@mui/icons-material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,7 +24,8 @@ const Magazines = () => {
   const [magazinesData, setMagazinesData] = useState(null); // State to hold magazines data
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(12);
-
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   // Fetch magazines data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
@@ -47,6 +48,36 @@ const Magazines = () => {
     setSearchParam(e.target.value.toLowerCase());
   };
 
+  const handleFilterOpen = () => setFilterOpen(true);
+  const handleFilterClose = () => setFilterOpen(false);
+
+  const handlePriceRangeChange = (e) => {
+    const { value } = e.target;
+    setSelectedPriceRanges((prev) =>
+      prev.includes(value) ? prev.filter((range) => range !== value) : [...prev, value]
+    );
+  };
+
+  const handleFilterApply = () => {
+    let filtered = magazinesData.products;
+
+    if (searchParam) {
+      filtered = filtered.filter((magazine) =>
+        magazine.name.toLowerCase().includes(searchParam)
+      );
+    }
+    if (selectedPriceRanges.length > 0) {
+      filtered = filtered.filter((magazine) => {
+        return selectedPriceRanges.some((range) => {
+          const [min, max] = range.split('-').map(Number);
+          return magazine.price >= min && magazine.price <= max;
+        });
+      });
+    }
+    setMagazinesData({ products: filtered });
+    setFilterOpen(false);
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error Loading Magazines</div>;
 
@@ -65,13 +96,18 @@ const Magazines = () => {
         <Typography variant='h3' gutterBottom>
           Magazine Catalog
         </Typography>
-        <TextField
-          variant='outlined'
-          placeholder='Search magazines...'
-          onChange={handleSearchChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <TextField
+            variant='outlined'
+            placeholder='Search magazines...'
+            onChange={handleSearchChange}
+            fullWidth
+            sx={{ mb: 2 }}
+            />
+            <IconButton onClick={handleFilterOpen} sx={{ m1:1 }}>
+              <FilterList />
+            </IconButton>
+        </Box>
         <Grid container spacing={3}>
         {currentPosts.map((magazine) => ( 
           <Grid item xs={12} sm={6} md={4} lg={3} key={magazine.id}>
@@ -95,8 +131,58 @@ const Magazines = () => {
           />
         </Box>
     </Box>
+    <Modal
+      open={filterOpen}
+      onClose={handleFilterClose}
+      aria-labelledby='filter-modal-title'
+      aria-describedby='filter-modal-description'  
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        }}>
+          <Typography id='filter-modal-title' variant='h5' component='h2'>
+            Filter By Price
+          </Typography>
+          <FormControl variant='outlined' fullWidth sx={{ mt: 2 }}>
+            <FormGroup>
+              {[
+                '0-100',
+                '101-200',
+                '201-300',
+                '301-400',
+                '401-500'
+              ].map((range) => (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedPriceRanges.includes(range)}
+                      onChange={handlePriceRangeChange}
+                      value={range}
+                    />
+                  }
+                  label={`$${range}`}
+                  key={range}
+                />
+              ))}
+            </FormGroup>
+          </FormControl>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
+            <Button onClick={handleFilterClose} sx={{ mr: 2 }}>Cancel</Button>
+            <Button variant='contained' color='primary' onClick={handleFilterApply}>Apply Filters</Button>
+          </Box>
+        </Box>
+      </Modal>
   </Container>
-    );
+  );
 };
 
 export default Magazines;
