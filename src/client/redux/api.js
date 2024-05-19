@@ -84,11 +84,11 @@ export const api = createApi({
     }),
 
     fetchShoppingSession: builder.query({
-      query: (customerId) => `/api/shoppingSession/${customerId}`,
+      query: (customerId) => `api/customer/shoppingSession/${customerId}`,
     }),
 
     fetchOrderHistory: builder.query({
-      query: (customerId) => `/api/orderDetail/${customerId}`,
+      query: (customerId) => `api/orderDetail/${customerId}`,
     }),
     
     fetchAllCustomerData: builder.query({

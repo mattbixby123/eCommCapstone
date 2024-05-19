@@ -81,6 +81,9 @@ router.get("/me", async (req, res, next) => {
         where: {
           id: req.customer.id,
         },
+        include: {
+          shoppingSessions: true,
+        }
       });
       console.log('customer - ', customer)
 
