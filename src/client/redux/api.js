@@ -51,7 +51,7 @@ export const api = createApi({
     }),
     
     fetchAllProducts: builder.query({
-      query: () => `api/product`, // Add pagination parameters
+      query: () => `api/product`, 
     }),
 
     fetchProductById: builder.query({
@@ -87,7 +87,6 @@ export const api = createApi({
       query: (customerId) => `/api/shoppingSession/${customerId}`,
     }),
 
-    
     fetchOrderHistory: builder.query({
       query: (customerId) => `/api/orderDetail/${customerId}`,
     }),
