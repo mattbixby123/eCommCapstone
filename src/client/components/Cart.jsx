@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, clearCart } from "../redux/cartslice";
+// import { useNavigate, useParams } from 'react-router-dom';
+// import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
 import { useMeQuery } from "../redux/api";
 
 const Cart = () => {
+  
+  // const {data: cartItems, isLoading, error} = useFetchCartQuery(session);
+  // console.log("Current Cart Products:", cartItems); 
+  // const { productId } = useParams();
+
   const {data: customer} = useMeQuery();
   const cartProducts = useSelector((state) => state.cart.products);
   console.log("Current Cart Products:", cartProducts); 
@@ -17,7 +24,7 @@ const Cart = () => {
   // console.log("Current Cart Products:", cartProducts);
  
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));

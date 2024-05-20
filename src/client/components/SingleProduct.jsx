@@ -10,7 +10,12 @@ import { addProductToCart } from '../redux/cartslice';
 const SingleProduct = () => {
   const { productId } = useParams();
   const {data: customer} = useMeQuery();
+  console.log(customer);
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
+
+
+ 
+
   const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
@@ -23,7 +28,7 @@ const SingleProduct = () => {
     e.preventDefault();
     try {
       await addToCartProduct({
-        sessionId: sessionId, 
+        sessionId: parseInt(sessionId), 
         productId: parseInt(productId),
         quantity: 1,
       });

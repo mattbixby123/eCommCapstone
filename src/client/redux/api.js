@@ -69,10 +69,14 @@ export const api = createApi({
     fetchMagazinesById: builder.query({
       query:(magazineId) => `api/product/${magazineId}`,
     }),
-
+    
+    fetchShoppingSession: builder.query({
+      query: (customerId) => `api/shoppingSession/customer/${customerId}`,
+    }),
+    
     addToCart: builder.mutation({
       query: ({ sessionId, productId, quantity, type }) => ({
-        url: 'api/cartitem',
+        url: `api/cartitem/${sessionId}`,
         method: 'POST',
         body: { 
           sessionId: parseInt(sessionId), 
@@ -83,8 +87,9 @@ export const api = createApi({
       }),
     }),
 
-    fetchShoppingSession: builder.query({
-      query: (customerId) => `api/customer/shoppingSession/${customerId}`,
+
+    fetchCart: builder.query({
+      query: (sessionId) => `api/cartItem/shoppingSession/${sessionId}`
     }),
 
     fetchOrderHistory: builder.query({
@@ -124,6 +129,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useWelcomeQuery,
+  useFetchCartQuery,
   useAddToCartMutation,
   useFetchShoppingSessionQuery,
   // useCreateCheckoutSessionMutation,

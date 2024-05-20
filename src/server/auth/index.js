@@ -85,7 +85,7 @@ router.get("/me", async (req, res, next) => {
           shoppingSessions: true,
         }
       });
-      console.log('customer - ', customer)
+      // console.log('customer - ', customer)
 
       res.send(customer);
     }
