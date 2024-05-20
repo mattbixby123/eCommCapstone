@@ -4,6 +4,7 @@ import { useFetchAllCustomerDataQuery } from "../redux/api";
 import Pagination from "@mui/material/Pagination";
 import { Paper, Grid, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import AddProduct from "./AddProduct";
 
 /* The followin allowed for collapsing sidebar */
 import Accordion from '@mui/material/Accordion';
@@ -68,6 +69,7 @@ function AdminView() {
 
   return (
   <>
+  <AddProduct />
     <Box sx={{ flexGrow: 10}}>
       <Grid container spacing={2}>
         <Grid item xl={4}>
