@@ -1,10 +1,11 @@
 import React from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useNavigate, useParams } from 'react-router-dom';
-// import { removeFromCart, clearCart } from "../redux/cartslice";
+import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
-import { useFetchShoppingSessionQuery, useMeQuery, useFetchCartQuery, useFetchProductByIdQuery } from "../redux/api";
+import { useMeQuery, useFetchAllCartItemsQuery } from "../redux/api";
 
 const Cart = () => {
   
@@ -13,54 +14,28 @@ const Cart = () => {
   // const { productId } = useParams();
 
   const {data: customer} = useMeQuery();
-  const { data: shoppingSession, isLoading, error } = useFetchShoppingSessionQuery(parseInt(customer.id));
-  // // const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
-  // // const { data: cart} = useFetchCartQuery();
+  const sessionId = [(customer.shoppingSessions[0]).id];
+  console.log(sessionId);
+  const { data: cartItems } = useFetchAllCartItemsQuery();
+  console.log(cartItems);
+  // const itemsBySession = cartItems.filter(id => id.sessionId === sessionId);
+  // console.log(itemsBySession);
+
+  const cartProducts = useSelector((state) => state.cart.products); // old logic linked to local state storage of cart items - needed for UI rendering to display
+  // console.log("Current Cart Products:", cartProducts); 
   
-  
-  
-  const cart = shoppingSession[0];
-  
-  // console.log(customer.id);
-  console.log(cart.cartItems);
-
-  // const cartProducts = cart.cartItems.forEach(async (item) => { await useFetchProductByIdQuery(item.productId)
-  // })
-
-  // console.log(cartProducts);
-
-
-
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-
-
-
-
-
-
-
-
-  
-
-  // const bookProducts = cartProducts.filter((product) => product.type === 'book');
-  // const comicProducts = cartProducts.filter((product) => product.type === 'comic');
-  // const magazineProducts = cartProducts.filter((product) => product.type === 'magazine');
-
-  // console.log("Current Cart Products:", cartItems);
-  // console.log("Shopping Session Data:", shoppingSession);
+  const [cart, setCart] = useState('');
+ 
 
   // const dispatch = useDispatch();
 
-  // const handleRemoveFromCart = (productId) => {
-  //   dispatch(removeFromCart(productId));
-  // };
+  const handleRemoveFromCart = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
 
-  // const handleClearCart = () => {
-  //   dispatch(clearCart());
-  // };
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
   
   const handleProceedToCheckout = () => {
     fetch('api/checkout/create-checkout-session', {
@@ -80,11 +55,11 @@ const Cart = () => {
   };
 
 
-  // const totalPrice = cartProducts.reduce((sum, product) => sum + product.price * product.quantity, 0);
+  const totalPrice = cartProducts.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
   return (
     <Box className='cart-container'>
-      {/* <Typography variant="h4" className="cart-header">
+      <Typography variant="h4" className="cart-header">
         Shopping Cart
       </Typography>
       <Box className='cart-page'>
@@ -142,7 +117,7 @@ const Cart = () => {
             Clear Cart
           </Button>
         </Box>
-      </Box> */}
+      </Box>
     </Box>
   );
 };

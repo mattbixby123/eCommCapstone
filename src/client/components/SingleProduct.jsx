@@ -4,7 +4,7 @@ import { useFetchProductByIdQuery, useAddToCartMutation, useMeQuery} from '../re
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { addProductToCart } from '../redux/cartslice';
+import { addProductToCart } from '../redux/cartslice';
 
 
 const SingleProduct = () => {
