@@ -3,23 +3,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
-import { useFetchShoppingSessionQuery, useMeQuery } from "../redux/api";
+import { useMeQuery } from "../redux/api";
 
 const Cart = () => {
   const {data: customer} = useMeQuery();
   const cartProducts = useSelector((state) => state.cart.products);
   console.log("Current Cart Products:", cartProducts); 
 
-  // const { data: shoppingSession, isLoading, error } = useFetchShoppingSessionQuery();
-  const [cart, setCart] = useState();
-  console.log(customer.shoppingSessions);
-
-  // const bookProducts = cartProducts.filter((product) => product.type === 'book');
-  // const comicProducts = cartProducts.filter((product) => product.type === 'comic');
-  // const magazineProducts = cartProducts.filter((product) => product.type === 'magazine');
-
-  console.log("Current Cart Products:", cartProducts);
-  // console.log("Shopping Session Data:", shoppingSession);
+  const [cart, setCart] = useState('');
+  
+  const sessionId = [(customer.shoppingSessions[0]).id];
+  console.log(sessionId);
+  // console.log("Current Cart Products:", cartProducts);
+ 
 
   const dispatch = useDispatch();
 
