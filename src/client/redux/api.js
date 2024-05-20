@@ -88,8 +88,9 @@ export const api = createApi({
     }),
 
 
-    fetchCart: builder.query({
-      query: (sessionId) => `api/cartItem/shoppingSession/${sessionId}`
+
+    fetchAllCartItems: builder.query({
+      query: () => 'api/cartItem/'
     }),
 
     fetchOrderHistory: builder.query({
@@ -129,7 +130,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useWelcomeQuery,
-  useFetchCartQuery,
+  useFetchAllCartItemsQuery,
   useAddToCartMutation,
   useFetchShoppingSessionQuery,
   // useCreateCheckoutSessionMutation,

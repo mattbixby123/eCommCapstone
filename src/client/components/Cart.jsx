@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useNavigate, useParams } from 'react-router-dom';
-// import { removeFromCart, clearCart } from "../redux/cartslice";
+import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
-import { useMeQuery } from "../redux/api";
+import { useMeQuery, useFetchAllCartItemsQuery } from "../redux/api";
 
 const Cart = () => {
   
@@ -14,14 +14,17 @@ const Cart = () => {
   // const { productId } = useParams();
 
   const {data: customer} = useMeQuery();
-  const cartProducts = useSelector((state) => state.cart.products);
-  console.log("Current Cart Products:", cartProducts); 
-
-  const [cart, setCart] = useState('');
-  
   const sessionId = [(customer.shoppingSessions[0]).id];
   console.log(sessionId);
-  // console.log("Current Cart Products:", cartProducts);
+  const { data: cartItems } = useFetchAllCartItemsQuery();
+  console.log(cartItems);
+  // const itemsBySession = cartItems.filter(id => id.sessionId === sessionId);
+  // console.log(itemsBySession);
+
+  const cartProducts = useSelector((state) => state.cart.products); // old logic linked to local state storage of cart items - needed for UI rendering to display
+  // console.log("Current Cart Products:", cartProducts); 
+  
+  const [cart, setCart] = useState('');
  
 
   // const dispatch = useDispatch();
