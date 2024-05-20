@@ -11,6 +11,9 @@ const SingleProduct = () => {
   const { productId } = useParams();
   const {data: customer} = useMeQuery();
   console.log(customer);
+  const sessionId = (customer.shoppingSessions[0]).id;
+  console.log(sessionId);
+
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
 
 
@@ -21,8 +24,6 @@ const SingleProduct = () => {
   const token = useSelector(state => state.auth.token);
   const dispatch = useDispatch();
 
-  const sessionId = (customer.shoppingSessions[0]).id;
-  console.log(sessionId);
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
