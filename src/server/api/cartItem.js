@@ -34,12 +34,37 @@ router.get("/:id", async (req, res, next) => {
      next (error);
   }
  });
+
+ router.get("/shoppingSession/:sessionId", async (req, res, next) => {
+  try {
+     const { id, sessionId } = req.params;
+
+     const cartItems = await prisma.cartItem.findMany({
+      where: {
+        id: id,
+        sessionId: Number(sessionId) },
+      include: {
+        product: true
+      }
+      
+     });
+     if (!cartItems) {
+       return res.status(404).json({ error: "Cart item not found" });
+     }
+     res.json(cartItems);
+  } catch (error) {
+     next (error);
+  }
+ });
+
+
  
 
 // POST /cartItem - Create a new cartItem.
-router.post("/", async (req, res, next) => {
+router.post("/:sessionId", async (req, res, next) => {
   try {
-     const { sessionId, productId, quantity } = req.body;
+    const { sessionId } = req.params
+    const { productId, quantity } = req.body;
      if (!sessionId || !productId || !quantity) {
        return res.status(400).json({ message: "Missing required fields" });
      }

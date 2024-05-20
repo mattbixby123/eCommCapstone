@@ -39,6 +39,31 @@ router.get("/:id", async (req, res, next) => {
      next (error);
   }
  });
+
+ // GET /shoppingSession/:customerId - Retrieve a specific shoppingSession by customer ID.
+  // This route fetches a specific shopping session by the customer's ID.
+  router.get("/customer/:customerId", async (req, res, next) => {
+    try {
+      const { id, customerId } = req.params;
+
+      const shoppingSession = await prisma.shoppingSession.findMany({
+        where: { 
+          id: id,
+          customerId: parseInt(customerId)
+        },
+        include: {
+          cartItems: true
+        }
+       });
+
+       if (!shoppingSession) {
+         return res.status(404).json({ error: "Shopping session not found" });
+       }
+       res.json(shoppingSession);
+    } catch (error) {
+       next (error);
+    }
+   });
  
 // POST /shoppingSession - Create a new shoppingSession.
  // This route allows creating a new shopping session.

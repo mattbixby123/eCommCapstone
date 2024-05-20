@@ -17,9 +17,17 @@ import Account from './components/Account';
 import OrderHistory from './components/OrderHistory';
 import AdminView from './components/AdminView';
 import AddProduct from './components/AddProduct';
+import { useMeQuery } from './redux/api';
 
 
 function App() {
+  const {data: customer, isLoading, error} = useMeQuery();
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  const session = customer.shoppingSessions[0].id
+
+  console.log(session)
+
   
 
   return (
@@ -40,7 +48,7 @@ function App() {
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
-          <Route path= '/cart' element={<Cart />}/>
+          <Route path= '/cart' element={<Cart />} session={session}/>
           <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
           <Route path= '/admin' element={<AdminView />} />
           <Route path= '/productform' element={<AddProduct />}/> 
