@@ -4,6 +4,7 @@ import axios from 'axios';
 const AddProduct = () => {
   const [productName, setProductName] = useState('');
   const [desc, setDesc] = useState('');
+  const [author, setAuthor] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [SKU, setSKU] = useState('');
   const [inventory, setInventory] = useState('');
@@ -14,9 +15,10 @@ const AddProduct = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/product', {
+      const response = await axios.post('api/product', {
         name: productName,
         desc,
+        author,
         imageUrl,
         SKU,
         inventory,
@@ -29,6 +31,7 @@ const AddProduct = () => {
       // Reset form fields
       setProductName('');
       setDesc('');
+      setAuthor('');
       setImageUrl('');
       setSKU('');
       setInventory('');
@@ -56,6 +59,14 @@ const AddProduct = () => {
           type="text"
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
+        />
+      </label>
+      <label>
+        Author:
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
         />
       </label>
       <label>
