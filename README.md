@@ -38,7 +38,7 @@ Version Control: Git, GitHub
 
 **Installation:
 
-1. Clone repo:
+1. Fork and Clone repo:
 
    git@github.com:mattbixby123/eCommCapstone.git
 
