@@ -5,7 +5,7 @@ import AddToCart from './AddToCart';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { addProductToCart } from '../redux/cartslice';
+// import { addProductToCart } from '../redux/cartslice';
 
 const SingleMagazine= () => {
   const { magazineId } = useParams();

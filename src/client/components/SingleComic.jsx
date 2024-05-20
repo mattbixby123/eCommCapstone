@@ -4,7 +4,7 @@ import { useFetchComicsByIdQuery, useAddToCartMutation } from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { addProductToCart } from '../redux/cartslice';
+// import { addProductToCart } from '../redux/cartslice';
 
 const SingleComic = () => {
   const { comicId } = useParams();

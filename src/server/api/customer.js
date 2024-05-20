@@ -46,28 +46,7 @@ router.get("/", async (req, res, next) => {
  }
 });
 
-// GET /shoppingSession/:customerId - Retrieve a specific shoppingSession by customer ID.
-  // This route fetches a specific shopping session by the customer's ID.
-  router.get("/shoppingSession/:id", async (req, res, next) => {
-    try {
-      const { id } = req.params;
-       const customer = await prisma.customer.findUnique({
-        where: { 
-          id: Number(id)
-        },
-        include: {
-          shoppingSessions: true
-        }
-       });
 
-       if (!customer) {
-         return res.status(404).json({ error: "Shopping session not found" });
-       }
-       res.json(customer);
-    } catch (error) {
-       next (error);
-    }
-   });
 
 // POST /customer - Create a new customer
   //***ADMIN STORY TIER 3***//
