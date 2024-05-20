@@ -70,9 +70,6 @@ export const api = createApi({
       query:(magazineId) => `api/product/${magazineId}`,
     }),
     
-    fetchShoppingSession: builder.query({
-      query: (customerId) => `api/shoppingSession/customer/${customerId}`,
-    }),
     
     addToCart: builder.mutation({
       query: ({ sessionId, productId, quantity, type }) => ({
@@ -132,7 +129,6 @@ export const {
   useWelcomeQuery,
   useFetchAllCartItemsQuery,
   useAddToCartMutation,
-  useFetchShoppingSessionQuery,
   // useCreateCheckoutSessionMutation,
   // useRemoveFromCartMutation,
   useFetchOrderHistoryQuery,
