@@ -35,6 +35,61 @@ router.get("/:id", async (req, res, next) => {
   }
  });
  
+ router.get("/customer/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const shoppingSession = await prisma.shoppingSession.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!shoppingSession) {
+      return res.status(404).json({ error: "Shopping session not found" })
+    }
+
+    const cartItems = await prisma.cartItem.findMany({
+      where: { sessionId: shoppingSession.id },
+    });
+
+    const cartProducts = await Promise.all(
+      cartItems.map(async (cartItem) => {
+        return await prisma.product.findUnique({
+          where: {id: cartItem.productId },
+        });
+      })
+    );
+
+    const validCartProducts = cartProducts.filter((product) => product!== null);
+
+    res.json(validCartProducts);
+
+
+    // const cartItem = await prisma.cartItem.findUnique({
+    //   where: { id: parseInt(id) }
+    // });
+    
+    // const customerShoppingSession = await prisma.shoppingSession.findUnique({
+    //   where: { customerId: Number(customer.id) },
+    // });
+
+    // const cartItemsBySessionId = await prisma.cartItem.findMany({
+    //   where: { sessionId: Number(customerShoppingSession.id) }
+    // });
+
+    // const cartProducts = await prisma.product.findMany({
+    //   where: { sessionId: Number(cartItem.productId) },
+    // });
+
+    // if (!cartProducts.length) {
+    //   return res.status(404).json({ error: "Products not found" });
+    // }
+    // res.json(cartProducts);
+
+
+
+  } catch(error) {
+    next (error);
+  }
+ });
 
 // POST /cartItem - Create a new cartItem.
 router.post("/:sessionId", async (req, res, next) => {

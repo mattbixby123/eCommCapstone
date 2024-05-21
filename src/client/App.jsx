@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Toolbar from './components/Toolbar';
 import Welcome from './components/Welcome';
@@ -18,9 +18,35 @@ import OrderHistory from './components/OrderHistory';
 import AdminView from './components/AdminView';
 import AddProduct from './components/AddProduct';
 import { useMeQuery } from './redux/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCustomer } from './redux/authslice';
 
 
 function App() {
+  const dispatch = useDispatch()
+  const token = useSelector((state) => state.auth.token)
+  const {data: customer, isLoading, error} = useMeQuery( 
+    {
+      skip: !token,
+    },
+  )
+
+  if(customer) {
+    dispatch (setCustomer(customer))
+  }
+  
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  console.log(customer.shoppingSessions);
+
+
+
+
+
+    /* fetch user data */
+
+    console.log('My token in App.jsx is:',token);
   // const {data: customer, isLoading, error} = useMeQuery();
   // if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>Error: {error.message}</div>;
@@ -48,7 +74,7 @@ function App() {
           <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
-          <Route path= '/cart' element={<Cart />}/>
+          <Route path= '/cart' element={<Cart />} />
           <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
           <Route path= '/admin' element={<AdminView />} />
           <Route path= '/productform' element={<AddProduct />}/> 
