@@ -16,6 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'left',
   color: theme.palette.text.secondary,
   margin: 10,
+  paddingBottom: theme.spacing(4),
 }));
 
 const SearchContainer = styled(Box)(({ theme }) => ({
