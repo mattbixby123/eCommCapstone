@@ -18,18 +18,19 @@ router.get("/", async (req, res, next) => {
  });
  
 
-// GET /cartItem/:id - Retrieve a specific cartItem by ID
+// GET /cartItem/:id - Retrieve cartItems by  session ID
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:sessionId", async (req, res, next) => {
   try {
-     const { id } = req.params;
-     const cartItem = await prisma.cartItem.findUnique({
-       where: { id: parseInt(id) },
+     const { sessionId } = req.params;
+     const cartItems = await prisma.cartItem.findMany({
+       where: { sessionId: parseInt(sessionId) },
+       include: { product: true }
      });
-     if (!cartItem) {
+     if (!cartItems) {
        return res.status(404).json({ error: "Cart item not found" });
      }
-     res.json(cartItem);
+     res.json(cartItems);
   } catch (error) {
      next (error);
   }
@@ -54,6 +55,7 @@ router.get("/:id", async (req, res, next) => {
       cartItems.map(async (cartItem) => {
         return await prisma.product.findUnique({
           where: {id: cartItem.productId },
+          include: {cartItem: true},
         });
       })
     );
@@ -62,34 +64,12 @@ router.get("/:id", async (req, res, next) => {
 
     res.json(validCartProducts);
 
-
-    // const cartItem = await prisma.cartItem.findUnique({
-    //   where: { id: parseInt(id) }
-    // });
-    
-    // const customerShoppingSession = await prisma.shoppingSession.findUnique({
-    //   where: { customerId: Number(customer.id) },
-    // });
-
-    // const cartItemsBySessionId = await prisma.cartItem.findMany({
-    //   where: { sessionId: Number(customerShoppingSession.id) }
-    // });
-
-    // const cartProducts = await prisma.product.findMany({
-    //   where: { sessionId: Number(cartItem.productId) },
-    // });
-
-    // if (!cartProducts.length) {
-    //   return res.status(404).json({ error: "Products not found" });
-    // }
-    // res.json(cartProducts);
-
-
-
   } catch(error) {
     next (error);
   }
  });
+
+
 
 // POST /cartItem - Create a new cartItem.
 router.post("/:sessionId", async (req, res, next) => {

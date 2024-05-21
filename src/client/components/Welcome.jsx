@@ -81,11 +81,11 @@ const Welcome = () => {
     }
   }, [searchParam, productsData]);
 
-  useEffect(() => {
-    if (productsData) {
-      dispatch(addTotalToSession())
-    }
-  })
+  // useEffect(() => {
+  //   if (productsData) {
+  //     dispatch(addTotalToSession())
+  //   }
+  // })
 
   const handlePageChange = (event, value) => {
     setPage(value);

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../redux/cartslice";
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
-import { useMeQuery, useFetchProductsBySessionQuery } from "../redux/api";
+import { useFetchCartBySessionQuery, useRemoveFromCartMutation } from "../redux/api";
 
 const Cart = () => {
   const customer = useSelector((state) => state.auth.customer);
@@ -13,10 +13,10 @@ const Cart = () => {
   
 
 
+  const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
 
+  const [removeFromCart, useRemoveFromCartMutation] = useState(null)
 
-
-  const {data: cartProducts, isLoading, error} = useFetchProductsBySessionQuery(sessionId);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -25,18 +25,9 @@ const Cart = () => {
   console.log(cartProducts);
 
 
-  
 
-  // const cartProducts = useSelector((state) => state.cart.products); // old logic linked to local state storage of cart items - needed for UI rendering to display
-  // console.log("Current Cart Products:", cartProducts); 
-  
-  // const [cart, setCart] = useState('');
- 
-
-  // const dispatch = useDispatch();
-
-  const handleRemoveFromCart = (productId) => {
-    dispatch(removeFromCart(productId));
+  const handleRemoveFromCart = (id) => {
+    removeFromCart(id);
   };
 
   const handleClearCart = () => {
@@ -61,7 +52,7 @@ const Cart = () => {
   };
 
 
-  const totalPrice = cartProducts.reduce((sum, product) => sum + product.price * product.quantity, 0);
+  const totalPrice = cartProducts.reduce((sum, product) => sum + product.product.price * product.quantity, 0);
 
 
   return (
@@ -72,7 +63,7 @@ const Cart = () => {
       <Box className='cart-page'>
         <Box className="card-items-cart">
           {cartProducts.map((product) => (
-            <Box key={product.id}>
+            <Box key={product.product.id}>
               <Card sx={{
                 bgcolor: 'lightgrey',
                 boxShadow: 3,
@@ -84,10 +75,10 @@ const Cart = () => {
                 maxWidth: '300px'
               }}>
                 <CardContent>
-                  <Typography gutterBottom variant="h6">{product.name}</Typography>
-                  <Typography variant="body2">Price: ${product.price}</Typography>
+                  <Typography gutterBottom variant="h6">{product.product.name}</Typography>
+                  <Typography variant="body2">Price: ${product.product.price}</Typography>
                   <Typography variant="body2">Quantity: {product.quantity}</Typography>
-                  <Typography variant="body2">Category: {product.type}</Typography>
+                  <Typography variant="body2">Category ID: {product.product.categoryId}</Typography>
                 </CardContent>
                 <CardActions>
                   <Button
