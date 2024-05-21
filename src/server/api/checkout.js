@@ -19,11 +19,11 @@ router.post('/create-checkout-session', async (req, res) => {
           price_data: {
             currency: "usd",
             product_data: {
-              name: cartProduct.name
+              name: cartProduct.product.name
             },
-            unit_amount: cartProduct.price*100
+            unit_amount: cartProduct.product.price*100
           },
-          // quantity: cartProduct.quantity
+          quantity: cartProduct.quantity
         }
       }),
       success_url: `${process.env.SERVER_URL}/cart`,

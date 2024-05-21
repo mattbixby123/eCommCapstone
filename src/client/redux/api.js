@@ -73,6 +73,10 @@ export const api = createApi({
     fetchProductsBySession: builder.query({
       query:(sessionId) => `api/cartItem/customer/${sessionId}`,
     }),
+
+    fetchCartBySession: builder.query({
+      query:(sessionId) => `api/cartItem/${sessionId}`,
+    }),
     
     addToCart: builder.mutation({
       query: ({ sessionId, productId, quantity, type }) => ({
@@ -102,14 +106,15 @@ export const api = createApi({
     fetchAllCustomerData: builder.query({
       query: () => '/api/customer',
     }),
+
     
-    // removeFromCart: builder.mutation({
-    //   query: ({ sessionId, productId }) => ({
-    //     url: `api/cart/cartitem/${sessionId}/${productId}`,
-    //     method: 'DELETE',
-    //     // body: { productId }
-    //   }),
-    // }),
+    
+    removeFromCart: builder.mutation({
+      query: ({ id }) => ({
+        url: `api/cartitem/${id}`,
+        method: 'DELETE',
+      }),
+    }),
     //   createCheckoutSession: builder.mutation({
     //   query: ({ cartProducts }) => ({
     //     url: 'checkout/create-checkout-session',
@@ -135,8 +140,9 @@ export const {
   useFetchAllCartItemsQuery,
   useAddToCartMutation,
   useFetchProductsBySessionQuery,
+  useFetchCartBySessionQuery,
   // useCreateCheckoutSessionMutation,
-  // useRemoveFromCartMutation,
+  useRemoveFromCartMutation,
   useFetchOrderHistoryQuery,
   useFetchAllCustomerDataQuery
 } = api;
