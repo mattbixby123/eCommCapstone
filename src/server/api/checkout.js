@@ -23,7 +23,7 @@ router.post('/create-checkout-session', async (req, res) => {
             },
             unit_amount: cartProduct.price*100
           },
-          quantity: cartProduct.quantity
+          // quantity: cartProduct.quantity
         }
       }),
       success_url: `${process.env.SERVER_URL}/cart`,
