@@ -200,8 +200,6 @@ export default function RegistrationForm() {
           </Typography>
         )}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2}}>
-          {/* <Button variant='outlined' onClick={() => navigate('/')}>Home</Button> */}
-          {/* <Button variant='outlined' onClick={() => navigate('/product')}>Products</Button> */}
         </Box>
       </Box>
     </Container>

@@ -15,10 +15,6 @@ const SingleProduct = () => {
   console.log(sessionId);
 
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
-
-
- 
-
   const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);

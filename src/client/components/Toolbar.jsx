@@ -14,7 +14,6 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useMeQuery } from '../redux/api';
@@ -41,7 +40,6 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseNavMenu = (page) => {
-    // console.log(page);
     if (page) {
       navigate(`/${page}`);
       setAnchorElNav(null);
@@ -78,15 +76,6 @@ function ResponsiveAppBar() {
     },
   }));
   
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
   
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
@@ -186,15 +175,6 @@ function ResponsiveAppBar() {
           >
             Retro Rag Reads
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-                <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-            />
-            </Search>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -224,7 +204,6 @@ function ResponsiveAppBar() {
     ) : (
       <Avatar alt="Default" src="/default-avatar.png" />
     )}
-                {/* <Avatar/> */}
               </IconButton>
             </Tooltip>
             <Menu
