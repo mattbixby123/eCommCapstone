@@ -16,7 +16,6 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useMeQuery } from '../redux/api';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const pages = ['Books', 'Comics', 'Magazines'];
@@ -30,7 +29,7 @@ function ResponsiveAppBar() {
   const token = useSelector(state => state.auth.token);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { data: customer } = useMeQuery();
+  const customer = useSelector((state) => state.auth.customer);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -200,7 +199,7 @@ function ResponsiveAppBar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
  
               {customer ? (
-      <Avatar alt={customer.firstName} src={customer.imageUrl} />
+      <Avatar alt={`${customer.firstName}`} src={customer.imageUrl} />
     ) : (
       <Avatar alt="Default" src="/default-avatar.png" />
     )}

@@ -18,11 +18,14 @@ const authSlice = createSlice({
     setCustomer: (state, action) => {
       const customer = action.payload;
       state.customer = customer;
+    },
+    clearCustomer: (state) => {
+      state.customer = ''
     }
   }
 });
 
-export const { setToken, clearToken, setCustomer } = authSlice.actions;
+export const { setToken, clearToken, setCustomer, clearCustomer } = authSlice.actions;
 export const selectToken = state => state.auth.token;
 export const selectCustomer = state => state.auth.customer;
 

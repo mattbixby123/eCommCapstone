@@ -30,15 +30,18 @@ function App() {
       skip: !token,
     },
   )
-
+  
+  // console.log(customer);
+  
+  
   if(customer) {
     dispatch (setCustomer(customer))
   }
   
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error.message}</div>;
 
-  console.log(customer.shoppingSessions);
+  // console.log(customer.shoppingSessions);
 
 
 
@@ -46,7 +49,7 @@ function App() {
 
     /* fetch user data */
 
-    console.log('My token in App.jsx is:',token);
+    // console.log('My token in App.jsx is:',token);
   // const {data: customer, isLoading, error} = useMeQuery();
   // if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>Error: {error.message}</div>;

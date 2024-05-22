@@ -4,20 +4,23 @@ import { useFetchComicsByIdQuery, useAddToCartMutation } from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { addProductToCart } from '../redux/cartslice';
+import { addProductToCart } from '../redux/cartslice';
 
 const SingleComic = () => {
   const { comicId } = useParams();
+  const customer = useSelector((state) => state.auth.customer);
+  const sessionId = (customer.shoppingSessions[0]).id;
   const { data: comic, error, isLoading } = useFetchComicsByIdQuery(comicId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
+  const token = useSelector(state => state.auth.token);
   const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
-      const response = await addToCart({
-        sessionId: 1, 
+      await addToCart({
+        sessionId: parseInt(sessionId),
         productId: parseInt(comicId),
         quantity: 1,
       });

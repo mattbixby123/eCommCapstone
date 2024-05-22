@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { clearToken } from '../redux/authslice';
+import { clearToken, clearCustomer } from '../redux/authslice';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLogoutMutation } from '../redux/api'
@@ -11,6 +11,7 @@ const useLogout = () => {
 
   useEffect(() => {
     dispatch(clearToken());
+    dispatch(clearCustomer())
     navigate('/')
   }, []);
 
