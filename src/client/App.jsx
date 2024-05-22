@@ -19,7 +19,7 @@ import AdminView from './components/AdminView';
 import AddProduct from './components/AddProduct';
 import { useMeQuery } from './redux/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCustomer } from './redux/authslice';
+import { setCustomer, setSessionId } from './redux/authslice';
 
 
 function App() {
@@ -30,12 +30,13 @@ function App() {
       skip: !token,
     },
   )
-  
+
   // console.log(customer);
   
   
   if(customer) {
     dispatch (setCustomer(customer))
+    dispatch (setSessionId(customer.shoppingSessions[0].id))
   }
   
   // if (isLoading) return <div>Loading...</div>;
