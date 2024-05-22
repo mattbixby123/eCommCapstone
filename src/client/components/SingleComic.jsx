@@ -24,6 +24,7 @@ const SingleComic = () => {
         productId: parseInt(comicId),
         quantity: 1,
       });
+      location.reload();
       console.log('Comic added to cart successfully');
       
     //   dispatch(addProductToCart({

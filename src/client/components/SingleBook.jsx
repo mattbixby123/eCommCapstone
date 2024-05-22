@@ -23,7 +23,8 @@ const SingleBook = () => {
       sessionId: parseInt(sessionId),
       productId: parseInt(bookId),
       quantity: 1,
-    })
+    });
+    location.reload();
 
     console.log('Book added to cart successfully');
 
