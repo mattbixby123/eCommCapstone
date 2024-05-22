@@ -23,6 +23,7 @@ const SingleMagazine= () => {
         productId: parseInt(magazineId),
         quantity: 1,
       });
+      location.reload();
       console.log('Magazine added to cart successfully');
 
     //   dispatch(addProductToCart({
