@@ -131,10 +131,7 @@ router.delete("/:id", async (req, res) => {
     const deletedCustomer = await prisma.customer.delete({
       where: { id: parseInt(id) },
     });
-    res.json({ 
-      message: "Customer deleted successfully",
-      deletedCustomer: deletedCustomer 
-    });
+    res.send({ deletedCustomer: deletedCustomer });
  } catch (error) {
     next (error);
  }
