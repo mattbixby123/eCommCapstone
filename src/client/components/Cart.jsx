@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
-import { useFetchCartBySessionQuery, useRemoveFromCartMutation } from "../redux/api";
+import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppingSessionMutation } from "../redux/api";
 
 const Cart = () => {
   const sessionId = useSelector((state) => state.auth.sessionId)
@@ -16,9 +16,7 @@ const Cart = () => {
 
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
   const [removeFromCart, { isLoading: isUpdating}] = useRemoveFromCartMutation();
-
-
-
+  const [removeShoppingSession] = useRemoveShoppingSessionMutation();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -34,6 +32,7 @@ const Cart = () => {
       await removeFromCart({
         id: parseInt(id)
       })
+      location.reload();
 
       // navigate('/cart')
 
@@ -44,8 +43,19 @@ const Cart = () => {
   };
 
 
-  const handleClearCart = () => {
-    dispatch(clearCart());
+  async function handleClearCart() {
+
+    try {
+      await removeShoppingSession({
+        sessionId: parseInt(sessionId)
+      })
+      location.reload();
+
+
+    } catch(error) {
+      console.error('Error removing items from cart:', error.message);
+    }
+    // dispatch(clearCart());
   };
   
   const handleProceedToCheckout = () => {
@@ -124,7 +134,7 @@ const Cart = () => {
             variant="contained"
             color="error"
             sx={{ mt: 1 }}
-            onClick={handleClearCart}
+            onClick={() => handleClearCart(sessionId)}
           >
             Clear Cart
           </Button>

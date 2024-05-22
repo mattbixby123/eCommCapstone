@@ -115,6 +115,13 @@ export const api = createApi({
         method: 'DELETE',
       }),
     }),
+
+    removeShoppingSession: builder.mutation({
+      query: ({ sessionId }) => ({
+        url: `api/cartitem/shoppingSession${sessionId}`,
+        method: 'DELETE',
+      }),
+    }),
     //   createCheckoutSession: builder.mutation({
     //   query: ({ cartProducts }) => ({
     //     url: 'checkout/create-checkout-session',
@@ -143,6 +150,7 @@ export const {
   useFetchCartBySessionQuery,
   // useCreateCheckoutSessionMutation,
   useRemoveFromCartMutation,
+  useRemoveShoppingSessionMutation,
   useFetchOrderHistoryQuery,
   useFetchAllCustomerDataQuery
 } = api;
