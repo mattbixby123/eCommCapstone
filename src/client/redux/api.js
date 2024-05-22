@@ -95,7 +95,6 @@ export const api = createApi({
 
     fetchAllCartItems: builder.query({
       query: () => 'api/cartItem/',
-      providesTags: ["Customer"]
     }),
 
 
@@ -106,6 +105,7 @@ export const api = createApi({
     
     fetchAllCustomerData: builder.query({
       query: () => '/api/customer',
+      providesTags: ["Customer"]
     }),
 
     
@@ -140,13 +140,6 @@ export const api = createApi({
       }),
       invalidatesTags: ["Customer"]
     }),
-    //   createCheckoutSession: builder.mutation({
-    //   query: ({ cartProducts }) => ({
-    //     url: 'checkout/create-checkout-session',
-    //     method: 'POST',
-    //     body: { cartProducts },
-    //   }),
-    // }),
     
   }),
 });
@@ -166,7 +159,6 @@ export const {
   useAddToCartMutation,
   useFetchProductsBySessionQuery,
   useFetchCartBySessionQuery,
-  // useCreateCheckoutSessionMutation,
   useRemoveFromCartMutation,
   useRemoveShoppingSessionMutation,
   useFetchOrderHistoryQuery,

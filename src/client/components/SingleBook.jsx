@@ -8,13 +8,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SingleBook = () => {
   const { bookId } = useParams();
-  const customer = useSelector((state) => state.auth.customer);
-  const sessionId = (customer.shoppingSessions[0]).id;
+  // const customer = useSelector((state) => state.auth.customer);
+  const sessionId = useSelector((state) => state.auth.sessionId);
   const { data: book, error, isLoading } = useFetchBooksByIdQuery(bookId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
-  const token = useSelector(state => state.auth.token);
-  const dispatch = useDispatch();
+  // const token = useSelector(state => state.auth.token);
+  // const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
   e.preventDefault();
