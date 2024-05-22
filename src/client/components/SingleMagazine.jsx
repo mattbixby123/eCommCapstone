@@ -9,16 +9,17 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SingleMagazine= () => {
   const { magazineId } = useParams();
+  const sessionId = useSelector((state) => state.auth.sessionId);
   const { data: magazine, error, isLoading } = useFetchMagazinesByIdQuery(magazineId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
     try {
       await addToCart({
-        sessionId: 1, 
+        sessionId: parseInt(sessionId), 
         productId: parseInt(magazineId),
         quantity: 1,
       });

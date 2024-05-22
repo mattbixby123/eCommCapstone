@@ -9,13 +9,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SingleProduct = () => {
   const { productId } = useParams();
-  const customer = useSelector((state) => state.auth.customer);
-  const sessionId = (customer.shoppingSessions[0]).id;
+  // const customer = useSelector((state) => state.auth.customer);
+  const sessionId = useSelector((state) => state.auth.sessionId);
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
   const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
-  const token = useSelector(state => state.auth.token);
-  const dispatch = useDispatch();
+  // const token = useSelector(state => state.auth.token);
+  // const dispatch = useDispatch();
 
 
   async function handleAddToCartClick(e) {
@@ -26,6 +26,7 @@ const SingleProduct = () => {
         productId: parseInt(productId),
         quantity: 1,
       });
+      location.reload();
       console.log('Product added to cart successfully');
 
       // dispatch(addProductToCart({

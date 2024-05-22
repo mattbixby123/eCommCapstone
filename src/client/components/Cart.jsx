@@ -10,10 +10,10 @@ import '../style.css'
 import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppingSessionMutation } from "../redux/api";
 
 const Cart = () => {
-  const sessionId = useSelector((state) => state.auth.sessionId)
   
-
-
+  
+  
+  const sessionId = useSelector((state) => state.auth.sessionId)
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
   const [removeFromCart, { isLoading: isUpdating}] = useRemoveFromCartMutation();
   const [removeShoppingSession] = useRemoveShoppingSessionMutation();
