@@ -94,7 +94,8 @@ export const api = createApi({
 
 
     fetchAllCartItems: builder.query({
-      query: () => 'api/cartItem/'
+      query: () => 'api/cartItem/',
+      providesTags: ["Customer"]
     }),
 
 
@@ -121,6 +122,23 @@ export const api = createApi({
         url: `api/cartitem/shoppingSession${sessionId}`,
         method: 'DELETE',
       }),
+    }),
+
+    updateCustomer: builder.mutation({
+      query: (customer) => ({
+        url: `api/customer/${customer.id}`,
+        method: "PUT",
+        body: customer,
+      }),
+      invalidatesTags: ["Customer"]
+    }),
+
+    deleteCustomer: builder.mutation({
+      query: (id) => ({
+        url: `api/customer/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Customer"]
     }),
     //   createCheckoutSession: builder.mutation({
     //   query: ({ cartProducts }) => ({
@@ -152,5 +170,7 @@ export const {
   useRemoveFromCartMutation,
   useRemoveShoppingSessionMutation,
   useFetchOrderHistoryQuery,
-  useFetchAllCustomerDataQuery
+  useFetchAllCustomerDataQuery,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation
 } = api;

@@ -99,7 +99,6 @@ router.get("/me", async (req, res, next) => {
 
       res.send(shoppingSession);
     }
-    res.send("I'm tired")
 
 
   } catch (error) {

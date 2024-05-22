@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useFetchAllCustomerDataQuery } from "../redux/api";
+import { useFetchAllCustomerDataQuery, useUpdateCustomerMutation, useDeleteCustomerMutation } from "../redux/api";
 import Pagination from "@mui/material/Pagination";
 import { Paper, Grid, Box, Button, List, ListItem, ListItemText, ListSubheader, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -36,7 +36,9 @@ const ButtonGroup = styled(Box)(({ theme }) => ({
 }));
 
 function AdminView() {
-  const { data: customers, error, isLoading } = useFetchAllCustomerDataQuery();
+  const { data: customers, error, isLoading, refetch } = useFetchAllCustomerDataQuery();
+  const [updateCustomer] = useUpdateCustomerMutation();
+  const [deleteCustomer] = useDeleteCustomerMutation();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [customersPerPage] = useState(9);
@@ -60,14 +62,38 @@ const currentCustomers = filteredCustomers.slice(
 const handlePageChange = (event, value) => setCurrentPage(value);
 
 // Handle delete customer
-// const handleDeleteCustomer = (customerId) => {
-//   // Your delete logic here
-// };
+const handleDeleteCustomer = async (customerId) => {
+  // Find the customer object based on customerId
+  const customer = customers.find((cust) => cust.id === customerId);
+
+  if (customer) {
+    try {
+      await deleteCustomer(customerId).unwrap();
+      console.log(`Customer ${customerId} (${customer.username}) deleted successfully`);
+      refetch(); // Refetch the customer data after delete
+    } catch (error) {
+      console.error("Failed to delete customer:", error);
+    }
+  } else {
+    console.error(`Customer with id ${customerId} not found`);
+  }
+};
+
 
 // Handle toggle isAdmin status
-// const handleToggleAdmin = (customerId) => {
-//   // Your toggle admin logic here
-// };
+const handleToggleAdmin = async (customerId) => {
+  const customer = customers.find((cust) => cust.id === customerId);
+  if (customer) {
+    const updatedCustomer = { ...customer, isAdmin: !customer.isAdmin };
+    try {
+      await updateCustomer({ id: customer.id, ...updatedCustomer }).unwrap();
+      console.log(`Customer ${customer.id}, ${customer.username} admin status toggled successfully`);
+    } catch (error) {
+      console.error("Failed to update customer:", error);
+    }
+  }
+};
+
 
 // Filter customers based on search query
 
