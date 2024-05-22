@@ -24,13 +24,13 @@ const SingleMagazine= () => {
       });
       console.log('Magazine added to cart successfully');
 
-      dispatch(addProductToCart({
-      id: magazineId,
-      name: magazine.name,
-      price: magazine.price,
-      quantity: 1,
-      type: 'Magazine'
-    }));
+    //   dispatch(addProductToCart({
+    //   id: magazineId,
+    //   name: magazine.name,
+    //   price: magazine.price,
+    //   quantity: 1,
+    //   type: 'Magazine'
+    // }));
     } catch (error) {
       console.error('Error adding magazine to cart.', error.message);
     }

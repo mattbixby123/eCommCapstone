@@ -133,6 +133,20 @@ router.delete("/:id", async (req, res, next) => {
      next (error);
   }
  });
+
+ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
+  try {
+     const { sessionId } = req.params;
+     const deletedCartItems = await prisma.cartItem.deleteMany({
+       where: { sessionId: parseInt(sessionId) },
+     });
+     res.json(deletedCartItems);
+  } catch (error) {
+     next (error);
+  }
+ });
+
+
  
 
 module.exports = router;

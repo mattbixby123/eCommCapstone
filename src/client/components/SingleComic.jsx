@@ -4,7 +4,7 @@ import { useFetchComicsByIdQuery, useAddToCartMutation } from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { addProductToCart } from '../redux/cartslice';
+// import { addProductToCart } from '../redux/cartslice';
 
 const SingleComic = () => {
   const { comicId } = useParams();
@@ -26,13 +26,13 @@ const SingleComic = () => {
       });
       console.log('Comic added to cart successfully');
       
-      dispatch(addProductToCart({
-      id: comicId,
-      name: comic.name,
-      price: comic.price,
-      quantity: 1,
-      type: 'Comic'
-    }));
+    //   dispatch(addProductToCart({
+    //   id: comicId,
+    //   name: comic.name,
+    //   price: comic.price,
+    //   quantity: 1,
+    //   type: 'Comic'
+    // }));
     } catch (error) {
       console.error('Error adding book to cart.', error.message);
     }
