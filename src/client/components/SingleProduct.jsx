@@ -4,7 +4,7 @@ import { useFetchProductByIdQuery, useAddToCartMutation} from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { addProductToCart } from '../redux/cartslice';
+// import { addProductToCart } from '../redux/cartslice';
 
 
 const SingleProduct = () => {
@@ -28,13 +28,13 @@ const SingleProduct = () => {
       });
       console.log('Product added to cart successfully');
 
-      dispatch(addProductToCart({
-        id: productId,
-        name: product.name,
-        price: product.price,
-        quantity: 1,
-        type: 'Product'
-      }));
+      // dispatch(addProductToCart({
+      //   id: productId,
+      //   name: product.name,
+      //   price: product.price,
+      //   quantity: 1,
+      //   type: 'Product'
+      // }));
     } catch (error) {
       console.error('Error adding book to cart.', error.message);
     }
