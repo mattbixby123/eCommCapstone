@@ -1,21 +1,22 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+/* useNavigate to refresh the page after an item has been removed from the cart does not seem to work, all instances of useNavigate have been commented out, consider other possible solutions to refresh */
 // import { useNavigate, useParams } from 'react-router-dom';
-import { removeFromCart, clearCart } from "../redux/cartslice";
+
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
 import { useFetchCartBySessionQuery, useRemoveFromCartMutation } from "../redux/api";
 
 const Cart = () => {
-  const customer = useSelector((state) => state.auth.customer);
-  const sessionId = (customer.shoppingSessions[0].id);
+  const sessionId = useSelector((state) => state.auth.sessionId)
   
 
 
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
+  const [removeFromCart, { isLoading: isUpdating}] = useRemoveFromCartMutation();
 
-  const [removeFromCart, useRemoveFromCartMutation] = useState(null)
 
 
   if (isLoading) return <div>Loading...</div>;
@@ -24,11 +25,24 @@ const Cart = () => {
   console.log(sessionId);
   console.log(cartProducts);
 
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
+  async function handleRemoveFromCart(id) {
+
+    try {
+      await removeFromCart({
+        id: parseInt(id)
+      })
+
+      // navigate('/cart')
 
 
-  const handleRemoveFromCart = (id) => {
-    removeFromCart(id);
+    } catch(error) {
+      console.error('Error removing item from cart:', error.message);
+    }
   };
+
 
   const handleClearCart = () => {
     dispatch(clearCart());

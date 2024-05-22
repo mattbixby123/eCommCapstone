@@ -21,12 +21,20 @@ const authSlice = createSlice({
     },
     clearCustomer: (state) => {
       state.customer = ''
+    },
+    setSessionId: (state, action) => {
+      const sessionId = action.payload;
+      state.sessionId = sessionId;
+    },
+    clearSessionId: (state, action) => {
+      state.sessionId = ''
     }
   }
 });
 
-export const { setToken, clearToken, setCustomer, clearCustomer } = authSlice.actions;
+export const { setToken, clearToken, setCustomer, clearCustomer, setSessionId, clearSessionId } = authSlice.actions;
 export const selectToken = state => state.auth.token;
 export const selectCustomer = state => state.auth.customer;
+export const selectSessionId = state => state.auth.sessionId;
 
 export default authSlice.reducer;
