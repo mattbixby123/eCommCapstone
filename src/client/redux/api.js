@@ -119,7 +119,7 @@ export const api = createApi({
 
     removeShoppingSession: builder.mutation({
       query: ({ sessionId }) => ({
-        url: `api/cartitem/shoppingSession${sessionId}`,
+        url: `api/cartitem/shoppingSession/${sessionId}`,
         method: 'DELETE',
       }),
     }),

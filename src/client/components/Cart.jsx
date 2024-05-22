@@ -23,7 +23,7 @@ const Cart = () => {
   console.log(sessionId);
   console.log(cartProducts);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const navigate = useNavigate();
 
   async function handleRemoveFromCart(id) {
