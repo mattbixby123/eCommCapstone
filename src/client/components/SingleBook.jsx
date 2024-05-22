@@ -8,21 +8,24 @@ import { addProductToCart } from '../redux/cartslice';
 
 const SingleBook = () => {
   const { bookId } = useParams();
+  const customer = useSelector((state) => state.auth.customer);
+  const sessionId = (customer.shoppingSessions[0]).id;
   const { data: book, error, isLoading } = useFetchBooksByIdQuery(bookId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
+  const token = useSelector(state => state.auth.token);
   const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
   e.preventDefault();
   try {
-    const response = await addToCart({
-      sessionId: 1,
+    await addToCart({
+      sessionId: parseInt(sessionId),
       productId: parseInt(bookId),
       quantity: 1,
-    }).unwrap();
+    })
 
-    console.log('Book added to cart successfully', response);
+    console.log('Book added to cart successfully');
 
     dispatch(addProductToCart({
       id: bookId,
@@ -32,7 +35,7 @@ const SingleBook = () => {
       type: 'Book'
     }));
   } catch (error) {
-    console.error('Error adding book to cart:', error.data?.message || error.message);
+    console.error('Error adding book to cart:', error.message);
   }
 }
 
