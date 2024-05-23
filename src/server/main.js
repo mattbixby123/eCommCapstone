@@ -20,7 +20,7 @@ app.use(express.static('public'))
 // app.use("/", express.static(path.join(__dirname, "public")));
 
 // Static file-serving middleware / only needed for deployment
-// app.use(express.static(path.join(__dirname, "..", "client/dist")));
+app.use(express.static(path.join(__dirname, "..", "client/dist")));
 
 // express-paginate middleware
 app.all(function(req, res, next) {
