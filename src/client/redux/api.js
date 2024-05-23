@@ -76,6 +76,7 @@ export const api = createApi({
 
     fetchCartBySession: builder.query({
       query:(sessionId) => `api/cartItem/${sessionId}`,
+      providesTags: ["Cart"]
     }),
     
     addToCart: builder.mutation({
@@ -89,6 +90,7 @@ export const api = createApi({
           type,
         },
       }),
+      invalidatesTags: ["Cart"]
     }),
 
 
