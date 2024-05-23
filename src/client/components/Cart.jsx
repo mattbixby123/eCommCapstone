@@ -11,10 +11,11 @@ import '../style.css'
 import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppingSessionMutation } from "../redux/api";
 
 const Cart = () => {
-  
+  // the three lines below retrieve the cancel message from the redirect 'cancel_url' (checkous.js L30)
   const location1 = useLocation();
   const params = new URLSearchParams(location1.search);
   const message = params.get('message');
+  
   
   const sessionId = useSelector((state) => state.auth.sessionId)
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
