@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 /* useNavigate to refresh the page after an item has been removed from the cart does not seem to work, all instances of useNavigate have been commented out, consider other possible solutions to refresh */
 // import { useNavigate, useParams } from 'react-router-dom';
@@ -11,7 +12,9 @@ import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppin
 
 const Cart = () => {
   
-  
+  const location1 = useLocation();
+  const params = new URLSearchParams(location1.search);
+  const message = params.get('message');
   
   const sessionId = useSelector((state) => state.auth.sessionId)
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
@@ -81,6 +84,7 @@ const Cart = () => {
 
   return (
     <Box className='cart-container'>
+      {message && <p>{message}</p>}
       <Typography variant="h4" className="cart-header">
         Shopping Cart
       </Typography>
