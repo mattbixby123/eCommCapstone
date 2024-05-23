@@ -1,4 +1,4 @@
-// this is the index for the express server
+//git// this is the index for the express server
 require('dotenv').config() //load env variables
 const express = require('express'); // Import Express framework
 const { prisma } = require('./db')
