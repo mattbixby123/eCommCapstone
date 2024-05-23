@@ -173,6 +173,8 @@ router.put("/:id", async (req, res, next) => {
 //      next (error);
 //   }
 //  });
+
+// DELETE /cartItem/:id - Delete a specific cartItem by Id
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -199,7 +201,7 @@ router.delete("/:id", async (req, res, next) => {
     const totalPriceToSubtract = product.price * cartItem.quantity;
 
     // Update the product's inventory
-    const updatedProduct = await prisma.product.update({
+    await prisma.product.update({
       where: { id: cartItem.productId },
       data: { inventory: product.inventory + cartItem.quantity },
     });
@@ -214,7 +216,7 @@ router.delete("/:id", async (req, res, next) => {
     }
 
     // Update the session's total price
-    const updatedSession = await prisma.shoppingSession.update({
+    await prisma.shoppingSession.update({
       where: { id: cartItem.sessionId },
       data: { total: shoppingSession.total - totalPriceToSubtract },
     });
@@ -231,18 +233,7 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-// DELETE route for Clearing entire cart on cart page
-//  router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
-//   try {
-//      const { sessionId } = req.params;
-//      const deletedCartItems = await prisma.cartItem.deleteMany({
-//        where: { sessionId: parseInt(sessionId) },
-//      });
-//      res.json(deletedCartItems);
-//   } catch (error) {
-//      next (error);
-//   }
-//  });
+// DELETE route for clearing entire cart on cart page
 router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
   try {
     const { sessionId } = req.params;
@@ -266,7 +257,7 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
       });
 
       if (product) {
-        const updatedProduct = await prisma.product.update({
+        await prisma.product.update({
           where: { id: item.productId },
           data: { inventory: product.inventory + item.quantity },
         });
@@ -285,7 +276,7 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
     }
 
     // Update the session's total price
-    const updatedSession = await prisma.shoppingSession.update({
+    await prisma.shoppingSession.update({
       where: { id: parseInt(sessionId) },
       data: { total: shoppingSession.total - totalPriceToSubtract },
     });
@@ -302,8 +293,17 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
   }
 });
 
-
-
- 
-
 module.exports = router;
+
+// DELETE route for Clearing entire cart on cart page
+//  router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
+//   try {
+//      const { sessionId } = req.params;
+//      const deletedCartItems = await prisma.cartItem.deleteMany({
+//        where: { sessionId: parseInt(sessionId) },
+//      });
+//      res.json(deletedCartItems);
+//   } catch (error) {
+//      next (error);
+//   }
+//  });

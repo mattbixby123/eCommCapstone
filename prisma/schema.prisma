@@ -65,7 +65,7 @@ model customer {
 model shoppingSession {
   id         Int        @id @default(autoincrement())
   customerId Int
-  total      Decimal
+  total      Decimal    @db.Decimal(65, 30)
   createdAt  DateTime   @default(now())
   modifiedAt DateTime   @updatedAt
   customer   customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
@@ -73,15 +73,14 @@ model shoppingSession {
 }
 
 model orderDetail {
-  id               Int           @id @default(autoincrement())
+  id               Int         @id @default(autoincrement())
   customerId       Int
   total            Decimal
-  paymentDetailsId Int           @unique // added unique to enforce one-to-one
-  createdAt        DateTime      @default(now())
-  modifiedAt       DateTime      @updatedAt
-  customer         customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  paymentDetailsId Int         @unique // added unique to enforce one-to-one
+  createdAt        DateTime    @default(now())
+  modifiedAt       DateTime    @updatedAt
+  customer         customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
   orderItems       orderItem[]
-  paymentDetail    paymentDetail @relation(fields: [paymentDetailsId], references: [id], onDelete: Cascade)
 }
 
 model cartItem {
@@ -104,15 +103,4 @@ model orderItem {
   modifiedAt  DateTime    @updatedAt
   orderDetail orderDetail @relation(fields: [orderId], references: [id])
   product     product     @relation(fields: [productId], references: [id])
-}
-
-model paymentDetail {
-  id          Int          @id @default(autoincrement())
-  orderId     Int
-  amount      Decimal
-  provider    String       @db.VarChar(150)
-  status      String       @db.VarChar(100)
-  createdAt   DateTime     @default(now())
-  modifiedAt  DateTime     @updatedAt
-  orderDetail orderDetail?
 }
