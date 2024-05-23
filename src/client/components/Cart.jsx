@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 /* useNavigate to refresh the page after an item has been removed from the cart does not seem to work, all instances of useNavigate have been commented out, consider other possible solutions to refresh */
 // import { useNavigate, useParams } from 'react-router-dom';
@@ -10,7 +11,10 @@ import '../style.css'
 import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppingSessionMutation } from "../redux/api";
 
 const Cart = () => {
-  
+  // the three lines below retrieve the cancel message from the redirect 'cancel_url' (checkous.js L30)
+  const location1 = useLocation();
+  const params = new URLSearchParams(location1.search);
+  const message = params.get('message');
   
   
   const sessionId = useSelector((state) => state.auth.sessionId)
@@ -81,6 +85,7 @@ const Cart = () => {
 
   return (
     <Box className='cart-container'>
+      {message && <p>{message}</p>}
       <Typography variant="h4" className="cart-header">
         Shopping Cart
       </Typography>

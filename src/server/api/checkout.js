@@ -26,8 +26,8 @@ router.post('/create-checkout-session', async (req, res) => {
           quantity: cartProduct.quantity
         }
       }),
-      success_url: `${process.env.SERVER_URL}/cart`,
-      cancel_url: `${process.env.SERVER_URL}/cart`
+      success_url: `${process.env.SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.SERVER_URL}/cart?message=Your order was cancelled. Please try again.`
     });
 
     return res.json({ url: session.url })
@@ -36,7 +36,14 @@ router.post('/create-checkout-session', async (req, res) => {
     if (!res.headersSent)
     res.status(500).json({ error: e.message })
   }
-})
+});
+
+// app.get('/order/success', async (req, res) => {
+//   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+//   const customer = await stripe.customers.retrieve(session.customer);
+
+//   res.send(`<html><body><h1>Thanks for your order, ${customer.name}!</h1></body></html>`);
+// });
 
 
 module.exports = router

@@ -20,6 +20,7 @@ import AddProduct from './components/AddProduct';
 import { useMeQuery } from './redux/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCustomer, setSessionId } from './redux/authslice';
+import OrderSuccess from './components/OrderSuccess';
 
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
           <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
           <Route path= '/admin' element={<AdminView />} />
           <Route path= '/productform' element={<AddProduct />}/> 
+          <Route path="/order/success" element={<OrderSuccess />} />
         </Routes>
         </div>
     </>
