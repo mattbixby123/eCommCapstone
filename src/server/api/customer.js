@@ -106,7 +106,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // DELETE /customer/:id - Delete a specific customer by Id.
-  //***ADMIN STORY TIER 3***//
+  
 
 router.delete("/:id", async (req, res) => {
  try {
