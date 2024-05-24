@@ -53,8 +53,7 @@ router.use((req, res, next) => {
 
 
 // POST /product - Create a new product.
-// This route will allow an admin to create a new product.
-  //***ADMIN STORY TIER 3***//
+// This route will allow an admin to create a new products
   
 router.post("/", async (req, res, next) => {
   try {
@@ -81,7 +80,6 @@ router.post("/", async (req, res, next) => {
 
 // PUT /product/:id - Update a specific product by ID.
 // This route will allow an admin to update an existing product.
-  //***ADMIN STORY TIER 3***//
 
 router.put("/:id", async (req, res, next) => {
  try {
@@ -107,12 +105,6 @@ router.put("/:id", async (req, res, next) => {
         inventory: inventory !== undefined ? inventory : existingProduct.inventory,
         price: price !== undefined ? price : existingProduct.price,
         categoryId: categoryId !== undefined ? parseInt(categoryId) : existingProduct.categoryId,
-        // name, ~~~ the above allows us to send any/no updates while retaining the original attribute if no update is passed
-        // desc,
-        // imageUrl,
-        // inventory,
-        // price,
-        // categoryId: categoryId ? parseInt(categoryId) : undefined,
       },
     });
 
@@ -125,7 +117,7 @@ router.put("/:id", async (req, res, next) => {
 
 // DELETE /product/:id - Delete a specific product by ID.
 // This route will allow an admin to delete an existing product.
-  //***ADMIN STORY TIER 3***//
+
 
 router.delete("/:id", async (req, res, next) => {
  try {

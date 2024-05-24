@@ -2,14 +2,6 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { api } from '../redux/api.js';
 import authReducer from './authslice.js';
 import cartReducer from './cartslice.js';
-// import storage from 'redux-persist/lib/storage';
-// import { persistReducer, persistStore,  FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
-
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-//   whitelist: ['cart'],
-// };
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -17,14 +9,10 @@ const rootReducer = combineReducers({
     cart: cartReducer,
 });
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(api.middleware),
 });
-
-// export const persistor = persistStore(store);
 
 export default store;

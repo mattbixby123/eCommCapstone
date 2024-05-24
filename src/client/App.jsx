@@ -32,34 +32,12 @@ function App() {
     },
   )
 
-  // console.log(customer);
   
   
   if(customer) {
     dispatch (setCustomer(customer))
     dispatch (setSessionId(customer.shoppingSessions[0].id))
   }
-  
-  // if (isLoading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error.message}</div>;
-
-  // console.log(customer.shoppingSessions);
-
-
-
-
-
-    /* fetch user data */
-
-    // console.log('My token in App.jsx is:',token);
-  // const {data: customer, isLoading, error} = useMeQuery();
-  // if (isLoading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error.message}</div>;
-  // const session = customer.shoppingSessions[0].id
-
-  // console.log(session)
-
-  
 
   return (
     

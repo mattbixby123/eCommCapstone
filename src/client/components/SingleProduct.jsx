@@ -4,19 +4,14 @@ import { useFetchProductByIdQuery, useAddToCartMutation} from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { addProductToCart } from '../redux/cartslice';
 
 
 const SingleProduct = () => {
   const { productId } = useParams();
-  // const customer = useSelector((state) => state.auth.customer);
   const sessionId = useSelector((state) => state.auth.sessionId);
   const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
   const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
-  // const token = useSelector(state => state.auth.token);
-  // const dispatch = useDispatch();
-
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
@@ -29,13 +24,6 @@ const SingleProduct = () => {
       location.reload();
       console.log('Product added to cart successfully');
 
-      // dispatch(addProductToCart({
-      //   id: productId,
-      //   name: product.name,
-      //   price: product.price,
-      //   quantity: 1,
-      //   type: 'Product'
-      // }));
     } catch (error) {
       console.error('Error adding book to cart.', error.message);
     }

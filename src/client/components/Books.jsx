@@ -19,20 +19,17 @@ function AllBooks() {
   const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const [searchParam, setSearchParam] = useState('');
-  const [booksData, setBooksData] = useState(null); // State to hold books data
-  const [currentPage, setCurrentPage] = useState(1); // State to hold current page number
-  const [postPerPage] = useState(12); // Number of items per page
+  const [booksData, setBooksData] = useState(null); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(12); 
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-
-  // Fetch all products data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
   useEffect(() => {
     console.log("Fetched Products Data:", fetchedProductsData);
 
     if (!isLoading && !error && fetchedProductsData) {
-      // Filter products based on the category ID for books
       const books = fetchedProductsData.products.filter(products => products.categoryId === 2);
       console.log("Books Data:", books);
 
@@ -40,12 +37,10 @@ function AllBooks() {
     }
   }, [isLoading, error, fetchedProductsData]);
 
-  // Function to handle page change
   const handlePageChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchParam(e.target.value.toLowerCase());
   };
@@ -83,10 +78,8 @@ function AllBooks() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error Loading Books</div>;
 
-  // Filter books based on search parameter
   const filteredBooks = booksData ? booksData.products.filter(book => book.name.toLowerCase().includes(searchParam)) : [];
 
-  // Calculate the index of the first and last items on the current page
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPosts = filteredBooks.slice(indexOfFirstPost, indexOfLastPost);

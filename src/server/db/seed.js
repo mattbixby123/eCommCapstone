@@ -48,57 +48,6 @@ async function main() {
       },
     });
   }));
-
-  // customers.forEach(async (customer) => {
-  //   await prisma.customer.update({
-  //     where: {
-  //       id: customer.id
-  //     },
-  //     data: {
-  //       shoppingSessions: {
-  //         create: {
-  //           total: 1.99
-  //         }
-  //       }
-  //     }
-  //   })
-  // })
-  
-  // const shoppingSessions = await prisma.shoppingSession.findMany();
-
-  // shoppingSessions.forEach(async (shoppingSession) => {
-  //   await prisma.shoppingSession.update({
-  //     where: {
-  //       id: shoppingSession.id
-  //     },
-  //     data: {
-  //       cartItems: {
-  //         createMany: {
-  //           data: Array.from({length: 4}).map
-  //           (() => ({
-  //             productId: faker.number.int({min: 1, max: 300}),
-  //             quantity: 1
-  //           }))
-  //         }
-  //       }
-  //     }
-  //   })
-  // })
-// I reworked the customer faker seed function to include password hashing for the seeded users.
-
-// In this case, using create inside a loop works because you're generating unique data for each user, 
-// which is not possible with createMany without additional logic to ensure uniqueness. 
-// The loop allows us to perform the asynchronous operations (like hashing passwords),
-// for each user before inserting them into the database. 
-
-// This approach is necessary when you need to perform operations 
-// that depend on the result of previous operations,
-// such as generating a unique password hash for each user.
-
-  
-
-  // await prisma.customer.createMany({data: customer}); // dont need this line with the updated customer code above
-
   
 }
 

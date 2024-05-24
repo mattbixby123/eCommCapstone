@@ -1,11 +1,9 @@
 import React from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useFetchMagazinesByIdQuery, useAddToCartMutation } from '../redux/api';
-import AddToCart from './AddToCart';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { addProductToCart } from '../redux/cartslice';
 
 const SingleMagazine= () => {
   const { magazineId } = useParams();
@@ -13,7 +11,6 @@ const SingleMagazine= () => {
   const { data: magazine, error, isLoading } = useFetchMagazinesByIdQuery(magazineId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
   async function handleAddToCartClick(e) {
     e.preventDefault();
@@ -26,13 +23,6 @@ const SingleMagazine= () => {
       location.reload();
       console.log('Magazine added to cart successfully');
 
-    //   dispatch(addProductToCart({
-    //   id: magazineId,
-    //   name: magazine.name,
-    //   price: magazine.price,
-    //   quantity: 1,
-    //   type: 'Magazine'
-    // }));
     } catch (error) {
       console.error('Error adding magazine to cart.', error.message);
     }

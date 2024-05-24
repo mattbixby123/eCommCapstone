@@ -36,7 +36,7 @@ const AddProduct = () => {
 
       console.log('Product added:', response.data);
       
-      // Reset form fields
+      
       setProductName('');
       setDesc('');
       setAuthor('');

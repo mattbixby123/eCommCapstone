@@ -79,22 +79,6 @@ router.put("/:id", async (req, res, next) => {
   }
  });
 
-//  router.get("/:customerId", async (req, res, next) => {
-//   try {
-//     const { customerId } = req.params;
-//     const orderHistory = await prisma.orderDetail.findMany({
-//       where: { customerId: parseInt(customerId) },
-//     });
-//     if (!orderHistory || orderHistory.length === 0) {
-//       return res.status(404).json({ error: "Order history not found for the specified customer" });
-//     }
-//     res.json(orderHistory);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
- 
-
 // DELETE /orderDetail/:id - Delete a specific orderDetail by Id.
 
 router.delete("/:id", async (req, res, next) => {

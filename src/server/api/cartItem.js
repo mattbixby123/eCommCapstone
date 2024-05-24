@@ -158,21 +158,6 @@ router.put("/:id", async (req, res, next) => {
      next (error);
   }
  });
- 
-
-// DELETE /cartItem/:id - Delete a specific cartItem by Id.
-
-// router.delete("/:id", async (req, res, next) => {
-//   try {
-//      const { id } = req.params;
-//      const deletedCartItem = await prisma.cartItem.delete({
-//        where: { id: parseInt(id) },
-//      });
-//      res.json(deletedCartItem);
-//   } catch (error) {
-//      next (error);
-//   }
-//  });
 
 // DELETE /cartItem/:id - Delete a specific cartItem by Id
 router.delete("/:id", async (req, res, next) => {
@@ -295,15 +280,4 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
 
 module.exports = router;
 
-// DELETE route for Clearing entire cart on cart page
-//  router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
-//   try {
-//      const { sessionId } = req.params;
-//      const deletedCartItems = await prisma.cartItem.deleteMany({
-//        where: { sessionId: parseInt(sessionId) },
-//      });
-//      res.json(deletedCartItems);
-//   } catch (error) {
-//      next (error);
-//   }
-//  });
+

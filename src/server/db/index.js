@@ -11,9 +11,5 @@ const prisma = new PrismaClient().$extends({
         }
     }
 });
-
-// async function query(sql, params, callback) {
-//     return db.query(sql, params, callback);
-//   }
   
   module.exports = { prisma }; 

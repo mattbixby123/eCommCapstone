@@ -21,17 +21,15 @@ const Magazines = () => {
   const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const [searchParam, setSearchParam] = useState('');
-  const [magazinesData, setMagazinesData] = useState(null); // State to hold magazines data
+  const [magazinesData, setMagazinesData] = useState(null); 
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(12);
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-  // Fetch magazines data
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
   useEffect(() => {
     if (!isLoading && !error && fetchedProductsData) {
-      // Filter products based on the category ID for magazines
       const magazines = fetchedProductsData.products.filter(products => products.categoryId === 3);
       console.log("Magazines Data:", magazines);
 
@@ -39,11 +37,9 @@ const Magazines = () => {
     }
   }, [isLoading, error, fetchedProductsData]);
 
-  // Function to handle page change
   const handlePageChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
   };
-   // Function to handle search input change
    const handleSearchChange = (e) => {
     setSearchParam(e.target.value.toLowerCase());
   };
@@ -81,12 +77,10 @@ const Magazines = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error Loading Magazines</div>;
 
-  // Filter books based on search parameter
   const filteredMagazines = magazinesData ? magazinesData.products.filter(magazine => magazine.name.toLowerCase().includes(searchParam)) : [];
   if(isLoading) return <div>Loading...</div>;
   if(error) return <div>Error Loading Magazines</div>;
 
-  // Calculate the index of the first and last items on the current page
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPosts = filteredMagazines.slice(indexOfFirstPost, indexOfLastPost);

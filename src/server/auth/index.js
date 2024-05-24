@@ -34,7 +34,6 @@ router.post("/register", async (req, res, next) => {
     });
     
     // Create a token with the customer id
-    // const token = jwt.sign({ id: customer.id }, process.env.JWT);
     const token = jwt.sign({ id: customer.id, isAdmin: customer.isAdmin }, process.env.JWT);
     res.status(201).send ({ token })
 

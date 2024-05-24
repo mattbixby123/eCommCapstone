@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-// const baseUrl = process.env.SERVER_URL
-
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -93,13 +91,9 @@ export const api = createApi({
       invalidatesTags: ["Cart"]
     }),
 
-
-
     fetchAllCartItems: builder.query({
       query: () => 'api/cartItem/',
     }),
-
-
 
     fetchOrderHistory: builder.query({
       query: (customerId) => `api/orderDetail/${customerId}`,
@@ -109,8 +103,6 @@ export const api = createApi({
       query: () => '/api/customer',
       providesTags: ["Customer"]
     }),
-
-    
     
     removeFromCart: builder.mutation({
       query: ({ id }) => ({

@@ -2,21 +2,15 @@ import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-
-/* useNavigate to refresh the page after an item has been removed from the cart does not seem to work, all instances of useNavigate have been commented out, consider other possible solutions to refresh */
-// import { useNavigate, useParams } from 'react-router-dom';
-
 import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
 import '../style.css'
 import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppingSessionMutation } from "../redux/api";
 
 const Cart = () => {
-  // the three lines below retrieve the cancel message from the redirect 'cancel_url' (checkous.js L30)
+
   const location1 = useLocation();
   const params = new URLSearchParams(location1.search);
   const message = params.get('message');
-  
-  
   const sessionId = useSelector((state) => state.auth.sessionId)
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
   const [removeFromCart, { isLoading: isUpdating}] = useRemoveFromCartMutation();
@@ -27,9 +21,6 @@ const Cart = () => {
   console.log(sessionId);
   console.log(cartProducts);
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
   async function handleRemoveFromCart(id) {
 
     try {
@@ -38,14 +29,10 @@ const Cart = () => {
       })
       location.reload();
 
-      // navigate('/cart')
-
-
     } catch(error) {
       console.error('Error removing item from cart:', error.message);
     }
   };
-
 
   async function handleClearCart() {
 
@@ -59,7 +46,6 @@ const Cart = () => {
     } catch(error) {
       console.error('Error removing items from cart:', error.message);
     }
-    // dispatch(clearCart());
   };
   
   const handleProceedToCheckout = () => {
@@ -76,7 +62,6 @@ const Cart = () => {
     }).catch(e => {
       console.error(e.error);
     })
-    // dispatch(proceedToCheckout());
   };
 
 
