@@ -25,7 +25,7 @@ const SingleProduct = () => {
       console.log('Product added to cart successfully');
 
     } catch (error) {
-      console.error('Error adding book to cart.', error.message);
+      console.error('Error adding item to cart.', error.message);
     }
   }
 

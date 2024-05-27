@@ -6,9 +6,9 @@ import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/mate
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SingleComic = () => {
-  const { comicId } = useParams();
+  const { productId } = useParams();
   const sessionId = useSelector((state) => state.auth.sessionId);
-  const { data: comic, error, isLoading } = useFetchComicsByIdQuery(comicId);
+  const { data: comic, error, isLoading } = useFetchComicsByIdQuery(productId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const SingleComic = () => {
     try {
       await addToCart({
         sessionId: parseInt(sessionId),
-        productId: parseInt(comicId),
+        productId: parseInt(productId),
         quantity: 1,
       });
       location.reload();
