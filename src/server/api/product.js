@@ -44,12 +44,12 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // Deny access if customer is not an Admin -- blanket statement for all routes below instead of applying route by route
-router.use((req, res, next) => {
-  if (!req.customer || !req.customer.isAdmin) {
-    return res.status(401).send("You must be an Admin to do that.");
-  }
-  next();
-});
+// router.use((req, res, next) => {
+//   if (!req.customer || !req.customer.isAdmin) {
+//     return res.status(401).send("You must be an Admin to do that.");
+//   }
+//   next();
+// });
 
 
 // POST /product - Create a new product.

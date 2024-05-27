@@ -61,7 +61,7 @@ function App() {
           <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
           <Route path= '/admin' element={<AdminView />} />
           <Route path= '/productform' element={<AddProduct />}/> 
-          <Route path="/order/success" element={<OrderSuccess />} />
+          <Route path= '/order/success' element={<OrderSuccess />} />
         </Routes>
         </div>
     </>
