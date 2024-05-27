@@ -6,9 +6,9 @@ import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/mate
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SingleMagazine= () => {
-  const { magazineId } = useParams();
+  const { productId } = useParams();
   const sessionId = useSelector((state) => state.auth.sessionId);
-  const { data: magazine, error, isLoading } = useFetchMagazinesByIdQuery(magazineId);
+  const { data: magazine, error, isLoading } = useFetchMagazinesByIdQuery(productId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const SingleMagazine= () => {
     try {
       await addToCart({
         sessionId: parseInt(sessionId), 
-        productId: parseInt(magazineId),
+        productId: parseInt(productId),
         quantity: 1,
       });
       location.reload();

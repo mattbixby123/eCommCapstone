@@ -52,9 +52,9 @@ function App() {
           <Route path= '/books' element={<Books />} />
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/comics' element={<Comics />} />
-          <Route path= '/product/books/:bookId' element={<SingleBook />}/>
-          <Route path= '/product/comics/:comicId' element={<SingleComic />}/>
-          <Route path= '/product/magazines/:magazineId' element={<SingleMagazine />}/>
+          <Route path= '/books/:productId' element={<SingleBook />}/>
+          <Route path= '/comics/:productId' element={<SingleComic />}/>
+          <Route path= '/magazines/:productId' element={<SingleMagazine />}/>
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />} />
