@@ -5,7 +5,7 @@ const { prisma } = require('./db')
 const router = require('vite-express'); // Import Vite Express for serving Vite-built assets
 const app = express(); // Create an Express application instance
 const jwt = require("jsonwebtoken");
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const path = require('path')
 
 

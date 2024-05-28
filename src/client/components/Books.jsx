@@ -108,7 +108,11 @@ function AllBooks() {
               <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}>
                 <img src={product.imageUrl} alt={product.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
                 <Typography variant="h6">{product.name}</Typography>
-                <Button variant="contained" color="primary" onClick={() => navigate(`/product/${product.id}`)}>
+                <Button variant="contained" color="primary" onClick={() => {
+                  console.log('foo')
+                  console.log('Navigating to:', `/product/${product.id}`);
+                  navigate(`/product/${product.id}`)
+                }}>
                   View Details
                 </Button>
                 {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}
