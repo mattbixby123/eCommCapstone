@@ -129,7 +129,6 @@ export const api = createApi({
 export const {
   useFetchAllProductsQuery,
   useFetchProductByIdQuery,
-  useFetchBooksByIdQuery,
   useRegistrationFormMutation,
   useMeQuery,
   useLoginMutation,
