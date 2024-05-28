@@ -72,13 +72,6 @@ const Account = () => {
             <Typography textAlign='center'>Email: {customerDetails.email}</Typography>
           </Grid>
           <Grid item xs={12} textAlign='center'>
-            <Button
-              variant='outlined'
-              onClick={() => navigate(`/orderdetail/${customerId}`)}
-              sx={{ mt: 2 }}
-            >
-              View Order History
-            </Button>
           </Grid>
         </Grid>
       </Box>

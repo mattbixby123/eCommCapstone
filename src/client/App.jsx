@@ -11,7 +11,6 @@ import SingleProduct from './components/SingleProduct';
 import Logout from './components/Logout';
 import Cart from './components/Cart';
 import Account from './components/Account';
-import OrderHistory from './components/OrderHistory';
 import AdminView from './components/AdminView';
 import AddProduct from './components/AddProduct';
 import { useMeQuery } from './redux/api';
@@ -52,7 +51,6 @@ function App() {
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />} />
-          <Route path= '/orderDetail/:customerId' element={<OrderHistory />}/>
           <Route path= '/admin' element={<AdminView />} />
           <Route path= '/productform' element={<AddProduct />}/> 
           <Route path= '/order/success' element={<OrderSuccess />} />
