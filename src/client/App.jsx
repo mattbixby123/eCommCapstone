@@ -7,9 +7,6 @@ import Register from './components/Register';
 import Books from './components/Books';
 import Comics from './components/Comics';
 import Magazines from './components/Magazines'
-import SingleBook from './components/SingleBook';
-import SingleComic from './components/SingleComic';
-import SingleMagazine from './components/SingleMagazine';
 import SingleProduct from './components/SingleProduct';
 import Logout from './components/Logout';
 import Cart from './components/Cart';
@@ -52,9 +49,6 @@ function App() {
           <Route path= '/books' element={<Books />} />
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/comics' element={<Comics />} />
-          <Route path= '/books/:productId' element={<SingleBook />}/>
-          <Route path= '/comics/:productId' element={<SingleComic />}/>
-          <Route path= '/magazines/:productId' element={<SingleMagazine />}/>
           <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />} />
