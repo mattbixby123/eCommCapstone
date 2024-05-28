@@ -56,18 +56,6 @@ export const api = createApi({
       query:(productId) => `api/product/${productId}`,
     }),
 
-    fetchBooksById: builder.query({
-      query:(bookId) => `api/product/${bookId}`,
-    }),
-
-    fetchComicsById: builder.query({
-      query:(comicId) => `api/product/${comicId}`,
-    }),
-
-    fetchMagazinesById: builder.query({
-      query:(magazineId) => `api/product/${magazineId}`,
-    }),
-
     fetchProductsBySession: builder.query({
       query:(sessionId) => `api/cartItem/customer/${sessionId}`,
     }),
@@ -141,9 +129,6 @@ export const api = createApi({
 export const {
   useFetchAllProductsQuery,
   useFetchBooksByIdQuery,
-  useFetchComicsByIdQuery,
-  useFetchMagazinesByIdQuery,
-  useFetchProductByIdQuery,
   useRegistrationFormMutation,
   useMeQuery,
   useLoginMutation,
