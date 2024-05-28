@@ -24,12 +24,12 @@ router.get("/", async (req, res, next) => {
 
 
 // GET /product/:id - Retrieve a specific product by ID.
-router.get("/:productId", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
-    const { productId } = req.params;
+    const { id } = req.params;
     const product = await prisma.product.findUnique({
       where: {
-        id: parseInt(productId),
+        id: parseInt(id),
       },
     });
     
