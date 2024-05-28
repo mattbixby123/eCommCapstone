@@ -103,12 +103,12 @@ const Magazines = () => {
             </IconButton>
         </Box>
         <Grid container spacing={3}>
-        {currentPosts.map((magazine) => ( 
-          <Grid item xs={12} sm={6} md={4} lg={3} key={magazine.id}>
+        {currentPosts.map((product) => ( 
+          <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
             <Item sx={{ border: '1px solid #ccc', p: 2, borderRadius: '8px' }}> 
-              <img src={magazine.imageUrl} alt={magazine.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
-              <Typography variant="h6">{magazine.name}</Typography>
-              <Button variant="contained" color="primary" onClick={() => navigate(`/product/${magazine.id}`)}>
+              <img src={product.imageUrl} alt={product.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
+              <Typography variant="h6">{product.name}</Typography>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/product/${product.id}`)}>
                 View Details
               </Button>
               {token && <Typography sx={{ mt: 1 }} variant="body2">In Stock</Typography>}
