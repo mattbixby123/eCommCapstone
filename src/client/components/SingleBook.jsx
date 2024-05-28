@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useFetchBooksByIdQuery, useAddToCartMutation } from '../redux/api';
+import { useFetchProductByIdQuery, useAddToCartMutation } from '../redux/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const SingleBook = () => {
   const { productId } = useParams();
   const sessionId = useSelector((state) => state.auth.sessionId);
-  const { data: book, error, isLoading } = useFetchBooksByIdQuery(productId);
+  const { data: book, error, isLoading } = useFetchProductByIdQuery(productId);
   const [addToCart, { isLoading: isUpdating }] = useAddToCartMutation();
   const navigate = useNavigate();
 
