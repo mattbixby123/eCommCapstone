@@ -26,8 +26,8 @@ router.post('/create-checkout-session', async (req, res) => {
           quantity: cartProduct.quantity
         }
       }),
-      success_url: `${process.env.SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.SERVER_URL}/cart?message=Your order was cancelled. Please try again.`
+      success_url: `${process.env.REACT_APP_SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.REACT_APP_SERVER_URL}/cart?message=Your order was cancelled. Please try again.`
     });
 
     return res.json({ url: session.url })
