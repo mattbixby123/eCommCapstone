@@ -39,7 +39,7 @@ const SingleProduct = () => {
         sx={{ mb: 2, color: 'black' }}
         onClick={() => window.history.back()}
       >
-        Back to All Products
+        Back to Previous Page
       </Button>
       <div className='single-product'>
         {product && (
@@ -91,7 +91,7 @@ const SingleProduct = () => {
               )}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
                 <Button variant='outlined' onClick={() => navigate('/')}>
-                  Home / All Products
+                  Home / Main Page
                 </Button>
               </Box>
             </CardContent>
