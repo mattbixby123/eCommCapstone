@@ -44,21 +44,21 @@ export const api = createApi({
       query: () => '/',
     }),
     fetchAllProducts: builder.query({
-      query: () => `/api/product`,
+      query: () => `api/product`,
     }),
     fetchProductById: builder.query({
       query: (productId) => `/api/product/${productId}`,
     }),
     fetchProductsBySession: builder.query({
-      query: (sessionId) => `/api/cartItem/customer/${sessionId}`,
+      query: (sessionId) => `api/cartItem/customer/${sessionId}`,
     }),
     fetchCartBySession: builder.query({
-      query: (sessionId) => `/api/cartItem/${sessionId}`,
+      query: (sessionId) => `api/cartItem/${sessionId}`,
       providesTags: ["Cart"],
     }),
     addToCart: builder.mutation({
       query: ({ sessionId, productId, quantity, type }) => ({
-        url: `/api/cartitem/${sessionId}`,
+        url: `api/cartitem/${sessionId}`,
         method: 'POST',
         body: {
           sessionId: parseInt(sessionId),
@@ -70,10 +70,10 @@ export const api = createApi({
       invalidatesTags: ["Cart"],
     }),
     fetchAllCartItems: builder.query({
-      query: () => '/api/cartItem/',
+      query: () => 'api/cartItem/',
     }),
     fetchOrderHistory: builder.query({
-      query: (customerId) => `/api/orderDetail/${customerId}`,
+      query: (customerId) => `api/orderDetail/${customerId}`,
     }),
     fetchAllCustomerData: builder.query({
       query: () => '/api/customer',
@@ -81,19 +81,19 @@ export const api = createApi({
     }),
     removeFromCart: builder.mutation({
       query: ({ id }) => ({
-        url: `/api/cartitem/${id}`,
+        url: `api/cartitem/${id}`,
         method: 'DELETE',
       }),
     }),
     removeShoppingSession: builder.mutation({
       query: ({ sessionId }) => ({
-        url: `/api/cartitem/shoppingSession/${sessionId}`,
+        url: `api/cartitem/shoppingSession/${sessionId}`,
         method: 'DELETE',
       }),
     }),
     updateCustomer: builder.mutation({
       query: (customer) => ({
-        url: `/api/customer/${customer.id}`,
+        url: `api/customer/${customer.id}`,
         method: "PUT",
         body: customer,
       }),
@@ -101,7 +101,7 @@ export const api = createApi({
     }),
     deleteCustomer: builder.mutation({
       query: (id) => ({
-        url: `/api/customer/${id}`,
+        url: `api/customer/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Customer"],
