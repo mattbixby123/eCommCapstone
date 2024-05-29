@@ -48,7 +48,7 @@ function App() {
           <Route path= '/books' element={<Books />} />
           <Route path= '/magazines' element={<Magazines />} />
           <Route path= '/comics' element={<Comics />} />
-          <Route path= '/product/:id' element={<SingleProduct />}/>
+          <Route path= '/product/:productId' element={<SingleProduct />}/>
           <Route path= '/logout' element={<Logout/>}/>
           <Route path= '/cart' element={<Cart />} />
           <Route path= '/admin' element={<AdminView />} />
