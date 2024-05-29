@@ -65,7 +65,7 @@ model customer {
 model shoppingSession {
   id         Int        @id @default(autoincrement())
   customerId Int
-  total      Decimal    @db.Decimal(65, 30)
+  total      Decimal
   createdAt  DateTime   @default(now())
   modifiedAt DateTime   @updatedAt
   customer   customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
