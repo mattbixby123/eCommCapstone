@@ -14,6 +14,7 @@ export const api = createApi({
       return headers;
     },
   }),
+
   endpoints: (builder) => ({
     me: builder.query({
       query: () => "auth/me",
