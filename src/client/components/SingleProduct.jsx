@@ -21,7 +21,7 @@ const SingleProduct = () => {
         productId: parseInt(productId),
         quantity: 1,
       });
-      // location.reload();
+      location.reload();
       console.log('Product added to cart successfully');
 
     } catch (error) {
