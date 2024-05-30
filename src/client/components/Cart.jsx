@@ -12,6 +12,7 @@ const Cart = () => {
   const params = new URLSearchParams(location1.search);
   const message = params.get('message');
   const sessionId = useSelector((state) => state.auth.sessionId)
+  console.log(sessionId);
   const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
   const [removeFromCart, { isLoading: isUpdating}] = useRemoveFromCartMutation();
   const [removeShoppingSession] = useRemoveShoppingSessionMutation();

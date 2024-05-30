@@ -9,8 +9,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const SingleProduct = () => {
   const { productId } = useParams();
   const sessionId = useSelector((state) => state.auth.sessionId);
-  const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
   const [addToCartProduct, { isLoading: isUpdating }] = useAddToCartMutation();
+  const { data: product, isLoading, error } = useFetchProductByIdQuery(productId);
   const navigate = useNavigate();
 
   async function handleAddToCartClick(e) {

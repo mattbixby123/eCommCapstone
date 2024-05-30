@@ -19,15 +19,15 @@ router.get("/", async (req, res, next) => {
 // GET /cartItem/:sessionId - Retrieve cartItems by session ID
 router.get("/:sessionId", async (req, res, next) => {
   try {
-    const { sessionId } = req.params;
-    const cartItems = await prisma.cartItem.findMany({
-      where: { sessionId: parseInt(sessionId) },
-      include: { product: true },
-    });
-    if (!cartItems || cartItems.length === 0) {
-      return res.status(404).json({ error: "Cart items not found" });
-    }
-    res.json(cartItems);
+     const { sessionId } = req.params;
+     const cartItems = await prisma.cartItem.findMany({
+       where: { sessionId: parseInt(sessionId) },
+       include: { product: true }
+     });
+     if (!cartItems) {
+       return []
+     }
+     res.json(cartItems);
   } catch (error) {
     next(error);
   }
