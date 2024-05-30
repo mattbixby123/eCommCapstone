@@ -1,25 +1,22 @@
 const router = require("express").Router();
-const { prisma } =  require("../db");
+const { prisma } = require("../db");
 
 // GET /cartItem - Retrieve a list of all cartItems (items in carts)
-
 router.get("/", async (req, res, next) => {
   try {
-     const cartItems = await prisma.cartItem.findMany({
+    const cartItems = await prisma.cartItem.findMany({
       include: {
         session: true,
-        product: true
-      }
-     });
-     res.json(cartItems);
+        product: true,
+      },
+    });
+    res.json(cartItems);
   } catch (error) {
-     next (error);
+    next(error);
   }
- });
- 
+});
 
-// GET /cartItem/:id - Retrieve cartItems by  session ID
-
+// GET /cartItem/:sessionId - Retrieve cartItems by session ID
 router.get("/:sessionId", async (req, res, next) => {
   try {
      const { sessionId } = req.params;
@@ -32,12 +29,12 @@ router.get("/:sessionId", async (req, res, next) => {
      }
      res.json(cartItems);
   } catch (error) {
-     next (error);
+    next(error);
   }
- });
+});
 
- // GET /cartItem/customer/:id - Retrieve cart items for a specific customer by their session ID
- router.get("/customer/:id", async (req, res, next) => {
+// GET /cartItem/customer/:id - Retrieve cart items by customer ID
+router.get("/customer/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const shoppingSession = await prisma.shoppingSession.findUnique({
@@ -45,7 +42,7 @@ router.get("/:sessionId", async (req, res, next) => {
     });
 
     if (!shoppingSession) {
-      return res.status(404).json({ error: "Shopping session not found" })
+      return res.status(404).json({ error: "Shopping session not found" });
     }
 
     const cartItems = await prisma.cartItem.findMany({
@@ -55,8 +52,8 @@ router.get("/:sessionId", async (req, res, next) => {
     const cartProducts = await Promise.all(
       cartItems.map(async (cartItem) => {
         return await prisma.product.findUnique({
-          where: {id: cartItem.productId },
-          include: {cartItem: true},
+          where: { id: cartItem.productId },
+          include: { cartItem: true },
         });
       })
     );
@@ -64,44 +61,45 @@ router.get("/:sessionId", async (req, res, next) => {
     const validCartProducts = cartProducts.filter((product) => product !== null);
 
     res.json(validCartProducts);
-
-  } catch(error) {
-    next (error);
+  } catch (error) {
+    next(error);
   }
- });
+});
 
-
-
-// POST /cartItem - Create a new cartItem.
+// POST /cartItem/:sessionId - Create a new cartItem
 router.post("/:sessionId", async (req, res, next) => {
   try {
     const { sessionId } = req.params;
     const { productId, quantity } = req.body;
-    
+
     if (!sessionId || !productId || !quantity) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Retrieve the product details
+    const parsedSessionId = parseInt(sessionId);
+    const parsedProductId = parseInt(productId);
+    const parsedQuantity = parseInt(quantity);
+
+    if (isNaN(parsedSessionId) || isNaN(parsedProductId) || isNaN(parsedQuantity) || parsedQuantity <= 0) {
+      return res.status(400).json({ message: "Invalid input values" });
+    }
+
     const product = await prisma.product.findUnique({
-      where: { id: parseInt(productId) },
+      where: { id: parsedProductId },
     });
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Check if the inventory is sufficient
-    if (product.inventory < parseInt(quantity)) {
+    if (product.inventory < parsedQuantity) {
       return res.status(400).json({ message: "Insufficient inventory" });
     }
 
-    // Calculate the total price for the quantity
-    const totalPrice = product.price * parseInt(quantity);
+    const totalPrice = product.price * parsedQuantity;
 
-    // Retrieve the session
     const shoppingSession = await prisma.shoppingSession.findUnique({
-      where: { id: parseInt(sessionId) },
+      where: { id: parsedSessionId },
     });
 
     if (!shoppingSession) {
@@ -109,33 +107,20 @@ router.post("/:sessionId", async (req, res, next) => {
     }
 
     await prisma.shoppingSession.update({
-      where: { id: parseInt(sessionId) },
+      where: { id: parsedSessionId },
       data: { total: shoppingSession.total + totalPrice },
     });
 
     await prisma.product.update({
-      where: { id: parseInt(productId) },
-      data: { inventory: product.inventory - parseInt(quantity) },
+      where: { id: parsedProductId },
+      data: { inventory: product.inventory - parsedQuantity },
     });
 
-    // // Update the session's total price
-    // const updatedSession = await prisma.shoppingSession.update({
-    //   where: { id: parseInt(sessionId) },
-    //   data: { total: shoppingSession.total + totalPrice },
-    // });
-
-    // // Deduct the quantity from the product's inventory
-    // const updatedProduct = await prisma.product.update({
-    //   where: { id: parseInt(productId) },
-    //   data: { inventory: product.inventory - parseInt(quantity) },
-    // });
-
-    // Add the cart item
     const newCartItem = await prisma.cartItem.create({
       data: {
-        sessionId: parseInt(sessionId),
-        productId: parseInt(productId),
-        quantity: parseInt(quantity),
+        sessionId: parsedSessionId,
+        productId: parsedProductId,
+        quantity: parsedQuantity,
       },
     });
 
@@ -146,36 +131,32 @@ router.post("/:sessionId", async (req, res, next) => {
   }
 });
 
- 
-
-// PUT /cartItem/:id - Update a specific cartItem by ID.
-
+// PUT /cartItem/:id - Update a specific cartItem by ID
 router.put("/:id", async (req, res, next) => {
   try {
-     const { id } = req.params;
-     const { sessionId, productId, quantity } = req.body;
- 
-     const updatedCartItem = await prisma.cartItem.update({
-       where: { id: parseInt(id) },
-       data: {
-         sessionId: sessionId ? parseInt(sessionId) : undefined,
-         productId: productId ? parseInt(productId) : undefined,
-         quantity: quantity ? parseInt(quantity) : undefined,
-       },
-     });
- 
-     res.json(updatedCartItem);
+    const { id } = req.params;
+    const { sessionId, productId, quantity } = req.body;
+
+    const updatedCartItem = await prisma.cartItem.update({
+      where: { id: parseInt(id) },
+      data: {
+        sessionId: sessionId ? parseInt(sessionId) : undefined,
+        productId: productId ? parseInt(productId) : undefined,
+        quantity: quantity ? parseInt(quantity) : undefined,
+      },
+    });
+
+    res.json(updatedCartItem);
   } catch (error) {
-     next (error);
+    next(error);
   }
- });
+});
 
 // DELETE /cartItem/:id - Delete a specific cartItem by Id
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    // Retrieve the cart item
     const cartItem = await prisma.cartItem.findUnique({
       where: { id: parseInt(id) },
     });
@@ -184,7 +165,6 @@ router.delete("/:id", async (req, res, next) => {
       return res.status(404).json({ message: "Cart item not found" });
     }
 
-    // Retrieve the product associated with the cart item
     const product = await prisma.product.findUnique({
       where: { id: cartItem.productId },
     });
@@ -193,16 +173,13 @@ router.delete("/:id", async (req, res, next) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Calculate the total price to subtract
     const totalPriceToSubtract = product.price * cartItem.quantity;
 
-    // Update the product's inventory
     await prisma.product.update({
       where: { id: cartItem.productId },
       data: { inventory: product.inventory + cartItem.quantity },
     });
 
-    // Retrieve the session associated with the cart item
     const shoppingSession = await prisma.shoppingSession.findUnique({
       where: { id: cartItem.sessionId },
     });
@@ -211,13 +188,11 @@ router.delete("/:id", async (req, res, next) => {
       return res.status(404).json({ message: "Session not found" });
     }
 
-    // Update the session's total price
     await prisma.shoppingSession.update({
       where: { id: cartItem.sessionId },
       data: { total: shoppingSession.total - totalPriceToSubtract },
     });
 
-    // Delete the cart item
     const deletedCartItem = await prisma.cartItem.delete({
       where: { id: parseInt(id) },
     });
@@ -229,12 +204,11 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-// DELETE route for clearing entire cart on cart page
+// DELETE /shoppingSession/:sessionId - Clear entire cart for a session
 router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
   try {
     const { sessionId } = req.params;
 
-    // Retrieve all cart items for the session
     const cartItems = await prisma.cartItem.findMany({
       where: { sessionId: parseInt(sessionId) },
     });
@@ -243,10 +217,8 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
       return res.status(404).json({ message: "No cart items found for this session" });
     }
 
-    // Initialize variables to track total price to subtract and inventory to add back
     let totalPriceToSubtract = 0;
 
-    // Update inventory and calculate the total price to subtract
     for (const item of cartItems) {
       const product = await prisma.product.findUnique({
         where: { id: item.productId },
@@ -262,7 +234,6 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
       }
     }
 
-    // Retrieve the session
     const shoppingSession = await prisma.shoppingSession.findUnique({
       where: { id: parseInt(sessionId) },
     });
@@ -271,13 +242,11 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
       return res.status(404).json({ message: "Session not found" });
     }
 
-    // Update the session's total price
     await prisma.shoppingSession.update({
       where: { id: parseInt(sessionId) },
       data: { total: shoppingSession.total - totalPriceToSubtract },
     });
 
-    // Delete the cart items
     const deletedCartItems = await prisma.cartItem.deleteMany({
       where: { sessionId: parseInt(sessionId) },
     });
@@ -290,5 +259,3 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
 });
 
 module.exports = router;
-
-
