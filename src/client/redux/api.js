@@ -47,7 +47,7 @@ export const api = createApi({
       query: () => `api/product`,
     }),
     fetchProductById: builder.query({
-      query: (productId) => `/api/product/${productId}`,
+      query: (productId) => `api/product/${productId}`,
     }),
     fetchProductsBySession: builder.query({
       query: (sessionId) => `api/cartItem/customer/${sessionId}`,
