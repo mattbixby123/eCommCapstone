@@ -27,7 +27,7 @@ router.get("/:sessionId", async (req, res, next) => {
        where: { sessionId: parseInt(sessionId) },
        include: { product: true }
      });
-     if (!cartItems) {
+     if (!cartItems || cartItems.length === 0) {
        return res.status(404).json({ error: "Cart item not found" });
      }
      res.json(cartItems);
@@ -35,7 +35,8 @@ router.get("/:sessionId", async (req, res, next) => {
      next (error);
   }
  });
- 
+
+ // GET /cartItem/customer/:id - Retrieve cart items for a specific customer by their session ID
  router.get("/customer/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -60,7 +61,7 @@ router.get("/:sessionId", async (req, res, next) => {
       })
     );
 
-    const validCartProducts = cartProducts.filter((product) => product!== null);
+    const validCartProducts = cartProducts.filter((product) => product !== null);
 
     res.json(validCartProducts);
 
@@ -107,17 +108,27 @@ router.post("/:sessionId", async (req, res, next) => {
       return res.status(404).json({ message: "Session not found" });
     }
 
-    // Update the session's total price
-    const updatedSession = await prisma.shoppingSession.update({
+    await prisma.shoppingSession.update({
       where: { id: parseInt(sessionId) },
       data: { total: shoppingSession.total + totalPrice },
     });
 
-    // Deduct the quantity from the product's inventory
-    const updatedProduct = await prisma.product.update({
+    await prisma.product.update({
       where: { id: parseInt(productId) },
       data: { inventory: product.inventory - parseInt(quantity) },
     });
+
+    // // Update the session's total price
+    // const updatedSession = await prisma.shoppingSession.update({
+    //   where: { id: parseInt(sessionId) },
+    //   data: { total: shoppingSession.total + totalPrice },
+    // });
+
+    // // Deduct the quantity from the product's inventory
+    // const updatedProduct = await prisma.product.update({
+    //   where: { id: parseInt(productId) },
+    //   data: { inventory: product.inventory - parseInt(quantity) },
+    // });
 
     // Add the cart item
     const newCartItem = await prisma.cartItem.create({
