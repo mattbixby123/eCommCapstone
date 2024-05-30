@@ -1,53 +1,39 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { Card, CardContent, CardActions, Button, Typography, Box, Grid } from '@mui/material';
-import '../style.css'
+import { Card, CardContent, CardActions, Button, Typography, Box } from '@mui/material';
+import '../style.css';
 import { useFetchCartBySessionQuery, useRemoveFromCartMutation, useRemoveShoppingSessionMutation } from "../redux/api";
 
 const Cart = () => {
-
-  const location1 = useLocation();
-  const params = new URLSearchParams(location1.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const message = params.get('message');
-  const sessionId = useSelector((state) => state.auth.sessionId)
-  const {data: cartProducts, isLoading, error} = useFetchCartBySessionQuery(sessionId);
-  const [removeFromCart, { isLoading: isUpdating}] = useRemoveFromCartMutation();
+  const sessionId = useSelector((state) => state.auth.sessionId);
+  
+  const { data: cartProducts, isLoading, error } = useFetchCartBySessionQuery(sessionId);
+  const [removeFromCart, { isLoading: isUpdating }] = useRemoveFromCartMutation();
   const [removeShoppingSession] = useRemoveShoppingSessionMutation();
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log(sessionId);
-  console.log(cartProducts);
-
   async function handleRemoveFromCart(id) {
-
     try {
-      await removeFromCart({
-        id: parseInt(id)
-      })
-      location.reload();
-
-    } catch(error) {
+      await removeFromCart({ id: parseInt(id) });
+    } catch (error) {
       console.error('Error removing item from cart:', error.message);
     }
   };
 
   async function handleClearCart() {
-
     try {
-      await removeShoppingSession({
-        sessionId: parseInt(sessionId)
-      })
-      location.reload();
-
-
-    } catch(error) {
-      console.error('Error removing items from cart:', error.message);
+      await removeShoppingSession({ sessionId: parseInt(sessionId) });
+    } catch (error) {
+      console.error('Error clearing cart:', error.message);
     }
   };
-  
+
   const handleProceedToCheckout = () => {
     fetch('api/checkout/create-checkout-session', {
       method: "POST",
@@ -56,17 +42,15 @@ const Cart = () => {
       },
       body: JSON.stringify({ cartProducts })
     }).then(res => {
-      if (res.ok) return res.json()
+      if (res.ok) return res.json();
     }).then(({ url }) => {
-      window.location = url
+      window.location = url;
     }).catch(e => {
       console.error(e.error);
-    })
+    });
   };
 
-
   const totalPrice = cartProducts.reduce((sum, product) => sum + product.product.price * product.quantity, 0);
-
 
   return (
     <Box className='cart-container'>
@@ -77,7 +61,7 @@ const Cart = () => {
       <Box className='cart-page'>
         <Box className="card-items-cart">
           {cartProducts.map((product) => (
-            <Box key={product.product.id}>
+            <Box key={product.id}>
               <Card sx={{
                 bgcolor: 'lightgrey',
                 boxShadow: 3,
@@ -124,7 +108,7 @@ const Cart = () => {
             variant="contained"
             color="error"
             sx={{ mt: 1 }}
-            onClick={() => handleClearCart(sessionId)}
+            onClick={handleClearCart}
           >
             Clear Cart
           </Button>
@@ -133,6 +117,5 @@ const Cart = () => {
     </Box>
   );
 };
-
 
 export default Cart;

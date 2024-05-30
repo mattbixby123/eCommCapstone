@@ -27,11 +27,9 @@ function AllBooks() {
   const { data: fetchedProductsData, isLoading, error } = useFetchAllProductsQuery();
 
   useEffect(() => {
-    console.log("Fetched Products Data:", fetchedProductsData);
 
     if (!isLoading && !error && fetchedProductsData) {
       const books = fetchedProductsData.products.filter(products => products.categoryId === 2);
-      console.log("Books Data:", books);
 
       setBooksData({ products: books });
     }
@@ -109,8 +107,6 @@ function AllBooks() {
                 <img src={product.imageUrl} alt={product.name} width="100%" style={{ maxHeight: '200px', marginBottom: '20px' }} />
                 <Typography variant="h6">{product.name}</Typography>
                 <Button variant="contained" color="primary" onClick={() => {
-                  console.log('foo')
-                  console.log('Navigating to:', `/product/${product.id}`);
                   navigate(`/product/${product.id}`)
                 }}>
                   View Details
