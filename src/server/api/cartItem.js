@@ -1,40 +1,42 @@
 const router = require("express").Router();
-const { prisma } = require("../db");
+const { prisma } =  require("../db");
 
 // GET /cartItem - Retrieve a list of all cartItems (items in carts)
+
 router.get("/", async (req, res, next) => {
   try {
-    const cartItems = await prisma.cartItem.findMany({
+     const cartItems = await prisma.cartItem.findMany({
       include: {
         session: true,
-        product: true,
-      },
-    });
-    res.json(cartItems);
+        product: true
+      }
+     });
+     res.json(cartItems);
   } catch (error) {
-    next(error);
+     next (error);
   }
-});
+ });
+ 
 
-// GET /cartItem/:sessionId - Retrieve cartItems by session ID
+// GET /cartItem/:id - Retrieve cartItems by  session ID
+
 router.get("/:sessionId", async (req, res, next) => {
   try {
-    const { sessionId } = req.params;
-    const cartItems = await prisma.cartItem.findMany({
-      where: { sessionId: parseInt(sessionId) },
-      include: { product: true },
-    });
-    if (!cartItems || cartItems.length === 0) {
-      return res.status(404).json({ error: "Cart item not found" });
-    }
-    res.json(cartItems);
+     const { sessionId } = req.params;
+     const cartItems = await prisma.cartItem.findMany({
+       where: { sessionId: parseInt(sessionId) },
+       include: { product: true },
+     });
+     if (!cartItems || cartItems.length === 0) {
+       return res.status(404).json({ error: "Cart item not found" });
+     }
+     res.json(cartItems);
   } catch (error) {
-    next(error);
+     next (error);
   }
-});
-
-// GET /cartItem/customer/:id - Retrieve cart items by customer ID
-router.get("/customer/:id", async (req, res, next) => {
+ });
+ 
+ router.get("/customer/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const shoppingSession = await prisma.shoppingSession.findUnique({
@@ -42,7 +44,7 @@ router.get("/customer/:id", async (req, res, next) => {
     });
 
     if (!shoppingSession) {
-      return res.status(404).json({ error: "Shopping session not found" });
+      return res.status(404).json({ error: "Shopping session not found" })
     }
 
     const cartItems = await prisma.cartItem.findMany({
@@ -52,8 +54,8 @@ router.get("/customer/:id", async (req, res, next) => {
     const cartProducts = await Promise.all(
       cartItems.map(async (cartItem) => {
         return await prisma.product.findUnique({
-          where: { id: cartItem.productId },
-          include: { cartItem: true },
+          where: {id: cartItem.productId },
+          include: {cartItem: true},
         });
       })
     );
@@ -61,17 +63,20 @@ router.get("/customer/:id", async (req, res, next) => {
     const validCartProducts = cartProducts.filter((product) => product !== null);
 
     res.json(validCartProducts);
-  } catch (error) {
-    next(error);
-  }
-});
 
-// POST /cartItem/:sessionId - Create a new cartItem
+  } catch(error) {
+    next (error);
+  }
+ });
+
+
+
+// POST /cartItem - Create a new cartItem.
 router.post("/:sessionId", async (req, res, next) => {
   try {
     const { sessionId } = req.params;
     const { productId, quantity } = req.body;
-
+    
     if (!sessionId || !productId || !quantity) {
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -103,13 +108,13 @@ router.post("/:sessionId", async (req, res, next) => {
     }
 
     // Update the session's total price
-    await prisma.shoppingSession.update({
+    const updatedSession = await prisma.shoppingSession.update({
       where: { id: parseInt(sessionId) },
       data: { total: shoppingSession.total + totalPrice },
     });
 
     // Deduct the quantity from the product's inventory
-    await prisma.product.update({
+    const updatedProduct = await prisma.product.update({
       where: { id: parseInt(productId) },
       data: { inventory: product.inventory - parseInt(quantity) },
     });
@@ -130,26 +135,29 @@ router.post("/:sessionId", async (req, res, next) => {
   }
 });
 
-// PUT /cartItem/:id - Update a specific cartItem by ID
+ 
+
+// PUT /cartItem/:id - Update a specific cartItem by ID.
+
 router.put("/:id", async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { sessionId, productId, quantity } = req.body;
-
-    const updatedCartItem = await prisma.cartItem.update({
-      where: { id: parseInt(id) },
-      data: {
-        sessionId: sessionId ? parseInt(sessionId) : undefined,
-        productId: productId ? parseInt(productId) : undefined,
-        quantity: quantity ? parseInt(quantity) : undefined,
-      },
-    });
-
-    res.json(updatedCartItem);
+     const { id } = req.params;
+     const { sessionId, productId, quantity } = req.body;
+ 
+     const updatedCartItem = await prisma.cartItem.update({
+       where: { id: parseInt(id) },
+       data: {
+         sessionId: sessionId ? parseInt(sessionId) : undefined,
+         productId: productId ? parseInt(productId) : undefined,
+         quantity: quantity ? parseInt(quantity) : undefined,
+       },
+     });
+ 
+     res.json(updatedCartItem);
   } catch (error) {
-    next(error);
+     next (error);
   }
-});
+ });
 
 // DELETE /cartItem/:id - Delete a specific cartItem by Id
 router.delete("/:id", async (req, res, next) => {
@@ -271,3 +279,5 @@ router.delete("/shoppingSession/:sessionId", async (req, res, next) => {
 });
 
 module.exports = router;
+
+
