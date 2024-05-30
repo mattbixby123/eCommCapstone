@@ -69,8 +69,6 @@ router.get("/:sessionId", async (req, res, next) => {
   }
  });
 
-
-
 // POST /cartItem - Create a new cartItem.
 router.post("/:sessionId", async (req, res, next) => {
   try {
