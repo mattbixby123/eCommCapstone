@@ -27,8 +27,8 @@ router.get("/:sessionId", async (req, res, next) => {
        where: { sessionId: parseInt(sessionId) },
        include: { product: true }
      });
-     if (!cartItems || cartItems.length === 0) {
-       return res.status(404).json({ error: "Cart item not found" });
+     if (!cartItems) {
+       return []
      }
      res.json(cartItems);
   } catch (error) {
