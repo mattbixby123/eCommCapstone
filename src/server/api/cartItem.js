@@ -33,38 +33,38 @@ router.get("/:sessionId", async (req, res, next) => {
   }
 });
 
-// GET /cartItem/customer/:id - Retrieve cart items by customer ID
-router.get("/customer/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const shoppingSession = await prisma.shoppingSession.findUnique({
-      where: { id: parseInt(id) },
-    });
+// // GET /cartItem/customer/:id - Retrieve cart items by customer ID
+// router.get("/customer/:id", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const shoppingSession = await prisma.shoppingSession.findUnique({
+//       where: { id: parseInt(id) },
+//     });
 
-    if (!shoppingSession) {
-      return res.status(404).json({ error: "Shopping session not found" });
-    }
+//     if (!shoppingSession) {
+//       return res.status(404).json({ error: "Shopping session not found" });
+//     }
 
-    const cartItems = await prisma.cartItem.findMany({
-      where: { sessionId: shoppingSession.id },
-    });
+//     const cartItems = await prisma.cartItem.findMany({
+//       where: { sessionId: shoppingSession.id },
+//     });
 
-    const cartProducts = await Promise.all(
-      cartItems.map(async (cartItem) => {
-        return await prisma.product.findUnique({
-          where: { id: cartItem.productId },
-          include: { cartItem: true },
-        });
-      })
-    );
+//     const cartProducts = await Promise.all(
+//       cartItems.map(async (cartItem) => {
+//         return await prisma.product.findUnique({
+//           where: { id: cartItem.productId },
+//           include: { cartItem: true },
+//         });
+//       })
+//     );
 
-    const validCartProducts = cartProducts.filter((product) => product !== null);
+//     const validCartProducts = cartProducts.filter((product) => product !== null);
 
-    res.json(validCartProducts);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.json(validCartProducts);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // POST /cartItem/:sessionId - Create a new cartItem
 router.post("/:sessionId", async (req, res, next) => {
