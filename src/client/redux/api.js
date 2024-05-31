@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    // baseUrl: process.env.REACT_APP_SERVER_URL, 
-    baseUrl: 'http://localhost:3000/', 
+    baseUrl: process.env.REACT_APP_SERVER_URL, 
+    // baseUrl: 'http://localhost:3000/', 
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {
@@ -49,12 +49,12 @@ export const api = createApi({
     fetchProductById: builder.query({
       query: (productId) => `/api/product/${productId}`,
     }),
-    fetchProductsBySession: builder.query({
-      query: (sessionId) => `api/cartItem/customer/${sessionId}`,
-    }),
+    // fetchProductsBySession: builder.query({
+    //   query: (sessionId) => `api/cartItem/customer/${sessionId}`,
+    // }),
     fetchCartBySession: builder.query({
       query: (sessionId) => `api/cartItem/${sessionId}`,
-      providesTags: ["Cart"],
+      // providesTags: ["Cart"],
     }),
     addToCart: builder.mutation({
       query: ({ sessionId, productId, quantity, type }) => ({
@@ -119,7 +119,7 @@ export const {
   useWelcomeQuery,
   useFetchAllCartItemsQuery,
   useAddToCartMutation,
-  useFetchProductsBySessionQuery,
+  // useFetchProductsBySessionQuery,
   useFetchCartBySessionQuery,
   useRemoveFromCartMutation,
   useRemoveShoppingSessionMutation,
