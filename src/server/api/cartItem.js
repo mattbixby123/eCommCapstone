@@ -96,7 +96,7 @@ router.post("/:sessionId", async (req, res, next) => {
       return res.status(400).json({ message: "Insufficient inventory" });
     }
 
-    const totalPrice = product.price * parsedQuantity;
+    const totalPrice = parseInt(product.price * parsedQuantity);
 
     const shoppingSession = await prisma.shoppingSession.findUnique({
       where: { id: parsedSessionId },
@@ -108,7 +108,7 @@ router.post("/:sessionId", async (req, res, next) => {
 
     await prisma.shoppingSession.update({
       where: { id: parsedSessionId },
-      data: { total: shoppingSession.total + totalPrice },
+      data: { total: parseInt(shoppingSession.total) + totalPrice },
     });
 
     await prisma.product.update({
