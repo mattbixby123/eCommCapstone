@@ -186,13 +186,13 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           <Tooltip title="Cart">
-            <IconButton
+            {token && <IconButton
               onClick={handleCartClick}
               sx={{ p: 0, marginRight: '10px' }}
               color="inherit"
             >
               <ShoppingCartIcon />
-            </IconButton>
+            </IconButton>}
           </Tooltip>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
