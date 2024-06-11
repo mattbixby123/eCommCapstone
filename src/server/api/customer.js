@@ -8,7 +8,6 @@ router.get("/", async (req, res, next) => {
     const customers = await prisma.customer.findMany({
       include: {
         shoppingSessions: true,
-        orderDetails: true
       }
     });
     res.json(customers);

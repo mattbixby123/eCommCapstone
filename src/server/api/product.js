@@ -10,7 +10,6 @@ router.get("/", async (req, res, next) => {
       include: {
         category: true,
         cartItem: true,
-        orderItems: true
       }
     });
 
