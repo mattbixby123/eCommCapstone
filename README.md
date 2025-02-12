@@ -1,90 +1,85 @@
-**Project Overview:
+# Retro Rag Reads - Vintage Media eCommerce Platform
 
-Retro Rag Reads is an e-commerce website designed to offer a unique shopping experience for enthusiasts of vintage books, magazines, and comic books. Our platform provides a diverse range of reading materials from various genres, ensuring there is something for everyone.
+## Project Overview
+Retro Rag Reads is an e-commerce website designed to offer a unique shopping experience for enthusiasts of vintage books, magazines, and comic books. Developed by a team of four during our time at Fullstack Academy, this platform demonstrates our collective ability to build a full-stack eCommerce solution.
 
+## Team Inspiration & Implementation
+Our team was inspired by the unique challenges of selling vintage media online. Each item's condition, rarity, and collectible status needed to be properly represented. We designed a platform that could handle these specific requirements while ensuring a seamless user experience.
 
+We selected our tech stack based on our shared knowledge and the specific needs of vintage media sales:
 
-**Purpose:
+- **React & Redux Toolkit Query**: Enables efficient state management and real-time inventory updates  
+- **Node.js & Express**: Provides a reliable backend foundation for handling complex product data  
+- **PostgreSQL & Prisma**: Ensures a robust relational database structure for managing detailed product information  
+- **Styled Components**: Maintains consistent styling across the platform  
 
-The purpose of this project is to create a user-friendly and visually appealing e-commerce platform that allows users to browse, search, and purchase collecatable vintage reading materials with ease. This project demonstrates the implementation of modern web development techniques and best practices.
+## Features
+- **Browse and Search**: Users can explore available vintage books, magazines, and comic books  
+- **Category Filtering**: Filters by price range and category using checkbox functionality  
+- **Shopping Cart**: Basic cart management system  
+- **User Authentication**: Secure login system  
+- **Responsive Design**: Optimized for mobile and desktop use  
 
+## Team Roles & Contributions
+- **Backend Development**: Implementation of database architecture and API endpoints  
+- **Frontend Development**: UI/UX implementation and state management  
+- **Database Design**: Collaborative effort focusing on efficient data structure  
+- **Testing & Documentation**: Shared responsibility among team members  
 
+## Technologies Used
+### Frontend
+- React  
+- Redux Toolkit Query (RTK Query)  
+- Styled-components  
+- CSS  
 
-**Features:
+### Backend
+- Node.js  
+- Express  
+- Prisma ORM  
+- PostgreSQL  
 
-*Browse and Search: Users can explore a wide range of the available books, magazines, and comic books. Advanced search functionality allows users to find specific titles or genres.
+### Development Tools
+- Git & GitHub  
+- npm  
 
-*Filtering: Users can filter products by price range and categories using checkboxes for a more customized shopping experience.
-
-*Cart Management: Users can add items to their cart, view their selections, and proceed to checkout.
-
-*User Authentication: Secure user registration and login to manage orders and preferences.
-
-
-
-**Technologies Used:
-
-Frontend: React, Redux Toolkit Query (RTK Query)
-
-Backend: Node.js, Express
-
-Database: Prisma, SQL
-
-Styling: CSS, styled-components
-
-Version Control: Git, GitHub
-
-
-
-**Installation:
-
-1. Fork and Clone repo:
-
-   git@github.com:mattbixby123/eCommCapstone.git
-
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:mattbixby123/eCommCapstone.git
+   ```
 
 2. Navigate to the project directory:
-
+   ```bash
    cd eCommCapstone
+   ```
 
-3. Install packages
-
+3. Install dependencies:
+   ```bash
    npm install
-   
    npm install prisma --save-dev
+   ```
 
-5. Create a database from your terminal
+4. Set up the database:
+   - Verify PostgreSQL installation: `postgres --version`  
+   - Create a new database: `createdb <db_name_here>`  
+   - Run migrations: `npx prisma migrate dev`  
 
-    a: Ensure postgreSQL is installed, use command in termial: postgres --version
-   
-    b: createdb (**db_name_here**)
+## Usage
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open [http://localhost:3000](http://localhost:3000) in your browser  
+3. Browse the vintage media inventory  
+4. Use price and category filters  
+5. Test cart functionality  
 
-7. Migrate table data
+## Collaborative Achievements
+- Successfully implemented core eCommerce functionality  
+- Maintained consistent code quality through peer reviews  
+- Completed the project within the given timeframe  
+- Ensured effective team communication and task management  
 
-   npx prisma migrate dev
-
-8. Start the development server
-
-   npm start
-
-   
-
-**Usage:
-
-Start the program on your localhost:
-
-   a: npm run dev
-   
-   b: Open localhost: http://localhost:3000
-   
-   c: Browse available vintage books, comics, and magazines for purchase
-   
-   d: Use filter by price, or search by category
-   
-   e: Add items to your cart and proceed to checkout
-   
-   
-   
-**Conclusion
-
-Retro Rag Reads is a comprehensive e-commerce platform for vintage print media enthusiasts. This project demonstrates the integration of various technologies and the implementation of essential e-commerce functionalities. Feedback is welcome to further enhance this platform.
+## Conclusion
+Retro Rag Reads showcases our team’s ability to create a functional eCommerce platform while addressing the unique challenges of vintage media sales. The project highlights our technical skills and collaborative efforts. We welcome feedback and suggestions for future improvements.
