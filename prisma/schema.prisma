@@ -41,23 +41,23 @@ model productCategory {
 }
 
 model customer {
-  id              Int               @id @default(autoincrement())
-  email           String            @unique @db.VarChar(255)
-  username        String            @db.VarChar(255)
-  password        String            @db.VarChar(255)
-  firstName       String            @db.VarChar(255)
-  lastName        String            @db.VarChar(255)
-  imageUrl        String?           @db.VarChar(8000)
-  addressLine1    String            @db.VarChar(46)
-  addressLine2    String?           @db.VarChar(46)
-  city            String            @db.VarChar(50)
-  state           String            @db.VarChar(50)
-  postalCode      String            @db.VarChar(50)
-  country         String            @db.VarChar(200)
-  createdAt       DateTime          @default(now()) @db.Timestamp()
-  modifiedAt      DateTime          @updatedAt @db.Timestamp()
-  isAdmin         Boolean?          @default(false) @db.Boolean
-  shoppingSession shoppingSession[]
+  id               Int               @id @default(autoincrement())
+  email            String            @unique @db.VarChar(255)
+  username         String            @db.VarChar(255)
+  password         String            @db.VarChar(255)
+  firstName        String            @db.VarChar(255)
+  lastName         String            @db.VarChar(255)
+  imageUrl         String?           @db.VarChar(8000)
+  addressLine1     String            @db.VarChar(46)
+  addressLine2     String?           @db.VarChar(46)
+  city             String            @db.VarChar(50)
+  state            String            @db.VarChar(50)
+  postalCode       String            @db.VarChar(50)
+  country          String            @db.VarChar(200)
+  createdAt        DateTime          @default(now()) @db.Timestamp()
+  modifiedAt       DateTime          @updatedAt @db.Timestamp()
+  isAdmin          Boolean?          @default(false) @db.Boolean
+  shoppingSessions shoppingSession[]
 }
 
 model shoppingSession {
