@@ -22,40 +22,47 @@ import OrderSuccess from './components/OrderSuccess';
 function App() {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
-  const {data: customer, isLoading, error} = useMeQuery( 
+  const { data: customer, isLoading, error } = useMeQuery(
     {
       skip: !token,
     },
   )
 
-  
-  
-  if(customer) {
-    dispatch (setCustomer(customer))
-    dispatch (setSessionId(customer.shoppingSessions[0].id))
-  }
+
+
+  useEffect(() => {
+    if (customer) {
+      dispatch(setCustomer(customer));
+
+      // Handle shopping sessions array
+      if (customer.shoppingSessions && customer.shoppingSessions.length > 0) {
+        console.log("Setting sessionId:", customer.shoppingSessions[0].id);
+        dispatch(setSessionId(customer.shoppingSessions[0].id));
+      }
+    }
+  }, [customer, dispatch]);
 
   return (
-    
+
     <>
-    <Toolbar />
-    <div className='App'>
+      <Toolbar />
+      <div className='App'>
         <Routes>
-          <Route path= '/' element={<Welcome />} />
-          <Route path= '/login' element={<Login />} />   
-          <Route path= '/account' element={<Account />} /> 
-          <Route path= '/register' element={<Register />} />
-          <Route path= '/books' element={<Books />} />
-          <Route path= '/magazines' element={<Magazines />} />
-          <Route path= '/comics' element={<Comics />} />
-          <Route path= '/product/:productId' element={<SingleProduct />}/>
-          <Route path= '/logout' element={<Logout/>}/>
-          <Route path= '/cart' element={<Cart />} />
-          <Route path= '/admin' element={<AdminView />} />
-          <Route path= '/productform' element={<AddProduct />}/> 
-          <Route path= '/order/success' element={<OrderSuccess />} />
+          <Route path='/' element={<Welcome />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/account' element={<Account />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/books' element={<Books />} />
+          <Route path='/magazines' element={<Magazines />} />
+          <Route path='/comics' element={<Comics />} />
+          <Route path='/product/:productId' element={<SingleProduct />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/admin' element={<AdminView />} />
+          <Route path='/productform' element={<AddProduct />} />
+          <Route path='/order/success' element={<OrderSuccess />} />
         </Routes>
-        </div>
+      </div>
     </>
   );
 }
